@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash
 from app.db import connection
 from app.models.user import User
+from app.helpers.sessionConfig import configSessionAttributes
 
 
 def login():
@@ -16,11 +17,9 @@ def authenticate():
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))
-    print("-" * 30)
-    print("user")
-    print("email")
-    print("-" * 30)
-    session["user"] = user["email"]
+    configSessionAttributes(session,user)
+    # session["user"] = user["email"]
+    print(session)
     flash("La sesión se inició correctamente.")
 
     return redirect(url_for("home"))
