@@ -2,6 +2,7 @@ from os import path, environ
 from flask import Flask, render_template, g, Blueprint
 from flask_session import Session
 from flask_bootstrap import Bootstrap
+#from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
 from app.resources import issue
@@ -22,10 +23,17 @@ def create_app(environment="development"):
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
     app.config["SESSION_PERMANENT"] = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/grupo3'
+    
     Session(app)
 
     # Configure db
     db.init_app(app)
+
+    #SQL Alchemy
+    
+   
+    
 
     # Bootstrap 
     Bootstrap(app)

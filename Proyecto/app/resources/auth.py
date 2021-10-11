@@ -9,8 +9,8 @@ def login():
 
 
 def authenticate():
-    conn = connection()
-    params = request.form
+    # conn = connection()
+    # params = request.form
 
     user = User.find_by_email_and_pass(conn, params["email"], params["password"])
 
