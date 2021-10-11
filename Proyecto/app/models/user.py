@@ -1,20 +1,25 @@
 # Se estan reescribiendo las clases para utilizar la libreria SQLAlchemy
+from sqlalchemy import Column, Integer, String
 from app.db import db
 
 
-class Users(db.Model):
-        id = db.Column(db.Integer, primary_key=True)
-        email = db.Column(db.String(80), unique=True, nullable=False)
-        password = db.Column(db.String(120), unique=True, nullable=False) 
-        first_name = db.Column(db.String(120), unique=True, nullable=False)
-        last_name = db.Column(db.String(120), unique=True, nullable=False)
+class User(db.Model):
+        __tablename__ = "uses"
+        id = Column(Integer, primary_key=True)
+        email = Column(String(50), unique=True, nullable=False)
+        password = Column(String(50), unique=True, nullable=False)
+        first_name = Column(String(50), unique=True, nullable=False)
+        last_name = Column(String(50), unique=True, nullable=False)
+
+
+        def __init__ (self,first_name = None , last_name = None, email = None, password =None):
+            self.first_name = first_name
+            self.last_name = last_name
+            self.email = email
+            self.password = password
 
         def __repr__(self):
-            return self.username
-
-test1 = Users(email='Arthut', password='test',first_name='Art',last_name='Wett')
-db.session.add(test1)
-db.session.commit()
+            return self.email
 
 
 
