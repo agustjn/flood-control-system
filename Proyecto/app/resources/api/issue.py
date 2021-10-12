@@ -9,4 +9,4 @@ def index():
 #    conn = connection()
 #    issues = Issue.all(conn)
 
-    return jsonify(issues=issues)
+    return jsonify(issues=[])

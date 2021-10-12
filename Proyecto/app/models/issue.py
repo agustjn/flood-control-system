@@ -11,10 +11,11 @@ class Issue(db.Model):
     email = Column(String(50), unique=True)
     description = Column(String(30),unique=True)
     category_id = Column(String(30),unique =True)
-    #
-    category = Column(Integer,ForeignKey("categories_id"))
+
+    category_id = Column(Integer,ForeignKey("categories.id"))
     category = relationship(Category)
-    status_id = Column(Integer,ForeignKey("statuses_id"))
+
+    status_id = Column(Integer,ForeignKey("statuses.id"))
     status = relationship(Status)
 
 """class Issue(object):

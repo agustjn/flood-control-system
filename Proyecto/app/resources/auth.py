@@ -12,14 +12,15 @@ def authenticate():
     # params = request.form
 
     #user = User.find_by_email_and_pass(conn, params["email"], params["password"])
+    params = request.form
+    user = User.query.filter( User.email == params["email"] and User.password == params["password"]).first()
 
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))
-    configSessionAttributes(session,user)
-    # session["user"] = user["email"]
-    flash("La sesión se inició correctamente.")
 
+    session["email"] = user.email
+    flash("La sesión se inició correctamente.")
     return redirect(url_for("home"))
 
 

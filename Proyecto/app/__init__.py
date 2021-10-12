@@ -11,6 +11,12 @@ from app.resources import auth
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
+import logging
+
+
+#Activo los loggins en la terminal de las query generadas
+logging.basicConfig()
+logging.getLogger("sqlalchmy.engine").setLevel(logging.INFO)
 
 def create_app(environment="development"):
     # Configuración inicial de la app

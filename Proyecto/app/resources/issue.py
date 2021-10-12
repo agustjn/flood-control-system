@@ -14,7 +14,7 @@ def new():
 
 
 def create():
-    conn = connection()
-    Issue.create(conn, request.form)
+    #conn = connection()
+    #Issue.create(conn, request.form)
 
     return redirect(url_for("issue_index"))

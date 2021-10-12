@@ -10,8 +10,8 @@ def index():
 
     # conn = connection()
     # users = User.all(conn)
-
-    return render_template("user/index.html", users=[])
+    users = User.query.all()
+    return render_template("user/index.html", users=users)
 
 
 def new():
