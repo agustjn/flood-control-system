@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %} 
+Configuration 
+{% endblock %}
+
+{% block head %} 
+{{super()}} 
+
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron bg-light">
+        <h2 class="text-center"> Configuraciones </h2>
+        </br>
+        <form action="">
+            <ul>
+                <li>
+                    <h4>Paginado</h4>
+                    <blockquote class="blockquote">
+                       <p> Ingrese la cantidad de items que se presentaran como maximo en cada listado (Min. 5 - Max. 30)</p> 
+                    </blockquote>
+                    <input type="number" class="form-control" id="cantItemsId" name="cantItems" min=5 max=30>
+                </li>
+                <li>
+                    <h4>Ordenacion</h4>
+                    <blockquote class="blockquote">
+                        <select class="form-select" aria-label="Seleccion de criterio de ordenacion">
+                            <option selected>{{session.get("name")}}</option>
+                            <option value="1">Alfabetico</option>
+                            <option value="2">Numerico?</option>
+                          </select> 
+                    </blockquote>
+                </li>
+                
+    
+            </ul>
+        </form>
+
+        
+    </div>
+    
+
+
+{% endblock %}

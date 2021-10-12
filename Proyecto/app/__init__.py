@@ -15,6 +15,7 @@ from app.helpers import auth as helper_auth
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
+    app.config["SECRET_KEY"] = "NeedConfigureAn"
 
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)
@@ -62,6 +63,12 @@ def create_app(environment="development"):
     @app.route("/")
     def home():
         return render_template("home.html")
+
+    # Ruta config
+    @app.route("/configuraciones")
+    def configPage():
+        return render_template("configuration/index.html")
+
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
