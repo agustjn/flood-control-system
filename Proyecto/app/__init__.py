@@ -11,6 +11,12 @@ from app.resources import auth
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
+import logging
+
+
+#Activo los loggins en la terminal de las query generadas
+logging.basicConfig()
+logging.getLogger("sqlalchmy.engine").setLevel(logging.INFO)
 
 def create_app(environment="development"):
     # Configuración inicial de la app
@@ -24,21 +30,21 @@ def create_app(environment="development"):
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
     app.config["SESSION_PERMANENT"] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/grupo3'
-    
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
+
     Session(app)
 
     # Configure db
     db.init_app(app)
 
     #SQL Alchemy
-    
-   
-    
 
-    # Bootstrap 
+
+
+
+    # Bootstrap
     Bootstrap(app)
-    
+
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 

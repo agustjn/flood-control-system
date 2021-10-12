@@ -1,8 +1,8 @@
 from flask import request
 
 def configSessionAttributes(session,user):
-    session["user"] = user["email"]
-    session["name"] = user["first_name"] + ' ' + user["last_name"]
+    session["user"] = user.email
+    session["name"] = user.first_name + ' ' + user.last_name
     # if request.cookies.get("customizations") == '0': # Si no tiene personalizaciones previamente existentes 
     #     createCustomizations(session)
         

@@ -24,7 +24,10 @@ class DevelopmentConfig(Config):
     DB_PASS = environ.get("DB_PASS", "root")
     DB_NAME = environ.get("DB_NAME", "grupo3")
 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    #Le digo que use el plugins que le password
+    SQLALCHEMY_DATABASE_URI = (f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}")
 class ProductionConfig(Config):
     """Production configuration."""
 
