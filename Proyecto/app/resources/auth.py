@@ -5,15 +5,14 @@ from app.helpers.cookies import configCookies
 
 
 def login():
-    
+
     return render_template("auth/login.html")
 
 
 def authenticate():
-    conn = connection()
-    params = request.form
 
-    #user = User.find_by_email_and_pass(conn, params["email"], params["password"])
+
+    
     params = request.form
     user = User.query.filter( User.email == params["email"] and User.password == params["password"]).first()
 
@@ -22,7 +21,7 @@ def authenticate():
         return redirect(url_for("auth_login"))
 
 
-    configSessionAttributes (session,user)    
+    configSessionAttributes (session,user)
 
     session["email"] = user.email
     flash("La sesión se inició correctamente.")
@@ -32,7 +31,7 @@ def authenticate():
 def logout():
     #resp = make_response(redirect(url_for("auth_login")))
     #setCookies(session,resp)
-    
+
     del session["user"]
     session.clear()
     flash("La sesión se cerró correctamente.")
