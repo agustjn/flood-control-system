@@ -26,7 +26,7 @@ def authenticate():
 
     configSessionAttributes (session,user)
 
-    session["email"] = user.email
+    
     flash("La sesión se inició correctamente.")
     return redirect(url_for("home"))
 
