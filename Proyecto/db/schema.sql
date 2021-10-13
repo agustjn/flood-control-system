@@ -115,11 +115,16 @@
     `password` varchar(30) NOT NULL,
     `first_name` varchar(30) NOT NULL,
     `last_name` varchar(30) NOT NULL,
+    `configuration_id` int(10) unsigned NOT NULL,
+
     PRIMARY KEY (`id`),
     UNIQUE KEY `email` (`email`),
     UNIQUE KEY `password` (`password`),
     UNIQUE KEY `first_name` (`first_name`),
-    UNIQUE KEY `last_name` (`last_name`)
+    UNIQUE KEY `last_name` (`last_name`),
+
+    KEY `configuration_id` (`configuration_id`),
+    CONSTRAINT `users_ibfk_1` FOREIGN KEY (`configuration_id`) REFERENCES `configurations` (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
   /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -129,7 +134,7 @@
 
   LOCK TABLES `users` WRITE;
   /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-  INSERT INTO `users` VALUES (1,'admin','123123','Cosme','Fulanito');
+  INSERT INTO `users` VALUES (1,'admin','123123','Cosme','Fulanito',1);
   /*!40000 ALTER TABLE `users` ENABLE KEYS */;
   UNLOCK TABLES;
   /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -163,9 +168,9 @@
   /*!40101 SET character_set_client = utf8 */;
   CREATE TABLE `configurations` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `configuration_id` int(10) NOT NULL,
+    `customization_id` int(10) unsigned NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `configuration_id` (`configuration_id`),
-    CONSTRAINT `user_ibfk_1` FOREIGN KEY (`configuration_id`) REFERENCES `customizations` (`id`)
+    KEY `customization_id` (`customization_id`),
+    CONSTRAINT `configurations_ibfk_1` FOREIGN KEY (`customization_id`) REFERENCES `customizations` (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
   /*!40101 SET character_set_client = @saved_cs_client */;

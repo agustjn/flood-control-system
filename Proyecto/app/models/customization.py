@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String
 from app.db import db
 
-class Customizations(db.Model):
+class Customization(db.Model):
   """Define la configuracion de la personalizacion de las vistas"""
-  __tablename__ = "Customizations"
+  __tablename__ = "customizations"
   id = Column(Integer,primary_key=True)
   __items_per_page  = Column (Integer,unique=True)
   sort_order = Column(String(30),unique =True)
