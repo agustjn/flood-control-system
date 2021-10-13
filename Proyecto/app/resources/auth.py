@@ -10,9 +10,6 @@ def login():
 
 
 def authenticate():
-
-
-    
     params = request.form
     user = User.query.filter( User.email == params["email"] and User.password == params["password"]).first()
 

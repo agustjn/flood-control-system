@@ -16,6 +16,7 @@ class User(db.Model):
         configuration_id = Column(Integer,ForeignKey("configuration.id"))
         configuration = relationship(Customizations)
 
+            
         def __init__ (self,first_name = None , last_name = None, email = None, password = None):
             customization = Customizations()
             db.session.add(customization)
