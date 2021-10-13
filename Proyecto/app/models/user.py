@@ -11,7 +11,10 @@ class User(db.Model):
         first_name = Column(String(50), unique=True)
         last_name = Column(String(50), unique=True)
 
+        configuration_id (Integer,ForeignKey("configuration.id"))
+        configuration = relationship(customizations)
 
+            
         def __init__ (self,first_name = None , last_name = None, email = None, password = None):
             self.first_name = first_name
             self.last_name = last_name
