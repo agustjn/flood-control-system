@@ -1,5 +1,6 @@
 from flask import redirect, render_template, request, url_for, session, abort,flash
 from app.models.user import User
+from app.models.configuration import Configuration
 from app.helpers.auth import authenticated
 from app.db import db
 
@@ -25,14 +26,23 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-    parametros = request.form
-    userTest = User(parametros["first_name"], parametros["last_name"], parametros["email"],parametros["password"])
-    print(userTest)
-    db.session.add(userTest)
+    parameter = request.form
+
+    last_configuration_id = User.query.order_by(User.configuration_id.desc()).first()
+
+    last_configuration_id = last_configuration_id.configuration_id
+
+    print (f"-------------------------------------------------{last_configuration_id}--------------------------------------------")
+    new_user = User(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["password"],last_configuration_id)
+
+    new_configuration = Configuration()
+    db.session.add(new_configuration)
+    db.session.commit()
+
+    db.session.add(new_user)
     db.session.commit()
     flash("Se creo el usuario")
-    #conn = connection()
-    #User.create(conn, request.form)
+
     return redirect(url_for("user_index"))
 
 def update():

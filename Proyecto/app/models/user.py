@@ -19,7 +19,7 @@ class User(db.Model):
         configuration = relationship(Configuration)
 
 
-        def __init__ (self,first_name = None , last_name = None, email = None, password = None):
+        def __init__ (self,first_name = None , last_name = None, email = None, password = None,configuration_id = None):
 
             #customization = Customizations()
             #db.session.add(customization)
@@ -28,6 +28,7 @@ class User(db.Model):
             self.last_name = last_name
             self.email = email
             self.password = password
+            self.configuration_id = configuration_id
 
 
         def __repr__(self):

@@ -119,7 +119,7 @@
 
     PRIMARY KEY (`id`),
     UNIQUE KEY `email` (`email`),
-    UNIQUE KEY `password` (`password`),
+    KEY `password` (`password`),
     UNIQUE KEY `first_name` (`first_name`),
     UNIQUE KEY `last_name` (`last_name`),
 
@@ -158,9 +158,9 @@
     `sort_order` varchar(30) NOT NULL,
     `background_color` varchar(30) NOT NULL,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `items_per_page` (`items_per_page`),
-    UNIQUE KEY `sort_order` (`sort_order`),
-    UNIQUE KEY `background_color` (`background_color`)
+    KEY `items_per_page` (`items_per_page`),
+    KEY `sort_order` (`sort_order`),
+    KEY `background_color` (`background_color`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
   DROP TABLE IF EXISTS `configurations`;

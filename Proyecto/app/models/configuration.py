@@ -14,5 +14,6 @@ class Configuration(db.Model):
 
 
   def __init__ (self):
-
-      customization = Customizations()
+      new_customization = Customization()
+      db.session.add(new_customization)
+      db.session.commit()

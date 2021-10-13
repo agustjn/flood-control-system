@@ -3,11 +3,35 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+
 {% block content %}
   <h1>usuarios</h1>
-  {% for user in users %}
-  <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }}</li>
-  {% endfor %}
-  <a href="{{ url_for('home') }}" class="link">Volver</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Email</th>
+        <th scope="col">first_name</th>
+        <th scope="col">last_name</th>
+        <th scope="col">password</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ user.email }}</td>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.password }}</td>
+          <td><a href="{{ url_for('home') }}" class="btn btn-secondary btn-sm" >Elimnar</a></td>
+          <td><a href="{{ url_for('user_new') }}" class="btn btn-success btn-sm"">Modificar</a></td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+  </table>
+
+  <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg" >Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
 {% endblock %}
