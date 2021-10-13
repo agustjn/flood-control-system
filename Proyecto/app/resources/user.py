@@ -34,3 +34,9 @@ def create():
     #conn = connection()
     #User.create(conn, request.form)
     return redirect(url_for("user_index"))
+
+def update():
+    if not authenticated(session):
+        abort(401)
+
+    session["users"]
