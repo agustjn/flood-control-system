@@ -73,7 +73,7 @@ def create_app(environment="development"):
     # Ruta config
     @app.route("/configuraciones")
     def configPage():
-        return render_template("configuration/index.html")
+        return render_template("configuration/index.html",users=user)
 
 
     # Rutas de API-REST (usando Blueprints)

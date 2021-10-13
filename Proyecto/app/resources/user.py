@@ -1,6 +1,7 @@
-from flask import redirect, render_template, request, url_for, session, abort
+from flask import redirect, render_template, request, url_for, session, abort,flash
 from app.models.user import User
 from app.helpers.auth import authenticated
+from app.db import db
 
 # Protected resources
 def index():
@@ -24,7 +25,12 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-
+    parametros = request.form
+    userTest = User(parametros["first_name"], parametros["last_name"], parametros["email"],parametros["password"])
+    print(userTest)
+    db.session.add(userTest)
+    db.session.commit()
+    flash("Se creo el usuario")
     #conn = connection()
     #User.create(conn, request.form)
     return redirect(url_for("user_index"))
