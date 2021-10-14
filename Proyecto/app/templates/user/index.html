@@ -24,7 +24,14 @@
           <td>{{ user.first_name }}</td>
           <td>{{ user.last_name }}</td>
           <td>{{ user.password }}</td>
-          <td><a href="{{ url_for('user_delete') }}" class="btn btn-secondary btn-sm" >Elimnar</a></td>
+          <td> 
+              <form action="{{url_for('user_delete')}}" method="POST">
+              <input type="hidden" name="id_user" value={{user.id}}>
+               <button type="submit" class="btn btn-secondary btn-sm" >Eliminar</button>
+              </form>
+          </td>
+          
+         
           <td><a href="{{ url_for('user_new') }}" class="btn btn-success btn-sm"">Modificar</a></td>
         </tr>
         {% endfor %}

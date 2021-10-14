@@ -37,11 +37,6 @@ def create_app(environment="development"):
     # Configure db
     db.init_app(app)
 
-    #SQL Alchemy
-
-
-
-
     # Bootstrap
     Bootstrap(app)
 

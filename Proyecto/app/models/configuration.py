@@ -24,3 +24,8 @@ class Configuration(db.Model):
       last_customization_id = Customization.query.order_by(Customization.id.desc()).first()
       last_customization_id = last_customization_id.id
       return last_customization_id
+  
+  @staticmethod  
+  def get_valid_paginations():
+      return [10,20,50,100]
+
