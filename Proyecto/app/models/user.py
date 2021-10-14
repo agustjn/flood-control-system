@@ -19,17 +19,20 @@ class User(db.Model):
         configuration = relationship(Configuration)
 
 
-        def __init__ (self,first_name = None , last_name = None, email = None, password = None,configuration_id = None):
-
-            #customization = Customizations()
-            #db.session.add(customization)
-
+        def __init__ (self,first_name = None , last_name = None, email = None, password = None, last_configuration_id = None):
             self.first_name = first_name
             self.last_name = last_name
             self.email = email
             self.password = password
-            self.configuration_id = configuration_id
+            self.configuration_id = last_configuration_id
 
 
         def __repr__(self):
-            return self.email
+            return (f"{self.first} {self.last_name} email: {self.email}")
+
+        @classmethod
+        def get_last_id(cls):
+            #Se obtiene el ultimo id del utltimo usuario
+            last_configuration_id = cls.query.order_by(cls.configuration_id.desc()).first()
+            last_configuration_id = last_configuration_id.configuration_id + 1
+            return last_configuration_id

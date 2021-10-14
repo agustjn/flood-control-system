@@ -2,7 +2,7 @@ from os import path, environ
 from flask import Flask, render_template, g, Blueprint
 from flask_session import Session
 from flask_bootstrap import Bootstrap
-#from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
 from app.resources import issue
@@ -64,6 +64,8 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+    
+    app.add_url_rule("/usuarios", "user_delete", user.delete, methods=["POST"])
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

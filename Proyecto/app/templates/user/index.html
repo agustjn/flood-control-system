@@ -24,7 +24,7 @@
           <td>{{ user.first_name }}</td>
           <td>{{ user.last_name }}</td>
           <td>{{ user.password }}</td>
-          <td><a href="{{ url_for('home') }}" class="btn btn-secondary btn-sm" >Elimnar</a></td>
+          <td><a href="{{ url_for('user_delete') }}" class="btn btn-secondary btn-sm" >Elimnar</a></td>
           <td><a href="{{ url_for('user_new') }}" class="btn btn-success btn-sm"">Modificar</a></td>
         </tr>
         {% endfor %}
@@ -33,5 +33,5 @@
   </table>
 
   <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg" >Volver</a>
-  <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
+  <a href="{{ url_for('user_new') }}" class="btn btn-primary btn-lg">Nuevo</a>
 {% endblock %}

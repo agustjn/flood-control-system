@@ -120,7 +120,7 @@
     PRIMARY KEY (`id`),
     UNIQUE KEY `email` (`email`),
     KEY `password` (`password`),
-    UNIQUE KEY `first_name` (`first_name`),
+    KEY `first_name` (`first_name`),
     UNIQUE KEY `last_name` (`last_name`),
 
     KEY `configuration_id` (`configuration_id`),
@@ -163,6 +163,12 @@
     KEY `background_color` (`background_color`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+  LOCK TABLES `customizations` WRITE;
+  /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+  INSERT INTO `customizations` VALUES (1,15,'alfabetica','bg-light');
+  /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+  UNLOCK TABLES;
+
   DROP TABLE IF EXISTS `configurations`;
   /*!40101 SET @saved_cs_client     = @@character_set_client */;
   /*!40101 SET character_set_client = utf8 */;
@@ -174,3 +180,9 @@
     CONSTRAINT `configurations_ibfk_1` FOREIGN KEY (`customization_id`) REFERENCES `customizations` (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
   /*!40101 SET character_set_client = @saved_cs_client */;
+
+  LOCK TABLES `configurations` WRITE;
+  /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+  INSERT INTO `configurations` VALUES (1,1);
+  /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+  UNLOCK TABLES;
