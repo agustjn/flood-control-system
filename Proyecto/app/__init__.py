@@ -37,11 +37,6 @@ def create_app(environment="development"):
     # Configure db
     db.init_app(app)
 
-    #SQL Alchemy
-
-
-
-
     # Bootstrap
     Bootstrap(app)
 
@@ -61,16 +56,19 @@ def create_app(environment="development"):
     app.add_url_rule("/consultas/nueva", "issue_new", issue.new)
 
     # Rutas de Usuarios
+
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
-    app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
-    
     app.add_url_rule("/usuarios", "user_delete", user.delete, methods=["POST"])
+    app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+    app.add_url_rule("/usuarios/edit", "user_edit", user.update)
+
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
         return render_template("home.html")
+
 
     # Ruta config
     @app.route("/configuraciones")

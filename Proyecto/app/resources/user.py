@@ -5,6 +5,7 @@ from app.helpers.auth import authenticated
 from app.db import db
 
 # Protected resources
+
 def index():
     if not authenticated(session):
         abort(401)
@@ -26,7 +27,6 @@ def create():
     if not authenticated(session):
         abort(401)
     parameter = request.form
-
     last_configuration_id = User.get_last_id()
     new_user = User(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["password"],last_configuration_id)
 
@@ -44,11 +44,11 @@ def create():
 def update():
     if not authenticated(session):
         abort(401)
-    session["users"]
+    return render_template("user/edit.html")
 
 def delete():
-
-    deletetodo = db.query.filter_by(id=id).first()
+    user_id = request.form["user_id"]
+    deletetodo = User.query.filter_by(id=user_id).first()
     db.session.delete(deletetodo)
     db.session.commit()
-    return redirect("/usuarios")
+    return redirect(url_for("user_index"))
