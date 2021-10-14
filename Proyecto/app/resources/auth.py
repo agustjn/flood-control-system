@@ -11,14 +11,9 @@ def login():
 
 def authenticate():
     params = request.form
-    pa = params["email"]
-    us = User.email
-
-    print(f"user {User} y params {pa}")
-
     user = User.query.filter( User.email == params["email"] and User.password == params["password"]).first()
 
-    print (f"que imprime esto{user}")
+    #print (f"que imprime esto{user}")
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))
