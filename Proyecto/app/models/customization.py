@@ -10,7 +10,6 @@ class Customization(db.Model):
   background_color = Column(String(30))
 
   def __init__ (self):
-    print (f"------------------------Entro Customization-------------------")
     self.items_per_page = 15
     self.sort_order = "alfabetica"
     self.background_color = "bg-light"

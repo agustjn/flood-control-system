@@ -9,7 +9,6 @@ def index():
     if not authenticated(session):
         abort(401)
 
-
     # conn = connection()
     # users = User.all(conn)
     users = User.query.all()
