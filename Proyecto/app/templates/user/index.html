@@ -27,11 +27,11 @@
           <td>
             <form action="{{ url_for('user_delete') }}" method="POST">
               <input type="hidden" name="user_id" value={{user.id}}>
-              <button type="submit" class="btn btn-secondary btn-sm" onclick="confirmacion()" >Eliminar</button>
+              <button  class="btn btn-secondary btn-sm" onclick="confirmacion()" >Eliminar</button>
             </form>
           </td>
           <td>
-            <form action="{{ url_for('user_edit') }}" method="POST" >
+            <form action="{{ url_for('user_edit') }}" id="myform" method="POST" >
               <input type="hidden" name="user_id" value={{user.id}}>
               <button type = "submit" class="btn btn-success btn-sm"> Modificar </button>
             </form>
@@ -47,10 +47,10 @@
 
   <script type="text/javascript">
     function confirmacion(){
-      bool = confirm()
-      if (bool) {
-        {{ url_for('user_delete') }}
-      }
+      var msj = "Estas seguro de querer eliminar al usuario ";
+      var boolean = confirm(msj);
+      console.log(boolean);
+
     }
   </script>
 {% endblock %}
