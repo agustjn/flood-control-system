@@ -25,9 +25,9 @@
           <td>{{ user.last_name }}</td>
           <td>{{ user.password }}</td>
           <td>
-            <form action="{{ url_for('user_delete') }} " method="POST">
+            <form action="{{ url_for('user_delete') }}" method="POST">
               <input type="hidden" name="user_id" value={{user.id}}>
-              <button type="submit" class="btn btn-secondary btn-sm" >Eliminar</button>
+              <button type="submit" class="btn btn-secondary btn-sm" onclick="confirmacion()" >Eliminar</button>
             </form>
           </td>
           <td>
@@ -44,4 +44,13 @@
 
   <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg" >Volver</a>
   <a href="{{ url_for('user_new') }}" class="btn btn-primary btn-lg">Nuevo</a>
+
+  <script type="text/javascript">
+    function confirmacion(){
+      bool = confirm()
+      if (bool) {
+        {{ url_for('user_delete') }}
+      }
+    }
+  </script>
 {% endblock %}
