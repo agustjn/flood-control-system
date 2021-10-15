@@ -27,13 +27,14 @@ def create():
     if not authenticated(session):
         abort(401)
     parameter = request.form
-    last_configuration_id = User.get_last_id()
-    new_user = User(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["password"],last_configuration_id)
-
+    #last_configuration_id = User.get_last_id()
+    new_user = User(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
     #se crea la tabla de configuracion para asociar a el usuario creado
-    new_configuration = Configuration()
-    db.session.add(new_configuration)
+    #new_configuration = Configuration()
+    #db.session.add(new_configuration)
     #db.session.commit()
+
+
 
     db.session.add(new_user)
     db.session.commit()
@@ -58,7 +59,6 @@ def delete():
     return redirect(url_for("user_index"))
 
 def modification(id):
-    print (f"-*-------------------------------------------{id}---------------------------------------")
     #User.query.filter_by(id = id_user)
     #if user.email:
     return none
