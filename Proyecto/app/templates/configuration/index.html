@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block title %} 
+Configuration 
+{% endblock %}
+
+{% block head %} 
+{{super()}} 
+
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron bg-light">
+        <h2 class="text-center"> Configuraciones </h2>
+        <h3 class="text-center mt-5"> Vistas </h3>
+        </br>
+        <h5>Paginado</h5>
+        <p> Ingrese la cantidad de items que se presentaran como maximo en cada listado (Min. 5 - Max. 30)</p>                   
+        <input type="number" class="form-control w-25" id="cantItemsId" name="cantItems" min=5 max=30>
+        <h5 class="mt-2">Ordenacion</h5>
+            <div class="row">
+                <div class="col-6">
+                    <p>Selecciona la seccion de la cual va a configurar su ordenamiento</p>
+                        <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
+                            <option selected>Usuarios</option>
+                            <option value="1">Consultas</option>
+                            <option value="2">Puntos de encuentro</option>
+                        </select> 
+                        <p> Selecciona la columna por la cual se va a hacer el ordenamiento y si va a ser ascendente o descendente</p>
+                        <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
+                            <option selected>Columna 1</option>
+                            <option value="1">Columna 2</option>
+                            <option value="2">Puntos de encuentro</option>
+                        </select> 
+
+                </div>
+                <div class="col-6">
+                    <p>Selecciona la seccion de la cual va a configurar su ordenamiento</p>
+                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
+                        <option selected>Consultas</option>
+                        <option value="1">Categoria de bug</option>
+                        <option value="2">Fecha de creacion</option>
+                    </select> 
+                    <p> Selecciona la columna por la cual se va a hacer el ordenamiento y si va a ser ascendente o descendente</p>
+                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
+                        <option selected>Columna 1</option>
+                        <option value="1">Columna 2</option>
+                        <option value="2">Puntos de encuentro</option>
+                    </select> 
+                </div>
+                <div class="col-6">
+                    <p>Selecciona la seccion de la cual va a configurar su ordenamiento</p>
+                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
+                        <option selected>Puntos de encuentro</option>
+                        <option value="1">Categoria de bug</option>
+                        <option value="2">Fecha de creacion</option>
+                    </select> 
+                    <p> Selecciona la columna por la cual se va a hacer el ordenamiento y si va a ser ascendente o descendente</p>
+                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
+                        <option selected>Columna 1</option>
+                        <option value="1">Columna 2</option>
+                        <option value="2">Puntos de encuentro</option>
+                    </select> 
+                </div>
+            </div>
+           
+
+               
+                
+                    <h5 class="mt-2">Color de fondo</h5>
+                       <p> Seleccione el color para el fondo de su pantalla</p>                   
+                    <input type="color" name="selected=color">
+               
+                
+    
+            
+        
+
+        
+    </div>
+    
+
+
+{% endblock %}
+{% block footer %}
+<h1> Config Footer </h1>
+{% endblock %}
