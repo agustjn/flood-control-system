@@ -5,25 +5,25 @@
 {% endblock %}
 {% block content %}
   <h1>Crear un usuario</h1>
-  <form class="row g-3" action="{{ url_for('user_create') }}" method="POST">
+  <form class="row g-3" action="{{ url_for('user_modification')}}" method="POST">
     <div class="col-md-6">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id= "email" name ="email" placeholder="example@algo.com">
+      <input type="email" class="form-control" id= "email" name ="email" placeholder={{user.email}}>
     </div>
     <div class="col-md-6">
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password" name = "password" placeholder="*********">
+      <input type="password" class="form-control" id="password" name = "password" placeholder={{user.password}}>
     </div>
     <div class="col-12">
       <label for="name" class="form-label">Ingrese su nombre </label>
-      <input type="text" class="form-control" id= "name" name ="first_name" placeholder="Nombre completo">
+      <input type="text" class="form-control" id= "name" name ="first_name" placeholder={{user.first_name}}>
     </div>
     <div class="col-12">
       <label for="last_name" class="form-label">Ingrese su apellido </label>
-      <input type="text" class="form-control" id= "last_name" name ="last_name" placeholder="Apellido completo">
+      <input type="text" class="form-control" id= "last_name" name ="last_name" placeholder={{user.last_name}}>
     </div>
     <div class="d-grid gap-1">
-      <button type="submit" class="btn btn-success" type="button">Crear</button>
+      <button type="submit" class="btn btn-success" type="button">Modificar</button>
     </div>
     <button type="reset" class="btn btn-secondary" >Limpiar</button>
   </form>

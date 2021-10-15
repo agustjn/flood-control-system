@@ -44,11 +44,21 @@ def create():
 def update():
     if not authenticated(session):
         abort(401)
-    return render_template("user/edit.html")
+    modification_id = request.form["user_id"]
+    modification_user = User.query.filter_by(id=modification_id).first()
+    return render_template("user/edit.html", user = modification_user)
 
 def delete():
+    if not authenticated(session):
+        abort(401)
     user_id = request.form["user_id"]
     deletetodo = User.query.filter_by(id=user_id).first()
     db.session.delete(deletetodo)
     db.session.commit()
     return redirect(url_for("user_index"))
+
+def modification(id):
+    print (f"-*-------------------------------------------{id}---------------------------------------")
+    #User.query.filter_by(id = id_user)
+    #if user.email:
+    return none
