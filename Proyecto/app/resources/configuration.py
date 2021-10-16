@@ -1,17 +1,22 @@
-from flask import redirect, render_template, request, url_for, flash
+from flask import redirect, render_template, request, url_for, flash,session
 from app.models.configuration import Configuration
 from app.models.views_sort import View_issues, View_users, View_meeting_points
 from app.db import db
+from app.helpers.configurations import putConfigurationsValuesInSession
 
 
 def index():
-    return render_template("configuration/index.html")
+   view_values = {  
+      "items-per-page" : Configuration.get_valid_paginations()
+   }
+   # Remuevo de el array que voy a presentar en la vista el valor actual de los items por pagina que este seleccionado
+   view_values["items-per-page"].remove(session["configurations"]["items_per_page"])
+   
+   return render_template("configuration/index.html", values = view_values)
 
 
 def update():
     params = request.form
-    print("Valor del formulario: " , int(params["items-per-page"]))
-    print("Valor del valid paginations: ", Configuration.get_valid_paginations())
     if (int(params["items-per-page"])) not in Configuration.get_valid_paginations():
             flash("El valor de items por pagina es el incorrecto")
             return redirect(url_for("config_index"))
@@ -31,7 +36,7 @@ def update():
     # return redirect(url_for("config_index"))
 
 
-
+   
 
 
     
