@@ -1,0 +1,3 @@
+sudo systemctl start httpd     Para iniciar apache
+	       status           pARA VER EL ESTADO
+	       stop              PARA DETENER
