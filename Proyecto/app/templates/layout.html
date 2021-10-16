@@ -12,9 +12,9 @@
 
   <title>{% block title %}{% endblock %}</title>
   {% endblock %}
-</head>
+</head>{
 
-<body>
+<body class={{session.get("background-color")}}>
   {% if is_authenticated(session) %}
   {% block navbar %}
   <div id="navbar">
