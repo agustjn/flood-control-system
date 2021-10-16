@@ -7,6 +7,7 @@ from config import config
 from app import db
 from app.resources import issue
 from app.resources import user
+from app.resources import configuration
 from app.resources import auth
 from app.resources.api.issue import issue_api
 from app.helpers import handler
@@ -70,10 +71,8 @@ def create_app(environment="development"):
         return render_template("home.html")
 
 
-    # Ruta config
-    @app.route("/configuraciones")
-    def configPage():
-        return render_template("configuration/index.html",users=user)
+    app.add_url_rule("/configuraciones","config_index",configuration.index)
+    app.add_url_rule("/configuraciones","config_update",configuration.update, methods=["POST"])
 
 
     # Rutas de API-REST (usando Blueprints)
