@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2021 a las 06:55:50
+-- Tiempo de generación: 16-10-2021 a las 16:42:32
 -- Versión del servidor: 10.3.31-MariaDB
 -- Versión de PHP: 8.0.11
 
@@ -61,29 +61,6 @@ CREATE TABLE `configurations` (
 
 INSERT INTO `configurations` (`id`, `view_users_id`, `view_meeting_points_id`, `view_issues_id`, `background`, `items_per_page`) VALUES
 (1, 1, 1, 1, 'bg-info', 15);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `configurations3`
---
-
--- ESTA TABLA NO LA PUDE ELIMINAR, ES LA LA TABLA CONFIGURATIONS ANTERIOR, PERO CON EL NOMBRE CAMBIADO (XQ NO LA PUDE ELIMINAR)
-CREATE TABLE `configurations3` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `view_users_id` int(10) UNSIGNED NOT NULL,
-  `view_meeting_points_id` int(10) UNSIGNED NOT NULL,
-  `view_issues_id` int(10) UNSIGNED NOT NULL,
-  `background` varchar(50) NOT NULL,
-  `items_per_page` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `configurations3`
---
-
-INSERT INTO `configurations3` (`id`, `view_users_id`, `view_meeting_points_id`, `view_issues_id`, `background`, `items_per_page`) VALUES
-(1, 1, 1, 2, 'acczcxzcxzc', 12);
 
 -- --------------------------------------------------------
 
@@ -230,12 +207,6 @@ ALTER TABLE `configurations`
   ADD KEY `view_issues_id` (`view_issues_id`) USING BTREE;
 
 --
--- Indices de la tabla `configurations3`
---
-ALTER TABLE `configurations3`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `issues`
 --
 ALTER TABLE `issues`
@@ -302,12 +273,6 @@ ALTER TABLE `configurations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `configurations3`
---
-ALTER TABLE `configurations3`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT de la tabla `issues`
 --
 ALTER TABLE `issues`
@@ -348,25 +313,11 @@ ALTER TABLE `view_users`
 --
 
 --
--- Filtros para la tabla `configurations3`
---
-ALTER TABLE `configurations3`
-  ADD CONSTRAINT `configurations_1` FOREIGN KEY (`view_users_id`) REFERENCES `view_users` (`id`),
-  ADD CONSTRAINT `configurations_2` FOREIGN KEY (`view_meeting_points_id`) REFERENCES `view_meeting_points` (`id`),
-  ADD CONSTRAINT `configurations_3` FOREIGN KEY (`view_issues_id`) REFERENCES `issues` (`id`);
-
---
 -- Filtros para la tabla `issues`
 --
 ALTER TABLE `issues`
   ADD CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`);
-
---
--- Filtros para la tabla `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`configuration_id`) REFERENCES `configurations3` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
