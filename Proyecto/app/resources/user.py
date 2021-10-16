@@ -51,7 +51,8 @@ def create():
         return redirect(url_for("user_new"))
 
 def validate_empty_fields(new_user):
-    if  new_user.email  or new_user.password or new_user.usuario  or new_user.first_name or new_user.last_name :
+    print(f"-----------------{new_user.email} {new_user.password} {new_user.usuario} -- {new_user.first_name}  {new_user.last_name}")
+    if  (new_user.email  and new_user.password and new_user.usuario  and new_user.first_name and new_user.last_name):
         return False
     else:
         return True
@@ -72,7 +73,6 @@ def modify(user_id):
         flash(msj,"warning")
         return render_template("user/edit.html" , user = user_update)
 
-    print (f"--------------------------{user_update.usuario}--------------------------")
     user_update = update(user_update,parameter)
     try:
         db.session.commit()
@@ -80,7 +80,6 @@ def modify(user_id):
 
 
     except Exception as e:
-        print (f"--------------------------{repr(e)}--------------------------")
         msj = "Se produjo un error al modificar, intente nuevamente "
     flash (msj)
     return redirect(url_for("user_index"))
