@@ -101,7 +101,6 @@
     INSERT INTO `statuses` VALUES (1,'New'),(2,'Todo'),(3,'In progress');
     /*!40000 ALTER TABLE `statuses` ENABLE KEYS */;
     UNLOCK TABLES;
-
     --
     -- Table structure for table `users`
     --
@@ -165,9 +164,9 @@
     ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
     LOCK TABLES `table_user` WRITE;
-    /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+    /*!40000 ALTER TABLE `table_user` DISABLE KEYS */;
     INSERT INTO `table_user` VALUES (1,"ASC","usuario");
-    /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+    /*!40000 ALTER TABLE `table_user` ENABLE KEYS */;
     UNLOCK TABLES;
 
     DROP TABLE IF EXISTS `meeting_points`;
@@ -183,9 +182,9 @@
     ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
     LOCK TABLES `meeting_points` WRITE;
-    /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+    /*!40000 ALTER TABLE `meeting_points` DISABLE KEYS */;
     INSERT INTO `meeting_points` VALUES (1,"ASC","nombre");
-    /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+    /*!40000 ALTER TABLE `meeting_points` ENABLE KEYS */;
     UNLOCK TABLES;
 
 
@@ -210,7 +209,7 @@
     /*!40101 SET character_set_client = @saved_cs_client */;
 
     LOCK TABLES `configurations` WRITE;
-    /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+    /*!40000 ALTER TABLE `configurations` DISABLE KEYS */;
     INSERT INTO `configurations` VALUES (1,1,1,1,"bg-light");
-    /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+    /*!40000 ALTER TABLE `configurations` ENABLE KEYS */;
     UNLOCK TABLES;

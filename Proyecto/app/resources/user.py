@@ -9,9 +9,6 @@ from app.db import db
 def index():
     if not authenticated(session):
         abort(401)
-
-    # conn = connection()
-    # users = User.all(conn)
     users = User.query.all()
     return render_template("user/index.html", users=users)
 
@@ -27,38 +24,90 @@ def create():
     if not authenticated(session):
         abort(401)
     parameter = request.form
-    #last_configuration_id = User.get_last_id()
     new_user = User(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
-    #se crea la tabla de configuracion para asociar a el usuario creado
-    #new_configuration = Configuration()
-    #db.session.add(new_configuration)
-    #db.session.commit()
+    validos = validate_empty_fields(new_user)
+    if validos:
+        answer = User.exist(new_user.email,new_user.usuario)
 
+        db.session.add(new_user)
+        try:
+            db.session.commit()
+        except Exception:
+            msj = "El " + answer + " ya existe, ingrese otro"
+            flash(msj,"error")
+            #flash(msj)
+            return redirect(url_for("user_new"))
 
+        if not answer:
+            msj = "Se creo el usuario " + new_user.usuario + " exitosamente"
+            #flash(msj,"info")
+            flash(msj)
+            return redirect(url_for("user_index"))
 
-    db.session.add(new_user)
-    db.session.commit()
+    else:
+        msj = "Por favor complete todos los campos"
+        flash(msj,"error")
+        #flash(msj)
+        return redirect(url_for("user_new"))
 
-    flash("Se creo el usuario")
-    return redirect(url_for("user_index"))
+def validate_empty_fields(new_user):
+    print(f"-----------------{new_user.email} {new_user.password} {new_user.usuario} -- {new_user.first_name}  {new_user.last_name}")
+    if  (new_user.email  and new_user.password and new_user.usuario  and new_user.first_name and new_user.last_name):
+        return False
+    else:
+        return True
 
-def update():
+def edit(user_id):
     if not authenticated(session):
         abort(401)
-    modification_id = request.form["user_id"]
-    modification_user = User.query.filter_by(id=modification_id).first()
+    modification_user = User.query.filter_by(id=user_id).first()
+    flash ("Los campos que desea dejar igual dejenlo sin rellenar")
     return render_template("user/edit.html", user = modification_user)
 
-def delete():
-    if not authenticated(session):
-        abort(401)
-    user_id = request.form["user_id"]
-    deletetodo = User.query.filter_by(id=user_id).first()
-    db.session.delete(deletetodo)
-    db.session.commit()
+def modify(user_id):
+    parameter = request.form
+    answer = User.exist(parameter["email"],parameter["user"])
+    user_update = User.query.filter_by(id = user_id).first()
+    if answer:
+        msj = "El " + answer + " ya existe, por favor ingrese otro"
+        flash(msj,"warning")
+        return render_template("user/edit.html" , user = user_update)
+
+    user_update = update(user_update,parameter)
+    try:
+        db.session.commit()
+        msj = "Se modifico el usuario "+ user_update.usuario + " exitosamente"
+
+
+    except Exception as e:
+        msj = "Se produjo un error al modificar, intente nuevamente "
+    flash (msj)
     return redirect(url_for("user_index"))
 
-def modification(id):
-    #User.query.filter_by(id = id_user)
-    #if user.email:
-    return none
+def update (user_update,parameter):
+    if parameter["user"]:
+        user_update.usuario = parameter["user"]
+    if parameter["email"]:
+        user_update.email = parameter["email"]
+    if parameter["password"]:
+        user_update.password = parameter["password"]
+    if parameter["first_name"]:
+        user_update.first_name = parameter["first_name"]
+    if parameter["last_name"]:
+        user_update.last_name = parameter["last_name"]
+    return user_update
+
+def delete(user_id):
+    if not authenticated(session):
+        abort(401)
+    user_delete = User.query.filter_by(id=user_id).first()
+    db.session.delete(user_delete)
+    try:
+        db.session.commit()
+    except Exception:
+        msj = "Error al quere borrar el usuario " + user_delete.usuario + " de la tabla"
+        flash (msj,"error")
+
+    msj = "El usuario " + user_delete.usuario + " a sido eliminado con exito"
+    flash (msj,"info")
+    return redirect(url_for("user_index"))

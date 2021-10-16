@@ -57,11 +57,11 @@ def create_app(environment="development"):
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
+    app.add_url_rule("/usuario/delete/<user_id>", "user_delete", user.delete)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
-    app.add_url_rule("/usuario/delete", "user_delete", user.delete, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
-    app.add_url_rule("/usuarios/edit", "user_edit", user.update, methods=["POST"])
-    app.add_url_rule("/usuarios/modification", "user_modification", user.modification, methods=["POST"])
+    app.add_url_rule("/usuarios/edit/<user_id>", "user_edit", user.edit)
+    app.add_url_rule("/usuarios/modification/<user_id>", "user_modification", user.modify,methods=["POST"])
 
 
     # Ruta para el Home (usando decorator)
