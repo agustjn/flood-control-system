@@ -18,7 +18,9 @@ def update():
     else:
        print("VALOR ITEMS PER PAGE: " ,params["items-per-page"])
        #print(Configuration.items_per_page)
-       Configuration.setItemsPerPage(int(params["items-per-page"]))
+       config_row = Configuration.query.filter_by(id=1).first()
+       config_row.items_per_page = params["items-per-page"]
+    #    Configuration.setItemsPerPage(int(params["items-per-page"]))
        db.session.commit()
     return redirect(url_for("user_index"))
        
