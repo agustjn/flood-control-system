@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+  {% extends "layout.html" %}
 {% block title %}Usuarios{% endblock %}
 {% block head %}
   {{ super() }}
@@ -10,6 +10,7 @@
     <thead>
       <tr>
         <th scope="col">#</th>
+        <th scope="col">Usuario</th>
         <th scope="col">Email</th>
         <th scope="col">first_name</th>
         <th scope="col">last_name</th>
@@ -20,21 +21,16 @@
       {% for user in users %}
         <tr>
           <th scope="row">1</th>
+          <td>{{ user.usuario }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.first_name }}</td>
           <td>{{ user.last_name }}</td>
           <td>{{ user.password }}</td>
           <td>
-            <form action="{{ url_for('user_delete') }}" method="POST">
-              <input type="hidden" name="user_id" value={{user.id}}>
-              <button  class="btn btn-secondary btn-sm" onclick="confirmacion()" >Eliminar</button>
-            </form>
+            <a href="{{ url_for('user_delete',user_id = user.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al usuario {{user.usuario}}?');"> Eliminar </a>
           </td>
           <td>
-            <form action="{{ url_for('user_edit') }}" id="myform" method="POST" >
-              <input type="hidden" name="user_id" value={{user.id}}>
-              <button type = "submit" class="btn btn-success btn-sm"> Modificar </button>
-            </form>
+            <a href="{{ url_for('user_edit',user_id = user.id) }}" class="btn btn-success btn-sm" > Modificar </a>
           </td>
         </tr>
         {% endfor %}
@@ -45,12 +41,5 @@
   <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg" >Volver</a>
   <a href="{{ url_for('user_new') }}" class="btn btn-primary btn-lg">Nuevo</a>
 
-  <script type="text/javascript">
-    function confirmacion(){
-      var msj = "Estas seguro de querer eliminar al usuario ";
-      var boolean = confirm(msj);
-      console.log(boolean);
 
-    }
-  </script>
 {% endblock %}

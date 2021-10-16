@@ -38,8 +38,12 @@ class User(db.Model):
             return (f"{self.first_name} {self.last_name} email: {self.email}")
 
         @classmethod
-        def get_last_id(cls):
-            #Se obtiene el ultimo id del utltimo usuario
-            last_configuration_id = cls.query.order_by(cls.configuration_id.desc()).first()
-            last_configuration_id = last_configuration_id.configuration_id + 1
-            return last_configuration_id
+        def exist(cls,email,user):
+            exist_email = cls.query.filter_by(email = email).first()
+            exist_usuario = cls.query.filter_by(usuario = user).first()
+            if exist_email:
+                return ("email "+ email )
+            elif exist_usuario:
+                return ("usuario " + user)
+            else:
+                return (None)
