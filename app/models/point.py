@@ -38,6 +38,6 @@ class Point(db.Model):
             if exist_nombre:
                 return ("nombre "+ nombre )
             elif exist_direccion:
-                return ("direccion" + direccion)
+                return ("direccion " + direccion)
             else:
                 return (None)

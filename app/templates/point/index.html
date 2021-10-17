@@ -22,14 +22,14 @@
     {% for point in points %}
       <tr>
         <th scope="row">1</th>
-        <td>{{ point.name }}</td>
-        <td>{{ point.address }}</td>
-        <td>{{ point.coordinates }}</td>
-        <td>{{ point.status }}</td>
-        <td>{{ point.phone}}</td>
+        <td>{{ point.nombre }}</td>
+        <td>{{ point.direccion }}</td>
+        <td>{{ point.coordenadas }}</td>
+        <td>{{ point.estado }}</td>
+        <td>{{ point.telefono}}</td>
         <td>{{ point.email}}</td>
         <td>
-          <a href="{{ url_for('point_delete',point_id = point.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al usuario {{user.usuario}}?');"> Eliminar </a>
+          <a href="{{ url_for('point_delete',point_id = point.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al punto de encuentro  {{point.nombre}}?');"> Eliminar </a>
         </td>
         <td>
           <a href="{{ url_for('point_edit',point_id = point.id) }}" class="btn btn-success btn-sm" > Modificar </a>

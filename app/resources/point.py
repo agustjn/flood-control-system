@@ -11,7 +11,7 @@ def index():
     if not authenticated(session):
         abort(401)
     points = Point.query.all()
-    return render_template("point/index.html", point = points)
+    return render_template("point/index.html", points = points)
 
 
 def new():
@@ -29,7 +29,6 @@ def create():
     validos = validate_empty_fields(new_point)
     if validos:
         answer = Point.exist(new_point.nombre,new_point.direccion)
-        print (f"------------------------{asnwer}-------------------------------")
         db.session.add(new_point)
         try:
             db.session.commit()
@@ -57,13 +56,14 @@ def validate_empty_fields(new_point):
 def edit(point_id):
     if not authenticated(session):
         abort(401)
-    modification_point = Point.query.filter_by(id=point_).first()
+    modification_point = Point.query.filter_by(id=point_id).first()
     flash ("Los campos que desea dejar igual dejenlo sin rellenar")
     return render_template("point/edit.html", point = modification_point)
 
 def modify(point_id):
+    print (f"---------------------------entro------------------------------")
     parameter = request.form
-    answer = Point.exist(parameter["name"],parameter["direccion"])
+    answer = Point.exist(parameter["name"],parameter["adress"])
     point_update = Point.query.filter_by(id = point_id).first()
     if answer:
         msj = "El " + answer + " ya existe, por favor ingrese otro"
@@ -74,8 +74,6 @@ def modify(point_id):
     try:
         db.session.commit()
         msj = "Se modifico el punto de encuentro "+ point_update.nombre + " exitosamente"
-
-
     except Exception as e:
         msj = "Se produjo un error al modificar, intente nuevamente "
     flash (msj)
