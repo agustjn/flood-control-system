@@ -1,9 +1,3 @@
-# Modulos de node
-node-modules
-
-#package-lock
-package-lock.json
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
