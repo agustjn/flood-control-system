@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Puntos de encuentros</h1>
+<form class="row g-3" action="{{url_for('index_filtro') }}" method="POST">
+  <div class="col-4">
+      <select name="status_id" class="form-select" id="status_id">
+          <option publicado>Publicado</option>
+          <option despublicado>Despublicado</option>
+      </select>
+      <button class="btn btn-warning btn-sm" type="submit">Filtrar</button>
+  </div>
+</form>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Direccion</th>
+      <th scope="col">Coordenadas</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Mail</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for point in points %}
+      <tr>
+        <th scope="row">1</th>
+        <td>{{ point.nombre }}</td>
+        <td>{{ point.direccion }}</td>
+        <td>{{ point.coordenadas }}</td>
+        <td>{{ point.estado }}</td>
+        <td>{{ point.telefono}}</td>
+        <td>{{ point.email}}</td>
+        <td>
+          <a href="{{ url_for('point_delete',point_id = point.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al punto de encuentro  {{point.nombre}}?');"> Eliminar </a>
+        </td>
+        <td>
+          <a href="{{ url_for('point_edit',point_id = point.id) }}" class="btn btn-success btn-sm" > Modificar </a>
+        </td>
+      </tr>
+      {% endfor %}
+
+  </tbody>
+</table>
+
+<a href="{{ url_for('home') }}" class="btn btn-danger btn-lg" >Volver</a>
+<a href="{{ url_for('point_new') }}" class="btn btn-primary btn-lg">Nuevo</a>
+
+
+{% endblock %}

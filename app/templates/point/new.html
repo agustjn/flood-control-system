@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}Puntos de encuentro{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Crear un punto de encuentro</h1>
+  <form class="row g-3" action="{{ url_for('point_create')}}" method="POST">
+
+    <div class="col-md-6">
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id= "name" name ="name" placeholder="Ingrese el nombre ">
+    </div>
+    <div class="col-md-6">
+      <label for="adress" class="form-label">Direccion</label>
+      <input type="text" class="form-control" id="adress" name = "adress" placeholder="Ingrese la direccion">
+    </div>
+    <div class="col-md-12">
+      <label for="coordinates" class="form-label">Coordenadas</label>
+      <input type="text" class="form-control" id= "coordinates" name ="coordinates" placeholder="Ingrese las coordenadas">
+    </div>
+    <div class="col-12">
+      <label for="name" class="form-label">Seleccione un estado</label>
+      <select class="form-select" name="status">
+        <option publicado>Publicado</option>
+        <option despublicado>Despublicado</option>
+      </select>
+    </div>
+    <div class="col-12">
+      <label for="phone" class="form-label">Telefono </label>
+      <input type="text" class="form-control" id= "phone" name ="phone" placeholder= "Ingrese el telefono de contacto">
+    </div>
+    <div class="col-12">
+      <label for="email" class="form-label">email</label>
+      <input type="email" class="form-control" id= "email" name ="email" placeholder= "Ingrese el email de contacto">
+    </div>
+
+    <div class="d-grid gap-1">
+      <button type="submit" class="btn btn-success" type="button" >Crear</button>
+    </div>
+    <button type="reset" class="btn btn-secondary" >Limpiar</button>
+  </form>
+    <div>
+        <a href="{{ url_for('point_index') }}" class="btn btn-danger " >Volver</a>
+    </div>
+{% endblock %}

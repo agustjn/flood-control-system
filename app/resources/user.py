@@ -6,6 +6,8 @@ from app.db import db
 
 # Protected resources
 
+
+
 def index():
     rows_per_page = session
     if not authenticated(session):
@@ -33,30 +35,27 @@ def create():
         db.session.add(new_user)
         try:
             db.session.commit()
-        except Exception:
-            msj = "El " + answer + " ya existe, ingrese otro"
-            flash(msj,"error")
-            #flash(msj)
+        except:
+            if not answer:
+                msj = "El " + answer + " ya existe, ingrese otro"
+                flash(msj,"error")
             return redirect(url_for("user_new"))
 
         if not answer:
             msj = "Se creo el usuario " + new_user.usuario + " exitosamente"
-            #flash(msj,"info")
             flash(msj)
             return redirect(url_for("user_index"))
 
     else:
         msj = "Por favor complete todos los campos"
         flash(msj,"error")
-        #flash(msj)
         return redirect(url_for("user_new"))
 
 def validate_empty_fields(new_user):
-    print(f"-----------------{new_user.email} {new_user.password} {new_user.usuario} -- {new_user.first_name}  {new_user.last_name}")
-    if  (new_user.email  and new_user.password and new_user.usuario  and new_user.first_name and new_user.last_name):
-        return False
-    else:
+    if  new_user.email  and new_user.password and new_user.usuario  and new_user.first_name and new_user.last_name:
         return True
+    else:
+        return False
 
 def edit(user_id):
     if not authenticated(session):
