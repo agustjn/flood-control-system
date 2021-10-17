@@ -25,10 +25,10 @@ def create():
     if not authenticated(session):
         abort(401)
     parameter = request.form
-    new_point = Point(parameter["name"], parameter["adress"], parameter["coordinates"],parameter["status"],parameter["phone"],parameter["email"])
+    new_point = Point(parameter["name"], parameter["adress"], parameter["coordinates"],parameter["phone"],parameter["email"],parameter["status"])
     validos = validate_empty_fields(new_point)
     if validos:
-        answer = Point.exist(new_point.Nombre,new_point.usuario)
+        answer = Point.exist(new_point.nombre,new_point.direccion)
         db.session.add(new_point)
         try:
             db.session.commit()

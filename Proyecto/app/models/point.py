@@ -19,11 +19,11 @@ class Point(db.Model):
         email = Column(String(50))
 
 
-        def __init__ (self,nombre = None, direccion = None, coordenadas = None, telefono = None, email = None ):
-            self.nombre = Nombre
+        def __init__ (self,nombre = None, direccion = None, coordenadas = None, telefono = None, email = None, estado = None):
+            self.nombre = nombre
             self.direccion = direccion
             self.coordenadas = coordenadas
-            self.estado = status
+            self.estado = estado
             self.telefono = telefono
             self.email = email
 
