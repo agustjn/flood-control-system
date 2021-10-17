@@ -135,6 +135,24 @@ INSERT INTO `users` (`id`, `email`, `usuario`, `password`, `first_name`, `last_n
 (1, 'admin', 'admin', '123123', 'Cosme', 'Fulanito', 1, 1, '15/10/2021');
 
 -- --------------------------------------------------------
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `points`
+--
+CREATE TABLE `points` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `direccion` varchar(30) NOT NULL,
+  `coordenadas` varchar(30) NOT NULL,
+  `estado` varchar(30) NOT NULL,
+  `telefono` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+
 
 --
 -- Estructura de tabla para la tabla `view_issues`
@@ -238,11 +256,26 @@ ALTER TABLE `users`
   ADD KEY `created_at` (`created_at`),
   ADD KEY `configuration_id` (`configuration_id`);
 
+
+  --
+  -- Indices de la tabla `points`
+  --
+  ALTER TABLE `points`
+    ADD PRIMARY KEY (`id`),
+    ADD UNIQUE KEY `nombre` (`nombre`),
+    ADD UNIQUE KEY `direccion` (`direccion`),
+    ADD KEY `coordenadas` (`coordenadas`),
+    ADD KEY `estado` (`estado`),
+    ADD KEY `telefono` (`telefono`),
+    ADD KEY `email` (`email`);
+
+
+
 --
 -- Indices de la tabla `view_issues`
 --
 ALTER TABLE `view_issues`
-  ADD PRIMARY KEY (`id`) USING BTREE;
+  ADD PRIMARY KEY (`id`) USING ;
 
 --
 -- Indices de la tabla `view_meeting_points`
@@ -293,6 +326,13 @@ ALTER TABLE `statuses`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `points`
+--
+ALTER TABLE `points`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 
 --
 -- AUTO_INCREMENT de la tabla `view_issues`

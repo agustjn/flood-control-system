@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Puntos de encuentro{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Editar un punto de encuentro</h1>
+  <form class="row g-3" action="{{ url_for('point_modification',point_id = point_id)}}" method="POST">
+
+    <div class="col-md-6">
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id= "name" name ="name" placeholder={{point.nombre}}>
+    </div>
+    <div class="col-md-6">
+      <label for="adress" class="form-label">Direccion</label>
+      <input type="text" class="form-control" id="adress" name = "adress" placeholder={{point.direccion}}>
+    </div>
+    <div class="col-md-12">
+      <label for="coordinates" class="form-label">Coordenadas</label>
+      <input type="text" class="form-control" id= "coordinates" name ="coordinates" placeholder={{point.coordenadas}}>
+    </div>
+    <div class="col-12">
+      <label for="status" class="form-label">Estado </label>
+      <input type="text" class="form-control" id= "status" name ="status" placeholder={{point.estado}}>
+    </div>
+    <div class="col-12">
+      <label for="phone" class="form-label">Telefono </label>
+      <input type="text" class="form-control" id= "phone" name ="phone" placeholder={{point.telefono}}>
+    </div>
+    <div class="col-12">
+      <label for="email" class="form-label">email</label>
+      <input type="email" class="form-control" id= "email" name ="email" placeholder={{point.telefono}}>
+    </div>
+
+    <div class="d-grid gap-1">
+      <button type="submit" class="btn btn-success" type="button" onclick="return confirm('¿Estas seguro de modificar al punto de encuentro {{point.nombre}}?');">Modificar</button>
+    </div>
+    <button type="reset" class="btn btn-secondary" >Limpiar</button>
+  </form>
+    <div>
+        <a href="{{ url_for('point_index') }}" class="btn btn-danger " >Volver</a>
+    </div>
+{% endblock %}
