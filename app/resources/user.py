@@ -33,9 +33,10 @@ def create():
         db.session.add(new_user)
         try:
             db.session.commit()
-        except Exception:
-            msj = "El " + answer + " ya existe, ingrese otro"
-            flash(msj,"error")
+        except:
+            if not answer:
+                msj = "El " + answer + " ya existe, ingrese otro"
+                flash(msj,"error")
             return redirect(url_for("user_new"))
 
         if not answer:
