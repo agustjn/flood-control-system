@@ -7,6 +7,8 @@ from config import config
 from app import db
 from app.resources import issue
 from app.resources import user
+from app.resources import point
+from app.resources import configuration
 from app.resources import auth
 from app.resources.api.issue import issue_api
 from app.helpers import handler
@@ -57,11 +59,22 @@ def create_app(environment="development"):
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
+    app.add_url_rule("/usuario/delete/<user_id>", "user_delete", user.delete)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuario/delete", "user_delete", user.delete, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
-    app.add_url_rule("/usuarios/edit", "user_edit", user.update, methods=["POST"])
-    app.add_url_rule("/usuarios/modification", "user_modification", user.modification, methods=["POST"])
+    app.add_url_rule("/usuarios/edit/<user_id>", "user_edit", user.edit)
+    app.add_url_rule("/usuarios/modification/<user_id>", "user_modification", user.modify,methods=["POST"])
+
+    # Rutas de Puntos de encuentro
+    app.add_url_rule("/puntos", "point_index", point.index)
+    app.add_url_rule("/puntos/delete/<point_id>", "point_delete", point.delete)
+    app.add_url_rule("/puntos", "point_create", point.create, methods=["POST"])
+    app.add_url_rule("/punto/delete", "point_delete", point.delete, methods=["POST"])
+    app.add_url_rule("/puntos/nuevo", "point_new", point.new)
+    app.add_url_rule("/puntos/edit/<point_id>", "point_edit", point.edit)
+    app.add_url_rule("/puntos/modification/<point_id>", "point_modification", point.modify,methods=["POST"])
+
 
 
     # Ruta para el Home (usando decorator)
@@ -70,10 +83,8 @@ def create_app(environment="development"):
         return render_template("home.html")
 
 
-    # Ruta config
-    @app.route("/configuraciones")
-    def configPage():
-        return render_template("configuration/index.html",users=user)
+    app.add_url_rule("/configuraciones","config_index",configuration.index)
+    app.add_url_rule("/configuraciones","config_update",configuration.update, methods=["POST"])
 
 
     # Rutas de API-REST (usando Blueprints)
