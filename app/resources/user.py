@@ -6,6 +6,8 @@ from app.db import db
 
 # Protected resources
 
+
+
 def index():
     rows_per_page = session
     if not authenticated(session):

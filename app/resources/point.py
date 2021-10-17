@@ -6,6 +6,13 @@ from app.db import db
 
 # Protected resources
 
+def index_filtro():
+    if not authenticated(session):
+        abort(401)
+    status = request.form["status_id"]
+    points = Point.query.filter_by(estado = status).all()
+    return render_template("point/index.html", points=points)
+
 def index():
     rows_per_page = session
     if not authenticated(session):

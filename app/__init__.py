@@ -58,6 +58,7 @@ def create_app(environment="development"):
     app.add_url_rule("/consultas/nueva", "issue_new", issue.new)
 
     # Rutas de Usuarios
+
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuario/delete/<user_id>", "user_delete", user.delete)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
@@ -66,6 +67,7 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/modification/<user_id>", "user_modification", user.modify,methods=["POST"])
 
     # Rutas de Puntos de encuentro
+    app.add_url_rule("/puntos", "index_filtro", point.index_filtro, methods=["POST"])
     app.add_url_rule("/puntos", "point_index", point.index)
     app.add_url_rule("/puntos/delete/<point_id>", "point_delete", point.delete)
     app.add_url_rule("/puntos", "point_create", point.create, methods=["POST"])
