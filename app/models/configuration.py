@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String,ForeignKey,VARCHAR
 from sqlalchemy.orm import relationship
 from app.db import db
 from app.models.views_sort import View_users, View_issues, View_meeting_points
+from flask import session
 
 
 class Configuration(db.Model):
@@ -42,3 +43,8 @@ class Configuration(db.Model):
   @staticmethod
   def get_valid_paginations():
       return [5,10,15,20,25]
+    
+  
+
+
+
