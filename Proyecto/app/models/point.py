@@ -37,7 +37,7 @@ class Point(db.Model):
             exist_direccion = cls.query.filter_by(direccion = direccion).first()
             if exist_nombre:
                 return ("nombre "+ nombre )
-            elif exist_usuario:
+            elif exist_direccion:
                 return ("direccion" + direccion)
             else:
                 return (None)

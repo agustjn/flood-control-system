@@ -29,6 +29,7 @@ def create():
     validos = validate_empty_fields(new_point)
     if validos:
         answer = Point.exist(new_point.nombre,new_point.direccion)
+        print (f"------------------------{asnwer}-------------------------------")
         db.session.add(new_point)
         try:
             db.session.commit()
