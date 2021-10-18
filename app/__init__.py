@@ -1,5 +1,5 @@
 from os import path, environ
-from flask import Flask, render_template, g, Blueprint
+from flask import Flask, render_template, g, Blueprint,session
 from flask_session import Session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +14,7 @@ from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 import logging
+from app.helpers.routes import RoutesConfig
 
 
 #Activo los loggins en la terminal de las query generadas
@@ -87,6 +88,9 @@ def create_app(environment="development"):
     app.add_url_rule("/configuraciones","config_index",configuration.index)
     app.add_url_rule("/configuraciones","config_update",configuration.update, methods=["POST"])
 
+    # Instancio la clase para configurar las rutas
+    
+    RoutesConfig(app)
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
