@@ -71,7 +71,7 @@ def create_app(environment="development"):
     app.add_url_rule("/puntos", "index_filtro", point.index_filtro, methods=["POST"])
     app.add_url_rule("/puntos", "point_index", point.index)
     app.add_url_rule("/puntos/delete/<point_id>", "point_delete", point.delete)
-    app.add_url_rule("/puntos", "point_create", point.create, methods=["POST"])
+    app.add_url_rule("/puntos/nuevo", "point_create", point.create, methods=["POST"])
     app.add_url_rule("/puntos/nuevo", "point_new", point.new)
     app.add_url_rule("/puntos/edit/<point_id>", "point_edit", point.edit)
     app.add_url_rule("/puntos/modification/<point_id>", "point_modification", point.modify,methods=["POST"])

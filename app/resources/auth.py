@@ -1,7 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash,make_response
 from app.models.user import User
 from app.helpers.sessionConfig import configSessionAttributes
-from app.helpers.cookies import configCookies
 
 
 def login():

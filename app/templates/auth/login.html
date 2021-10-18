@@ -4,10 +4,17 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <h1>Iniciar sesión</h1>
-  <form action="{{ url_for('auth_authenticate') }}" method="POST">
-    <input name="email" placeholder="Correo" required/>
-    <input type="password" name="password" placeholder="Clave" required/>
-    <input type="submit" value="Login">
-  </form>
+  <div class="container-fluid">
+      <div class="container">
+        <h1>Iniciar sesión</h1>
+
+        <form action="{{ url_for('auth_authenticate') }}" method="POST">
+          <input name="email" placeholder="Correo" required/>
+          <input type="password" name="password" placeholder="Clave" required/>
+          <input type="submit" value="Login">
+        </form>
+      </div>
+
+  </div>
+
 {% endblock %}

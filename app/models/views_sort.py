@@ -2,7 +2,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String,ForeignKey
 from sqlalchemy.sql.sqltypes import VARCHAR
 from app.db import db
-from app.models.customization import Customization
 
 # Futura clase para usar herencia
 # class Views_sort(db.model):

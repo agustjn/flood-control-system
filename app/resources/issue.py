@@ -3,8 +3,6 @@ from app.models.issue import Issue
 
 # Public resources
 def index():
-    # conn = connection()
-    # issues = Issue.all(conn)
     issue = Issue.query.all()
     return render_template("issue/index.html", issues=issue)
 

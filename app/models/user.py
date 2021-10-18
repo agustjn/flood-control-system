@@ -1,6 +1,5 @@
 # Se estan reescribiendo las clases para utilizar la libreria SQLAlchemy
 from sqlalchemy import Column, Integer, String, ForeignKey
-from app.models.customization import Customization
 from app.models.configuration import Configuration
 
 
