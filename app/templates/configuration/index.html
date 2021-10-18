@@ -9,7 +9,7 @@ Configuration
 {% endblock %}
 
 {% block content %}
-<div class="jumbotron bg-light">
+<div class="jumbotron">
     <h2 class="text-center"> Configuraciones </h2>
     <h3 class="text-center mt-5"> Vistas </h3>
     </br>
@@ -18,11 +18,10 @@ Configuration
         <h5>Paginado</h5>
         <p>Selecciona la cantidad de items que se presentaran en cada listado del sistema</p>
         <select name="items-per-page" class="form-control w-25">
-            <option selected>5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
+            <option selected>{{session["configurations"]["items_per_page"]}}</option>
+            {% for item in values["items-per-page"] %}
+            <option value={{item}}>{{item}}</option>
+            {% endfor %}
         </select>
     </div>
     <h5 class="mt-2">Ordenacion</h5>
@@ -70,9 +69,9 @@ Configuration
         <h5>Color de fondo</h5>
         <p>Seleccione el color que se va a visualizar como fondo de pantalla</p>
         <select name="color-background-selected" id="">
-            <option selected>Blanco</option>
+            <option selected value="bg-light">Gris claro</option>
             <option value="bg-info">Celeste</option>
-            <option value="bg-dark">Negro</option>
+            <option value="bg-warning">Amarillo</option>
         </select>
     </div>
     <div class="text-center mt-5">
@@ -81,78 +80,10 @@ Configuration
 </form>
 </div>
 {% endblock %}
-<!-- <div class="row">
-            <div class="col-6">
-                <strong class="text-center"> Usuarios </strong>
-                    <select name="sort-order-selec3tion" class="form-select w-25">
-                        <option selected>Usuarios</option>
-                        <option value="1">Consultas</option>
-                        <option value="2">Puntos de encuentro</option>
-                    </select> 
-                    <p> Selecciona la columna por la cual se va a hacer el ordenamiento y si va a ser ascendente o descendente</p>
-                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
-                        <option selected>Columna 1</option>
-                        <option value="1">Columna 2</option>
-                        <option value="2">Puntos de encuentro</option>
-                    </select> 
 
-            </div>
-          </div> -->
-<!-- <div>
-            
-
-        </div>
-        
-            <div class="row">
-               
-                <div class="col-6">
-                    <p>Selecciona la seccion de la cual va a configurar su ordenamiento</p>
-                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
-                        <option selected>Consultas</option>
-                        <option value="1">Categoria de bug</option>
-                        <option value="2">Fecha de creacion</option>
-                    </select> 
-                    <p> Selecciona la columna por la cual se va a hacer el ordenamiento y si va a ser ascendente o descendente</p>
-                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
-                        <option selected>Columna 1</option>
-                        <option value="1">Columna 2</option>
-                        <option value="2">Puntos de encuentro</option>
-                    </select> 
-                </div>
-                <div class="col-6">
-                    <p>Selecciona la seccion de la cual va a configurar su ordenamiento</p>
-                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
-                        <option selected>Puntos de encuentro</option>
-                        <option value="1">Categoria de bug</option>
-                        <option value="2">Fecha de creacion</option>
-                    </select> 
-                    <p> Selecciona la columna por la cual se va a hacer el ordenamiento y si va a ser ascendente o descendente</p>
-                    <select name="sort-order-selection" class="form-select w-25" aria-label="Seleccion de criterio de ordenacion">
-                        <option selected>Columna 1</option>
-                        <option value="1">Columna 2</option>
-                        <option value="2">Puntos de encuentro</option>
-                    </select> 
-                </div>
-            </div>
-           
-
-               
-                
-                    <h5 class="mt-2">Color de fondo</h5>
-                       <p> Seleccione el color para el fondo de su pantalla</p>                   
-                    <input type="color" name="selected=color">
-               
-                
-    
-            
-        
-
-        
-    </div> -->
 
 
 
 
 {% block footer %}
-<h1> Config Footer </h1>
 {% endblock %}

@@ -19,7 +19,7 @@ def authenticate():
         return redirect(url_for("auth_login"))
 
 
-    configSessionAttributes (session,user)
+    configSessionAttributes (user)
 
 
     flash("La sesión se inició correctamente.")

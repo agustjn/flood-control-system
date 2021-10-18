@@ -2,12 +2,12 @@ from sqlalchemy import Column, Integer, String,ForeignKey,VARCHAR
 from sqlalchemy.orm import relationship
 from app.db import db
 from app.models.views_sort import View_users, View_issues, View_meeting_points
+from flask import session
 
 
 class Configuration(db.Model):
   """Es la tabla intermedia la cual define la configuracion del usuario """
   __tablename__ = "configurations"
-
   id = Column(Integer,primary_key=True)
   background = Column(VARCHAR(50))
   items_per_page = Column(Integer)
@@ -20,18 +20,12 @@ class Configuration(db.Model):
   
 
 
-  def __init__ (self):
-      pass
-    #   new_customization = Customization()
-    #   db.session.add(new_customization)
-    #   db.session.commit()
-    #   self.customization_id = self.obtener_id_customization()
-    #   print (f"------------------------------------{new_customization}---------------------------------------------------")
 
-#   def obtener_id_customization(self):
-#       last_customization_id = Customization.query.order_by(Customization.id.desc()).first()
-#       last_customization_id = last_customization_id.id
-#       return last_customization_id
+
+  def __repr__(self):
+    return (f"{self.background} {self.items_per_page}")
+
+
   @staticmethod
   def setItemsPerPage(value):
       items_per_page = value
@@ -42,3 +36,12 @@ class Configuration(db.Model):
   @staticmethod
   def get_valid_paginations():
       return [5,10,15,20,25]
+
+  @staticmethod
+  def get_valid_colors():
+    return ["bg-info","bg-warning","bg-light"]
+    
+  
+
+
+
