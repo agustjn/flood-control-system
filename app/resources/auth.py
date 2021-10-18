@@ -1,7 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash,make_response
 from app.models.user import User
 from app.helpers.sessionConfig import configSessionAttributes
-from app.helpers.cookies import configCookies
 
 
 def login():
@@ -27,11 +26,7 @@ def authenticate():
 
 
 def logout():
-    #resp = make_response(redirect(url_for("auth_login")))
-    #setCookies(session,resp)
-
     del session["user"]
     session.clear()
     flash("La sesión se cerró correctamente.")
-
     return redirect(url_for("auth_login"))
