@@ -9,7 +9,7 @@ Configuration
 {% endblock %}
 
 {% block content %}
-<div class="jumbotron bg-light">
+<div class="jumbotron">
     <h2 class="text-center"> Configuraciones </h2>
     <h3 class="text-center mt-5"> Vistas </h3>
     </br>
@@ -70,9 +70,9 @@ Configuration
         <h5>Color de fondo</h5>
         <p>Seleccione el color que se va a visualizar como fondo de pantalla</p>
         <select name="color-background-selected" id="">
-            <option selected>Blanco</option>
+            <option selected value="bg-light">Gris claro</option>
             <option value="bg-info">Celeste</option>
-            <option value="bg-dark">Negro</option>
+            <option value="bg-warning">Amarillo</option>
         </select>
     </div>
     <div class="text-center mt-5">
@@ -154,5 +154,4 @@ Configuration
 
 
 {% block footer %}
-<h1> Config Footer </h1>
 {% endblock %}

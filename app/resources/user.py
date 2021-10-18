@@ -9,7 +9,6 @@ from app.db import db
 
 
 def index():
-    rows_per_page = session
     if not authenticated(session):
         abort(401)
     users = User.query.all()
