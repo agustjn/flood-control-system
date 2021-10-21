@@ -23,7 +23,7 @@
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{
           session.get("first_and_last_name") }}</a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="/users/{{session.get("user")}}/edit">Perfil</a></li>
+          <li><a class="dropdown-item" href="{{  url_for('index_profile', username=session.get('user')) }}">Perfil</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
