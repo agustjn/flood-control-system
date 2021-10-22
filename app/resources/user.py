@@ -37,7 +37,7 @@ def create():
         try:
             db.session.commit()
         except:
-            if not answer:
+            if answer:
                 msj = "El " + answer + " ya existe, ingrese otro"
                 flash(msj,"error")
             return redirect(url_for("user_new"))
