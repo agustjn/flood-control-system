@@ -1,5 +1,5 @@
 from os import path, environ
-from flask import Flask, render_template, g, Blueprint
+from flask import Flask, render_template, g, Blueprint,session
 from flask_session import Session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +14,7 @@ from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 import logging
+from app.helpers.routes import RoutesConfig
 
 
 #Activo los loggins en la terminal de las query generadas
@@ -77,7 +78,7 @@ def create_app(environment="development"):
     app.add_url_rule("/puntos", "index_filtro", point.index_filtro, methods=["POST"])
     app.add_url_rule("/puntos", "point_index", point.index)
     app.add_url_rule("/puntos/delete/<point_id>", "point_delete", point.delete)
-    app.add_url_rule("/puntos", "point_create", point.create, methods=["POST"])
+    app.add_url_rule("/puntos/nuevo", "point_create", point.create, methods=["POST"])
     app.add_url_rule("/puntos/nuevo", "point_new", point.new)
     app.add_url_rule("/puntos/edit/<point_id>", "point_edit", point.edit)
     app.add_url_rule("/puntos/modification/<point_id>", "point_modification", point.modify,methods=["POST"])
@@ -93,6 +94,9 @@ def create_app(environment="development"):
     app.add_url_rule("/configuraciones","config_index",configuration.index)
     app.add_url_rule("/configuraciones","config_update",configuration.update, methods=["POST"])
 
+    # Instancio la clase para configurar las rutas
+    
+    RoutesConfig(app)
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")

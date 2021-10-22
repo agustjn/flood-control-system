@@ -14,7 +14,6 @@ def index_filtro():
     return render_template("point/index.html", points=points)
 
 def index():
-    rows_per_page = session
     if not authenticated(session):
         abort(401)
     points = Point.query.all()

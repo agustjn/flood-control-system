@@ -12,10 +12,10 @@
           <option publicado>Publicado</option>
           <option despublicado>Despublicado</option>
       </select>
-      <button class="btn btn-warning btn-sm" type="submit">Filtrar</button>
+      <button class="btn btn-warning btn-sm mt-4" type="submit">Filtrar</button>
   </div>
 </form>
-<table class="table">
+<table class="table mt-4">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -49,8 +49,8 @@
   </tbody>
 </table>
 
-<a href="{{ url_for('home') }}" class="btn btn-danger btn-lg" >Volver</a>
-<a href="{{ url_for('point_new') }}" class="btn btn-primary btn-lg">Nuevo</a>
+<a href="{{ url_for('home') }}" class="btn btn-danger btn-lg mt-5" >Volver</a>
+<a href="{{ url_for('point_new') }}" class="btn btn-primary btn-lg mt-5">Nuevo</a>
 
 
 {% endblock %}
