@@ -11,7 +11,9 @@ from app.db import db
 def index():
     if not authenticated(session):
         abort(401)
-    users = User.query.all()
+    rows_per_page = session["configurations"]["items_per_page"]
+    page = request.args.get('page', 1, type=int)
+    users = User.query.paginate(page=page, per_page=rows_per_page)
     return render_template("user/index.html", users=users)
 
 
