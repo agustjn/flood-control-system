@@ -1,46 +1,80 @@
-  {% extends "layout.html" %}
+{% extends "layout.html" %}
 {% block title %}Usuarios{% endblock %}
 {% block head %}
-  {{ super() }}
+{{ super() }}
 {% endblock %}
 
 {% block content %}
 
 
-  <h1>Usuarios del sistema</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Usuario</th>
-        <th scope="col">Email</th>
-        <th scope="col">first_name</th>
-        <th scope="col">last_name</th>
-        <th scope="col">password</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user in users %}
-        <tr>
-          <th scope="row">1</th>
-          <td>{{ user.usuario }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.first_name }}</td>
-          <td>{{ user.last_name }}</td>
-          <td>{{ user.password }}</td>
-          <td>
-            <a href="{{ url_for('user_delete',user_id = user.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al usuario {{user.usuario}}?');"> Eliminar </a>
-          </td>
-          <td>
-            <a href="{{ url_for('user_edit',user_id = user.id) }}" class="btn btn-success btn-sm" > Modificar </a>
-          </td>
-        </tr>
-        {% endfor %}
+<h1>Usuarios del sistema</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Usuario</th>
+      <th scope="col">Email</th>
+      <th scope="col">first_name</th>
+      <th scope="col">last_name</th>
+      <th scope="col">password</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users.items %}
+    <tr>
+      <th scope="row">{{loop.index}}</th>
+      <td>{{ user.usuario }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.password }}</td>
+      <td>
+        <a href="{{ url_for('user_delete',user_id = user.id) }}" class="btn btn-secondary btn-sm"
+          onclick="return confirm('¿Estas seguro de eliminar al usuario {{user.usuario}}?');"> Eliminar </a>
+      </td>
+      <td>
+        <a href="{{ url_for('user_edit',user_id = user.id) }}" class="btn btn-success btn-sm"> Modificar </a>
+      </td>
+    </tr>
+    {% endfor %}
 
-    </tbody>
-  </table>
 
-  <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg" >Volver</a>
+
+
+
+  </tbody>
+</table>
+
+<div class="text-right">
+  <a href="{{ url_for('user_index', page=users.prev_num) }}" class="btn btn-outline-dark {% if users.page == 1 %}disabled{% endif %}">
+    &laquo;
+  </a>
+
+  {% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+     {% if page_num %}
+        {% if users.page == page_num %}
+            <a href="{{ url_for('user_index', page=page_num) }}" class="btn btn-dark">
+             {{ page_num }}
+            </a>
+        {% else %}
+            <a href="{{ url_for('user_index', page=page_num) }}" class="btn btn-outline-dark">
+             {{ page_num }}
+            </a>
+        {% endif %}
+     {% endif %}
+  {% endfor %}
+
+  <a href="{{ url_for('user_index', page=users.next_num) }}" class="btn btn-outline-dark {% if users.page == users.pages %}disabled{% endif %}">
+    &raquo; </a>
+</div>
+<p class="text-right mt-3">
+  Pagina {{ users.page }} de {{ users.pages }}
+</p>
+
+<div class="mt-5">
+  <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg">Volver</a>
   <a href="{{ url_for('user_new') }}" class="btn btn-primary btn-lg">Nuevo</a>
+</div>
+
 
 {% endblock %}

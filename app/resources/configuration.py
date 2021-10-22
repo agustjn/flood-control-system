@@ -32,8 +32,8 @@ def update():
             flash("El valor de items por pagina es el incorrecto")
             return redirect(url_for("config_index"))
     else:
-       config_row.items_per_page = params["items-per-page"]
-       session["configurations"]["items_per_page"] = params["items-per-page"]
+       config_row.items_per_page = int(params["items-per-page"])
+       session["configurations"]["items_per_page"] = int(params["items-per-page"])
     if (params["color-background-selected"] not in Configuration.get_valid_colors()):
             flash("El color seleccionado no existe en el sistema")
             return redirect(url_for("home"))
