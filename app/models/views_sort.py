@@ -9,14 +9,14 @@ class View_users(db.Model):
     __tablename__ = "view_users"
     id = Column(Integer,primary_key=True)
     sorted_by_column = Column(VARCHAR(30))
-    sort_order = Column(VARCHAR(30))
+    sort_type = Column(VARCHAR(30))
 
     def __init__(self, column = None , type = None):
         self.sorted_by_column = column
-        self.order = type
+        self.type = type
 
     def __repr__():
-        return (f"{self.sorted_by_column} {self.sort_order}")
+        return (f"{self.sorted_by_column} {self.sort_type}")
 
 
 class View_issues(db.Model):
