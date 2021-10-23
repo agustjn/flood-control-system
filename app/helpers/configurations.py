@@ -10,7 +10,7 @@ def putConfigurationsValuesInSession():
     session["configurations"] = {
         "items_per_page" : config_row.items_per_page,
         "background" : config_row.background,
-        "view_users" : { "sort_order" : view_users_row.sort_order,
+        "view_users" : { "sort_type" : view_users_row.sort_type,
                           "sorted_by_column" : view_users_row.sorted_by_column },
         "view_issues" : { "sort_type" : view_issues_row.sort_type,
                           "sorted_by_column" : view_issues_row.sorted_by_column },
