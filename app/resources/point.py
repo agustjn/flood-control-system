@@ -67,7 +67,6 @@ def edit(point_id):
     return render_template("point/edit.html", point = modification_point)
 
 def modify(point_id):
-    print (f"---------------------------entro------------------------------")
     parameter = request.form
     answer = Point.exist(parameter["name"],parameter["adress"])
     point_update = Point.query.filter_by(id = point_id).first()
