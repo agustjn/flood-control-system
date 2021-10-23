@@ -198,7 +198,7 @@ INSERT INTO `view_meeting_points` (`id`, `sorted_by_column`, `sort_type`) VALUES
 
 CREATE TABLE `view_users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `sort_order` varchar(3) NOT NULL,
+  `sort_type` varchar(3) NOT NULL,
   `sorted_by_column` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -206,7 +206,7 @@ CREATE TABLE `view_users` (
 -- Volcado de datos para la tabla `view_users`
 --
 
-INSERT INTO `view_users` (`id`, `sort_order`, `sorted_by_column`) VALUES
+INSERT INTO `view_users` (`id`, `sort_type`, `sorted_by_column`) VALUES
 (1, 'ASC', 'first_name');
 
 --
@@ -290,7 +290,7 @@ ALTER TABLE `view_meeting_points`
 --
 ALTER TABLE `view_users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `order_by` (`sort_order`),
+  ADD KEY `order_by` (`sort_type`),
   ADD KEY `type` (`sorted_by_column`);
 
 --

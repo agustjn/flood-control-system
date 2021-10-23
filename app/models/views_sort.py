@@ -3,22 +3,6 @@ from sqlalchemy import Column, Integer, String,ForeignKey
 from sqlalchemy.sql.sqltypes import VARCHAR
 from app.db import db
 
-# Futura clase para usar herencia
-# class Views_sort(db.model):
-#     "Contiene la columna por la que se ordena el listado de usuarios y el tipo de orden (ASC,DESC)"
-
-
-#     def __init__(self, column = None , type = None):
-#         __tablename__ = table_name
-#         id = Column(Integer,primary_key=True)
-#         sorted_by_column = Column(VARCHAR(30))
-#         sort_type = Column(VARCHAR(30))
-#         self.sorted_by_column = column
-#         self.type = type
-
-#     def __repr__():
-#         #return (f"{__tablename__},{self.sorted_by_column} {self.sort_type}")
-#          return (f"{self.sorted_by_column} {self.sort_type}")
 
 class View_users(db.Model):
     "Contiene la columna por la que se ordena el listado de usuarios y el tipo de orden (ASC,DESC)"
@@ -62,3 +46,22 @@ class View_meeting_points(db.Model):
 
     def __repr__():
         return (f"{self.sorted_by_column} {self.sort_type}")
+
+
+
+# Futura clase para usar herencia
+# class Views_sort(db.model):
+#     "Contiene la columna por la que se ordena el listado de usuarios y el tipo de orden (ASC,DESC)"
+
+
+#     def __init__(self, column = x , type = x):
+#         __tablename__ = table_name
+#         id = Column(Integer,primary_key=True)
+#         sorted_by_column = Column(VARCHAR(30))
+#         sort_type = Column(VARCHAR(30))
+#         self.sorted_by_column = column
+#         self.type = type
+
+#     def __repr__():
+#         #return (f"{__tablename__},{self.sorted_by_column} {self.sort_type}")
+#          return (f"{self.sorted_by_column} {self.sort_type}")

@@ -30,7 +30,6 @@ class Configuration(db.Model):
   def setItemsPerPage(value):
       items_per_page = value
       db.session.commit()
-     #@property
 
   
   @staticmethod

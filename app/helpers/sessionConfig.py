@@ -13,3 +13,4 @@ def configSessionAttributes(user):
     session["last_name"] = user.last_name
     session["email"] = user.email
     putConfigurationsValuesInSession()
+    

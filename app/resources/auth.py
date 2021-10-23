@@ -26,11 +26,7 @@ def authenticate():
 
 
 def logout():
-    #resp = make_response(redirect(url_for("auth_login")))
-    #setCookies(session,resp)
-
     del session["user"]
     session.clear()
     flash("La sesión se cerró correctamente.")
-
     return redirect(url_for("auth_login"))

@@ -39,8 +39,9 @@ def create():
         try:
             db.session.commit()
         except Exception:
-            msj = "El " + answer + " ya existe, ingrese otro"
-            flash(msj,"error")
+            if answer:
+                msj = "El " + answer + " ya existe, ingrese otro"
+                flash(msj,"error")
             return redirect(url_for("point_new"))
 
         if not answer:
