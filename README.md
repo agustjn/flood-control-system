@@ -4,6 +4,12 @@ Aplicación de ejemplo para la cátedra de Proyecto de Software de la Facultad d
 
 ## Iniciar ambiente
 
+## Login
+
+- admin: `admin:123123`
+- operador: `{user}:{password}
+https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/
+
 ### Requisitos
 
 - python3

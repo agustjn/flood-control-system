@@ -10,6 +10,7 @@ def not_found_error(e):
 
 
 def unauthorized_error(e):
+    print(e)
     kwargs = {
         "error_name": "401 Unauthorized Error",
         "error_description": "No está autorizado para acceder a la url",

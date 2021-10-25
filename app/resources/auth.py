@@ -4,7 +4,7 @@ from app.helpers.sessionConfig import configSessionAttributes
 
 
 def login():
-
+    print("!!!!!!!!!!!!Q")
     return render_template("auth/login.html")
 
 
