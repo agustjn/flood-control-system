@@ -7,13 +7,13 @@ from app.helpers.configurations import putConfigurationsValuesInSession
 
 background_dict = { "Gris claro" : "bg-light",
                      "Amarillo" : "bg-warning",
-                     "Celeste" : "bg-info"}      
+                     "Celeste" : "bg-info"}
 
 
 def index():
    Auth.verify_authentification()
    getViewConfigs()
-   valid_values = {  
+   valid_values = {
       "items-per-page" : Configuration.get_valid_paginations(),
       "background-color" : Configuration.get_valid_colors()
    }
@@ -22,7 +22,7 @@ def index():
    print(type(session["configurations"]["items_per_page"]))
    # Remuevo de el array que voy a presentar en la vista el valor actual de los items por pagina que este seleccionado
    valid_values["items-per-page"].remove(int(session["configurations"]["items_per_page"]))
-   
+
    return render_template("configuration/index.html", values = valid_values)
 
 
@@ -47,7 +47,7 @@ def update():
 
     db.session.commit()
     return redirect(url_for("user_index"))
-       
+
 
 
 #def getBackground():
@@ -63,9 +63,3 @@ def getViewConfigs():
    config_row = Configuration.query.filter_by(id=1).first()
    return { "bg" : config_row.background,
             "items-per-page" : config_row.items_per_page}
-
-
-   
-
-
-    
