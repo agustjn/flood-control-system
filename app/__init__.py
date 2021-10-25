@@ -12,7 +12,7 @@ from app.resources import configuration
 from app.resources import auth
 from app.resources.api.issue import issue_api
 from app.helpers import handler
-from app.helpers import auth as helper_auth
+from app.helpers.auth import Auth
 import logging
 from app.helpers.routes import RoutesConfig
 
@@ -33,10 +33,10 @@ def create_app(environment="development"):
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
     app.config["SESSION_PERMANENT"] = False
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
     # if environment=="production":
     #     print("ASDASDASD")
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
     # else:
     #     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
     
@@ -50,7 +50,7 @@ def create_app(environment="development"):
     Bootstrap(app)
 
     # Funciones que se exportan al contexto de Jinja2
-    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
+    app.jinja_env.globals.update(is_authenticated=Auth.verify_authentification)
     app.jinja_env.globals.update(view_configs=configuration.getViewConfigs)
 
     # Autenticación

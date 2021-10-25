@@ -15,7 +15,7 @@
 </head>
 
 <body style="height: 100%">
-  {% if is_authenticated(session) %}
+  {% if is_authenticated() %}
   {% block navbar %}
   <div id="navbar">
     <ul class="nav justify-content-end bg-dark">
@@ -40,7 +40,7 @@
 
   <div class="container-fluid vh-100">
     <div class="row h-100">
-      {% if is_authenticated(session) %}
+      {% if is_authenticated() %}
       <div class="col-2 bg-dark">
         <ul class="nav flex-column">
           <li class="nav-item">

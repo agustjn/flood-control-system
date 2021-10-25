@@ -1,35 +1,35 @@
 from flask import redirect, render_template, request, url_for, session, abort,flash
 from app.models.point import Point
 from app.models.configuration import Configuration
-from app.helpers.auth import authenticated
+from app.helpers.auth import Auth
 from app.db import db
 
 # Protected resources
 
 def index_filtro():
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
+
     status = request.form["status_id"]
     points = Point.query.filter_by(estado = status).all()
     return render_template("point/index.html", points=points)
 
 def index():
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
+
     points = Point.query.all()
     return render_template("point/index.html", points = points)
 
 
 def new():
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
+
 
     return render_template("point/new.html")
 
 
 def create():
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
+
     parameter = request.form
     new_point = Point(parameter["name"], parameter["adress"], parameter["coordinates"],parameter["phone"],parameter["email"],parameter["status"])
     validos = validate_empty_fields(new_point)
@@ -61,8 +61,8 @@ def validate_empty_fields(new_point):
         return False
 
 def edit(point_id):
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
+
     modification_point = Point.query.filter_by(id=point_id).first()
     flash ("Los campos que desea dejar igual dejenlo sin rellenar")
     return render_template("point/edit.html", point = modification_point)
@@ -101,8 +101,8 @@ def update (point_update,parameter):
     return point_update
 
 def delete(point_id):
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
+
     point_delete = Point.query.filter_by(id=point_id).first()
     db.session.delete(point_delete)
     try:

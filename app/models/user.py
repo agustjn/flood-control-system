@@ -1,7 +1,7 @@
 # Se estan reescribiendo las clases para utilizar la libreria SQLAlchemy
 from sqlalchemy import Column, Integer, String, ForeignKey
 from app.models.configuration import Configuration
-
+from datetime import datetime as dt
 
 from app.db import db
 from sqlalchemy.orm import relationship
@@ -30,7 +30,7 @@ class User(db.Model):
             self.password = password
             self.configuration_id = 1
             self.activo = 1
-            self.created_at = "03/07/2021"
+            self.created_at = dt.today()
 
 
         def __repr__(self):

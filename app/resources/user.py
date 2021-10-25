@@ -1,32 +1,30 @@
 from flask import redirect, render_template, request, url_for, session, abort,flash
 from app.models.user import User
 from app.models.configuration import Configuration
-from app.helpers.auth import authenticated
 from app.db import db
-
+from app.dao.user import UserDAO
+from app.helpers.auth import Auth
 # Protected resources
 
 
 
 def index():
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
     rows_per_page = session["configurations"]["items_per_page"]
-    page = request.args.get('page', 1, type=int)
-    users = User.query.paginate(page=page, per_page=rows_per_page)
+    users = UserDAO.users_paginated(rows_per_page)
+
+
     return render_template("user/index.html", users=users)
 
 
 def new():
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
 
     return render_template("user/new.html")
 
 
 def create():
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
     parameter = request.form
     new_user = User(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
     validos = validate_empty_fields(new_user)
@@ -41,7 +39,7 @@ def create():
                 msj = "El " + answer + " ya existe, ingrese otro"
                 flash(msj,"error")
             return redirect(url_for("user_new"))
-
+        
         if not answer:
             msj = "Se creo el usuario " + new_user.usuario + " exitosamente"
             flash(msj)
@@ -59,8 +57,7 @@ def validate_empty_fields(new_user):
         return False
 
 def edit(user_id):
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
     modification_user = User.query.filter_by(id=user_id).first()
     flash ("Los campos que desea dejar igual dejenlo sin rellenar")
     return render_template("user/edit.html", user = modification_user)
@@ -99,8 +96,7 @@ def update (user_update,parameter):
     return user_update
 
 def delete(user_id):
-    if not authenticated(session):
-        abort(401)
+    Auth.verify_authentification()
     user_delete = User.query.filter_by(id=user_id).first()
     db.session.delete(user_delete)
     try:

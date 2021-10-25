@@ -1,5 +1,9 @@
-def authenticated(session):
-    return session.get("user")
+from flask import abort,session
 
-def is_administrator(session):
-    return session.get("user") == "admin"
+class Auth():
+    def verify_authentification():
+        if not session.get("user"):
+            abort(401)
+        return True
+
+   

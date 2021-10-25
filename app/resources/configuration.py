@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for, flash,session
 from app.models.configuration import Configuration
 from app.models.views_sort import View_issues, View_users, View_meeting_points
 from app.db import db
+from app.helpers.auth import Auth
 from app.helpers.configurations import putConfigurationsValuesInSession
 
 background_dict = { "Gris claro" : "bg-light",
@@ -10,6 +11,7 @@ background_dict = { "Gris claro" : "bg-light",
 
 
 def index():
+   Auth.verify_authentification()
    getViewConfigs()
    valid_values = {  
       "items-per-page" : Configuration.get_valid_paginations(),
@@ -25,6 +27,7 @@ def index():
 
 
 def update():
+    Auth.verify_authentification()
     params = request.form
     config_row = Configuration.query.filter_by(id=1).first()
     # Si el valor ingresado en la seleccion de items por listado es invalida, entra al if
