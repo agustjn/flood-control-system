@@ -7,11 +7,14 @@ from app.db import db
 # Protected resources
 
 def index_filtro():
+    """Genero los puntos de encuentro filtrados por lo recibido de parametros"""
     Auth.verify_authentification()
+    if request.form["texto_id"]:
+        filtered_points = Point.filter_by_key(request.form["status_id"],request.form["texto_id"])
+    else:
+        filtered_points = Point.filter_by(request.form["status_id"])
 
-    status = request.form["status_id"]
-    points = Point.query.filter_by(estado = status).all()
-    return render_template("point/index.html", points=points)
+    return render_template("point/index.html", points=filtered_points)
 
 def index():
     Auth.verify_authentification()
