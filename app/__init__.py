@@ -1,7 +1,6 @@
 from os import path, environ
 from flask import Flask, render_template, g, Blueprint,session
 from flask_session import Session
-from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
@@ -39,15 +38,13 @@ def create_app(environment="development"):
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
     # else:
     #     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
-    
+
 
     Session(app)
 
     # Configure db
     db.init_app(app)
 
-    # Bootstrap
-    Bootstrap(app)
 
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=Auth.verify_authentification)
@@ -95,7 +92,7 @@ def create_app(environment="development"):
     app.add_url_rule("/configuraciones","config_update",configuration.update, methods=["POST"])
 
     # Instancio la clase para configurar las rutas
-    
+
     RoutesConfig(app)
 
     # Rutas de API-REST (usando Blueprints)

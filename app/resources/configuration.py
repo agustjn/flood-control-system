@@ -17,9 +17,9 @@ def index():
       "items-per-page" : Configuration.get_valid_paginations(),
       "background-color" : Configuration.get_valid_colors()
    }
-   print(session["configurations"]["items_per_page"])
-   print(valid_values["items-per-page"])
-   print(type(session["configurations"]["items_per_page"]))
+   #print(session["configurations"]["items_per_page"])
+   #print(valid_values["items-per-page"])
+   #print(type(session["configurations"]["items_per_page"]))
    # Remuevo de el array que voy a presentar en la vista el valor actual de los items por pagina que este seleccionado
    valid_values["items-per-page"].remove(int(session["configurations"]["items_per_page"]))
 

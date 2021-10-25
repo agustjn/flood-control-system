@@ -39,7 +39,7 @@ def create():
                 msj = "El " + answer + " ya existe, ingrese otro"
                 flash(msj,"error")
             return redirect(url_for("user_new"))
-        
+
         if not answer:
             msj = "Se creo el usuario " + new_user.usuario + " exitosamente"
             flash(msj)
@@ -74,7 +74,7 @@ def modify(user_id):
     user_update = update(user_update,parameter)
     try:
         db.session.commit()
-        msj = "Se modifico el usuario "+ user_update.usuario + " exitosamente"
+        msj = "Se modifico el usuario " + user_update.usuario + " exitosamente"
 
 
     except Exception as e:
