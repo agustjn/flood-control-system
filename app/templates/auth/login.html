@@ -4,7 +4,11 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-
+{% if msj %}
+  <div class="alert alert-danger" role="alert">
+    {{msj}}
+  </div>
+{% endif %}
   <div class="container-fluid col-xs-12 col-sm-6 col-md-8">
       <div class= "container col-6 text-center ">
         <h1 >Iniciar sesión</h1>

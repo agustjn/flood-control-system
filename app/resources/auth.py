@@ -11,14 +11,14 @@ def authenticate():
     params = request.form
     user = AuthDAO.authenticate(params["email"],params["password"])
 
-    
+
     if not user:
-        flash("Usuario o clave incorrecto.")
-        return redirect(url_for("auth_login"))
+        msj = "Usuario o clave incorrecto."
+        return render_template("auth/login.html",msj=msj)
     configSessionAttributes (user)
 
-    flash("La sesión se inició correctamente.")
-    return redirect(url_for("home"))
+    msj = "La sesión se inició correctamente."
+    return render_template("home.html",msj=msj)
 
 
 def logout():

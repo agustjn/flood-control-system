@@ -91,7 +91,6 @@ def modify(point_id):
     parameter = request.form
     point_update = PointDAO.search_by_id(point_id)
     a = parameter["address"]
-    print (f"---------------------------- tiene {a}-------------------------")
     if PointDAO.exist_name(parameter["name"]):
         msj = "el Nombre "+ parameter["name"] + " ya existe, ingrese otro"
     elif PointDAO.exist_adress(parameter["address"]):
