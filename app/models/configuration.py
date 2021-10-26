@@ -38,7 +38,7 @@ class Configuration(db.Model):
 
   @staticmethod
   def get_valid_colors():
-    return ["bg-info","bg-warning","bg-light"]
+    return ["Gris","Amarillo","Celeste"]
     
   
 

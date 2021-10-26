@@ -15,6 +15,7 @@ from app.helpers import handler
 from app.helpers.auth import Auth
 import logging
 from app.helpers.routes import RoutesConfig
+from app.helpers.configurations import format_background
 
 
 #Activo los loggins en la terminal de las query generadas
@@ -50,8 +51,8 @@ def create_app(environment="development"):
     Bootstrap(app)
 
     # Funciones que se exportan al contexto de Jinja2
-    app.jinja_env.globals.update(is_authenticated=Auth.verify_authentification)
-    app.jinja_env.globals.update(view_configs=configuration.getViewConfigs)
+    app.jinja_env.globals.update(is_authenticated=Auth.is_authenticated)
+    app.jinja_env.globals.update(format_background=format_background)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
