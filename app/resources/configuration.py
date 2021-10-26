@@ -19,7 +19,6 @@ def update():
     errors = []
     configDao = ConfigurationDAO()
     params = request.form
-    config_row = Configuration.query.filter_by(id=1).first()
     if (int(params["items-per-page"])) not in Configuration.get_valid_paginations():
             errors.append("La cantidad de items por pagina que ingreso es invalida") 
 
@@ -38,8 +37,5 @@ def update():
           "column":params["user-col-selected"],
           "type":params["user-type-selected"]
        })
-
-    
-    
 
     return render_template("configuration/index.html", values = configDao.values_to_render(), errors = errors)

@@ -37,6 +37,10 @@ class View_issues(db.Model):
     def __repr__():
         return (f"{self.sorted_by_column} {self.sort_type}")
 
+    def formatted_values(self):
+         return { "column" : self.sorted_by_column,
+                  "type" : self.sort_type }
+
 class View_meeting_points(db.Model):
     "Contiene la columna por la que se ordena el listado de usuarios y el tipo de orden (ASC,DESC)"
     __tablename__ = "view_meeting_points"
@@ -51,6 +55,9 @@ class View_meeting_points(db.Model):
     def __repr__():
         return (f"{self.sorted_by_column} {self.sort_type}")
 
+    def formatted_values(self):
+         return { "column" : self.sorted_by_column,
+                  "type" : self.sort_type }
 
 
 # Futura clase para usar herencia

@@ -11,7 +11,7 @@ class ConfigurationDAO:
 
     @property
     def background(self):
-        return self._config_row.background
+        return (self._config_row.background)
     
     @background.setter
     def background(self,value):
@@ -51,8 +51,8 @@ class ConfigurationDAO:
 
     def set_view_user_values(self, values):
         user_row = View_users.query.first()
-        user_row.sorted_by_column = values["column"].lower()
-        user_row.sort_type = values["type"].lower()
+        user_row.sorted_by_column = values["column"]
+        user_row.sort_type = values["type"]
         try:
             db.session.commit()
         except:
