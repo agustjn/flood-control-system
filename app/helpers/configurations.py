@@ -1,5 +1,6 @@
 from app.models.views_sort import View_issues, View_users, View_meeting_points
 from app.models.configuration import Configuration
+from app.dao.configuration import ConfigurationDAO
 from flask import session
 
 def putConfigurationsValuesInSession():
@@ -21,3 +22,12 @@ def putConfigurationsValuesInSession():
 
     }
     return session["configurations"]
+
+def format_background(background='Gris'):
+    values = { "Gris" : "bg-light",
+               "Celeste" : "bg-info",
+               "Amarillo" : "bg-warning"
+       }
+    dao = ConfigurationDAO()
+    
+    return values[dao.background]

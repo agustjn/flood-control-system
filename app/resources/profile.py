@@ -8,7 +8,6 @@ class Profile():
 
     def index_profile(username):
         try:
-            print(username)
             user_retorned = User.query.filter_by(usuario = username).first()
             return render_template("profile.html", user=user_retorned)
         except:

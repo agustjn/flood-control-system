@@ -1,71 +1,38 @@
-from flask import redirect, render_template, request, url_for, flash,session
-from app.dao.configuration import ConfigurationDAO
-
-from app.models.views_sort import View_issues, View_users, View_meeting_points
-
-from app.helpers.auth import Auth
-from app.helpers.configurations import putConfigurationsValuesInSession
-
-#Habria que sacar estas 2, y ver como configuramos en el DAO
+from flask import render_template, request, flash
 from app.models.configuration import Configuration
-from app.db import db
-
-background_dict = { "Gris claro" : "bg-light",
-                     "Amarillo" : "bg-warning",
-                     "Celeste" : "bg-info"}
-
+from app.helpers.auth import Auth
+from app.dao.configuration import ConfigurationDAO
 
 def index():
    Auth.verify_authentification()
-   getViewConfigs()
-   valid_values = {
-      "items-per-page" : Configuration.get_valid_paginations(),
-      "background-color" : Configuration.get_valid_colors()
-   }
-   #print(session["configurations"]["items_per_page"])
-   #print(valid_values["items-per-page"])
-   #print(type(session["configurations"]["items_per_page"]))
-   # Remuevo de el array que voy a presentar en la vista el valor actual de los items por pagina que este seleccionado
-   valid_values["items-per-page"].remove(int(session["configurations"]["items_per_page"]))
-
-   return render_template("configuration/index.html", values = valid_values)
+   dao = ConfigurationDAO()
+   config_values = dao.values_to_render()
+   flash(config_values)
+   return render_template("configuration/index.html", values = config_values)
 
 
 def update():
     Auth.verify_authentification()
+    errors = []
+    configDao = ConfigurationDAO()
     params = request.form
-
-    config_row = ConfigurationDAO.search_by_id(1)
-    # Si el valor ingresado en la seleccion de items por listado es invalida, entra al if
     if (int(params["items-per-page"])) not in Configuration.get_valid_paginations():
-            flash("El valor de items por pagina es el incorrecto")
-            return redirect(url_for("config_index"))
+            errors.append("La cantidad de items por pagina que ingreso es invalida") 
+
     else:
-       config_row.items_per_page = int(params["items-per-page"])
-       session["configurations"]["items_per_page"] = int(params["items-per-page"])
+            # configDao en su setter, hace el commit en la bd.
+            configDao.items_per_page = int(params["items-per-page"])
+
     if (params["color-background-selected"] not in Configuration.get_valid_colors()):
-            flash("El color seleccionado no existe en el sistema")
-            return redirect(url_for("home"))
+       errors.append("Ingreso un color invalido para el color de fondo")
     else:
-      config_row.background = params["color-background-selected"]
-      session["background"] = params["color-background-selected"]
+            configDao.background = params["color-background-selected"]
+    if ( (params["user-col-selected"] not in Configuration.get_valid_user_columns()) or (params["user-type-selected"] not in Configuration.get_valid_sort_types()) ):
+         errors.append("El campo seleccionado para ordenar los usuario o su tipo de orden son incorrectos.")
+    else:
+       configDao.set_view_user_values({ 
+          "column":params["user-col-selected"],
+          "type":params["user-type-selected"]
+       })
 
-
-    db.session.commit()
-    return redirect(url_for("user_index"))
-
-
-
-#def getBackground():
-
-
-    # print(params)
-    # flash(params)
-    # return render_template("user_index")
-    # return redirect(url_for("config_index"))
-
-
-def getViewConfigs():
-   config_row = ConfigurationDAO.search_by_id(1)
-   return { "bg" : config_row.background,
-            "items-per-page" : config_row.items_per_page}
+    return render_template("configuration/index.html", values = configDao.values_to_render(), errors = errors)

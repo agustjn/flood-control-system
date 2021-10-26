@@ -1,6 +1,5 @@
-from flask import redirect, render_template, request, url_for, session, abort,flash
-
-from app.models.configuration import Configuration
+from flask import redirect, render_template, request, url_for,flash
+from app.dao.configuration import ConfigurationDAO
 from app.dao.user import UserDAO
 from app.helpers.auth import Auth
 # Protected resources
@@ -10,8 +9,8 @@ from app.helpers.auth import Auth
 
 def index():
     Auth.verify_authentification()
-    rows_per_page = session["configurations"]["items_per_page"]
-    users = UserDAO.users_paginated(rows_per_page)
+    dao = ConfigurationDAO()
+    users = UserDAO.users_paginated(dao.items_per_page)
     return render_template("user/index.html", users=users)
 
 

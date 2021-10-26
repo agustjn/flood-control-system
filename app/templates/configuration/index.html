@@ -9,6 +9,13 @@ Configuration
 {% endblock %}
 
 {% block content %}
+{% if errors %}
+    {% for error in errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+{% endif %}
 <div class="jumbotron">
     <h2 class="text-center"> Configuraciones </h2>
     <h3 class="text-center mt-5"> Vistas </h3>
@@ -18,9 +25,8 @@ Configuration
         <h5>Paginado</h5>
         <p>Selecciona la cantidad de items que se presentaran en cada listado del sistema</p>
         <select name="items-per-page" class="form-control w-25">
-            <option selected>{{session["configurations"]["items_per_page"]}}</option>
-            {% for item in values["items-per-page"] %}
-            <option value={{item}}>{{item}}</option>
+            {% for item in values["items_per_page"] %}
+            <option value={{item}}>  {{item}}  </option>
             {% endfor %}
         </select>
     </div>
@@ -32,15 +38,15 @@ Configuration
             <div class="row">
                 <div class="col-8">
                     <select name="user-col-selected" class="form-select">
-                        <option selected value="username-selected">Tag de usuario</option>
-                        <option value="first-name-selected">Nombre</option>
-                        <option value="surname-selected">Apellido</option>
+                        <option selected value="usuario">Nombre de usuario</option>
+                        <option value="last_name">Apellido</option>
+                        <option value="first_name">Nombre</option>
                     </select>
                 </div>
                 <div class="col-4">
-                    <select name="order-of-column-users" class="form-select" id="">
-                        <option selected>ASC</option>
-                        <option value="1">DESC</option>
+                    <select name="user-type-selected" class="form-select" id="">
+                        <option selected value='asc'>Ascendente</option>
+                        <option value="desc">Descendente</option>
                     </select>
                 </div>
                 </select>
@@ -57,23 +63,28 @@ Configuration
                 </div>
                 <div class="col-4">
                     <select name="order-of-column-users" class="form-select" id="">
-                        <option selected>ASC</option>
-                        <option value="1">DESC</option>
+                        <option selected>Ascendente</option>
+                        <option value="1">Descendente</option>
                     </select>
                 </div>
                 </select>
             </div>
         </div>
     </div>
+
+
     <div class="mt-3">
         <h5>Color de fondo</h5>
         <p>Seleccione el color que se va a visualizar como fondo de pantalla</p>
         <select name="color-background-selected" id="">
-            <option selected value="bg-light">Gris claro</option>
-            <option value="bg-info">Celeste</option>
-            <option value="bg-warning">Amarillo</option>
+        {% for bg in values["background"] %}
+        <option value={{bg}}> {{bg}} </option>
+        {% endfor %}    
         </select>
     </div>
+
+
+
     <div class="text-center mt-5">
         <button type="submit" class="btn btn-success"> Guardar </button>
     </div>
