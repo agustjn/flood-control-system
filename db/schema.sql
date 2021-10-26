@@ -64,7 +64,7 @@ CREATE TABLE `configurations` (
 --
 
 INSERT INTO `configurations` (`id`, `view_users_id`, `view_meeting_points_id`, `view_issues_id`, `background`, `items_per_page`) VALUES
-(1, 1, 1, 1, 'bg-info', 15);
+(1, 1, 1, 1, 'Amarillo', 15);
 
 -- --------------------------------------------------------
 
