@@ -49,10 +49,8 @@ class UserDAO():
             user_update.last_name = parameter["last_name"]
         try:
             db.session.commit()
-            print("--------------------------------------entro al true")
             return True
         except:
-            print("--------------------------------------entro al false")
             return False
 
     @classmethod

@@ -42,7 +42,6 @@ def create():
     return redirect(url_for("user_new"))
 
 
-
 def validate_empty_fields(first_name,last_name,email,usuario,password):
     if  email  and password and usuario  and first_name and last_name:
         return True
