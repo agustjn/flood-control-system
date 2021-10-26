@@ -5,9 +5,29 @@
 {% endblock %}
 {% block content %}
   <h1>Consultas</h1>
-  {% for issue in issues %}
-    <li>{{ issue.email }} - {{ issue.description }} - {{ issue.category.name }} - {{ issue.status.name }}</li>
-  {% endfor %}
-  <a href="{{ url_for('home') }}" class="link">Volver</a>
-  <a href="{{ url_for('issue_new') }}" class="link">Nuevo</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Email</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for issue in issues %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{ issue.email }}</td>
+        <td>{{ issue.description }}</td>
+        <td>{{ issue.category.name }}</td>
+        <td>{{ issue.status.name }}</td>
+    {% endfor %}
+    <div class="">
+      <a href="{{ url_for('issue_new') }}" class="btn btn-success btn-lg"> Nuevo </a>
+      <a href="{{ url_for('home') }}" class="btn btn-secondary btn-lg"> Volver </a>
+    </div>
+
 {% endblock %}

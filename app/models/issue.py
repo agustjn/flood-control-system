@@ -10,13 +10,19 @@ class Issue(db.Model):
     id = Column(Integer,primary_key=True)
     email = Column(String(50), unique=True)
     description = Column(String(30),unique=True)
-    category_id = Column(String(30),unique =True)
+    #category_id = Column(String(30),unique =True)
 
     category_id = Column(Integer,ForeignKey("categories.id"))
     category = relationship(Category)
 
     status_id = Column(Integer,ForeignKey("statuses.id"))
     status = relationship(Status)
+
+    def __init__ (self,email = None, description = None, category_id = None, status_id = None ):
+        self.email = email
+        self.description = description
+        self.category_id = category_id
+        self.status_id = status_id
 
 """class Issue(object):
     @classmethod
