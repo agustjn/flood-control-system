@@ -1,5 +1,6 @@
 from flask import request
 from app.models.configuration import Configuration
+from app.models.views_sort import View_users, View_issues, View_meeting_points
 from app.db import db
 
 class ConfigurationDAO:
@@ -14,10 +15,9 @@ class ConfigurationDAO:
     
     @background.setter
     def background(self,value):
-        if value in Configuration.get_valid_colors():
-            self._config_row.background = value
+        try:
             db.session.commit()
-        else:
+        except:
             raise Exception
 
     @property
@@ -47,3 +47,13 @@ class ConfigurationDAO:
                     "background" : order_backgrounds
                     }
         return values
+
+
+    def set_view_user_values(self, values):
+        user_row = View_users.query.first()
+        user_row.sorted_by_column = values["column"].lower()
+        user_row.sort_type = values["type"].lower()
+        try:
+            db.session.commit()
+        except:
+            raise Exception

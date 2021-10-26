@@ -39,6 +39,14 @@ class Configuration(db.Model):
   @staticmethod
   def get_valid_colors():
     return ["Gris","Amarillo","Celeste"]
+
+  @staticmethod
+  def get_valid_user_columns():
+    return ['usuario','last_name','first_name']
+
+  @staticmethod
+  def get_valid_sort_types():
+    return ['asc','desc']
     
   
 

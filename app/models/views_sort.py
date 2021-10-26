@@ -18,6 +18,10 @@ class View_users(db.Model):
     def __repr__():
         return (f"{self.sorted_by_column} {self.sort_type}")
 
+    def formatted_values(self):
+        return { "column" : self.sorted_by_column,
+                 "type" : self.sort_type }
+
 
 class View_issues(db.Model):
     "Contiene la columna por la que se ordena el listado de usuarios y el tipo de orden (ASC,DESC)"
