@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for,flash
 from app.dao.configuration import ConfigurationDAO
 from app.dao.user import UserDAO
 from app.helpers.auth import Auth
+
 # Protected resources
 
 

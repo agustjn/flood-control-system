@@ -1,5 +1,6 @@
 from flask import redirect, render_template, request, url_for, session, abort,flash
 from app.dao.point import PointDAO
+from app.dao.configuration import ConfigurationDAO
 from app.models.configuration import Configuration
 from app.helpers.auth import Auth
 
@@ -18,12 +19,15 @@ def index_filtro():
     filtro = request.form["status_id"]
     Auth.verify_authentification()
 
+    dao = ConfigurationDAO()
+
+
     if request.form["texto_id"]:
-        filtered_points = PointDAO.filter_by_key(filtro,request.form["texto_id"])
+        filtered_points = PointDAO.filter_by_key(filtro,dao.items_per_page,request.form["texto_id"])
         texto = request.form["texto_id"]
     else:
         texto = None
-        filtered_points = PointDAO.filter_by(filtro)
+        filtered_points = PointDAO.filter_by_key(filtro,dao.items_per_page)
 
     values = get_values_filter_columns()
     values.remove(filtro)
@@ -34,7 +38,10 @@ def index():
     Auth.verify_authentification()
     points = PointDAO.recover_points()
     values = get_values_filter_columns()
-    return render_template("point/index.html", points = points,values = values,filtro = values[2],texto='Nan')
+
+    dao = ConfigurationDAO()
+    all_points = PointDAO.points_paginated(dao.items_per_page)
+    return render_template("point/index.html", points = all_points ,values = values,filtro = values[2])
 
 
 def new():
@@ -81,15 +88,17 @@ def edit(point_id):
     return render_template("point/edit.html", point = modification_point, msj= msj)
 
 def modify(point_id):
-    print (f"---------------------entro ------------------------ modify")
     parameter = request.form
+    point_update = PointDAO.search_by_id(point_id)
+    a = parameter["address"]
+    print (f"---------------------------- tiene {a}-------------------------")
     if PointDAO.exist_name(parameter["name"]):
         msj = "el Nombre "+ parameter["name"] + " ya existe, ingrese otro"
     elif PointDAO.exist_adress(parameter["address"]):
         msj = "La direccion " + parameter["address"] + " ya existe , ingrese otro "
 
     else:
-        point_update = PointDAO.search_by_id(point_id)
+
         if PointDAO.update(point_update,parameter):
             msj = "Se modifico el punto de encuentro "+ point_update.nombre + " exitosamente"
         else:

@@ -8,8 +8,13 @@
 <h1>Puntos de encuentros</h1>
 <form class="row g-2" action="{{url_for('index_filtro') }}" method="POST">
   <div class="col-3 p-2 m-1 " >
-      <input  type="text" name="texto_id" placeholder="Ingrese el nombre">
+    {% if texto %}
+        <input  type="text" name="texto_id" placeholder={{texto}}>
+    {% else %}
+        <input  type="text" name="texto_id" placeholder="Ingrese el nombre">
+    {% endif %}
   </div>
+
   <div class="col-2 p-1 m-1">
       <select name="status_id" class="form-select " id="status_id">
           <option todos>{{filtro}}</option>
@@ -32,9 +37,9 @@
     </tr>
   </thead>
   <tbody>
-    {% for point in points %}
+    {% for point in points.items %}
       <tr>
-        <th scope="row">1</th>
+        <th scope="row">{{loop.index}}</th>
         <td>{{ point.nombre }}</td>
         <td>{{ point.direccion }}</td>
         <td>{{ point.coordenadas }}</td>
@@ -53,8 +58,36 @@
   </tbody>
 </table>
 
-<a href="{{ url_for('home') }}" class="btn btn-danger btn-lg mt-5" >Volver</a>
-<a href="{{ url_for('point_new') }}" class="btn btn-primary btn-lg mt-5">Nuevo</a>
 
+<div class="text-right">
+  <a href="{{ url_for('point_index', page=points.prev_num) }}" class="btn btn-outline-dark {% if points.page == 1 %}disabled{% endif %}">
+    &laquo;
+  </a>
+
+  {% for page_num in points.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+     {% if page_num %}
+        {% if points.page == page_num %}
+            <a href="{{ url_for('point_index', page=page_num) }}" class="btn btn-dark">
+             {{ page_num }}
+            </a>
+        {% else %}
+            <a href="{{ url_for('point_index', page=page_num) }}" class="btn btn-outline-dark">
+             {{ page_num }}
+            </a>
+        {% endif %}
+     {% endif %}
+  {% endfor %}
+
+  <a href="{{ url_for('point_index', page=points.next_num) }}" class="btn btn-outline-dark {% if points.page == points.pages %}disabled{% endif %}">
+    &raquo; </a>
+</div>
+<p class="text-right mt-3">
+  Pagina {{ points.page }} de {{ points.pages }}
+</p>
+
+<div class="mt-5">
+  <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg mt-5" >Volver</a>
+  <a href="{{ url_for('point_new') }}" class="btn btn-primary btn-lg mt-5">Nuevo</a>
+</div>
 
 {% endblock %}

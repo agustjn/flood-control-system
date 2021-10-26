@@ -12,19 +12,14 @@ class PointDAO():
         return points
 
     @staticmethod
-    def filter_by_key(status,key):
+    def filter_by_key(status,items_per_page, key=""):
         key_filtered = "%" + key + "%"
+        page = request.args.get('page', 1, type=int)
         if status == "Todos":
-            return Point.query.filter(Point.nombre.like(key_filtered)).all()
+            return Point.query.filter(Point.nombre.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
-            return Point.query.filter(Point.nombre.like(key_filtered)).filter_by(estado = status).all()
+            return Point.query.filter(Point.nombre.like(key_filtered)).filter_by(estado = status).paginate(page=page, per_page=items_per_page)
 
-    @staticmethod
-    def filter_by(status):
-        if status == "Todos":
-            return Point.query.all()
-        else:
-            return Point.query.filter_by(estado = status).all()
 
     @staticmethod
     def recover_points():
@@ -32,7 +27,6 @@ class PointDAO():
 
     @staticmethod
     def exist_name(nombre):
-        print (f"---------------------entro ------------------------ name")
         return bool((Point.query.filter_by(nombre=nombre).first()))
 
     @staticmethod
@@ -58,8 +52,8 @@ class PointDAO():
     def update(point_update,parameter):
         if parameter["name"]:
             point_update.nombre = parameter["name"]
-        if parameter["answer"]:
-            point_update.direccion = parameter["answer"]
+        if parameter["address"]:
+            point_update.direccion = parameter["address"]
         if parameter["coordinates"]:
             point_update.coordenadas = parameter["coordinates"]
         if parameter["status"]:
