@@ -1,9 +1,14 @@
 from flask import redirect, render_template, request, url_for, flash,session
-from app.models.configuration import Configuration
+from app.dao.configuration import ConfigurationDAO
+
 from app.models.views_sort import View_issues, View_users, View_meeting_points
-from app.db import db
+
 from app.helpers.auth import Auth
 from app.helpers.configurations import putConfigurationsValuesInSession
+
+#Habria que sacar estas 2, y ver como configuramos en el DAO
+from app.models.configuration import Configuration
+from app.db import db
 
 background_dict = { "Gris claro" : "bg-light",
                      "Amarillo" : "bg-warning",
@@ -29,7 +34,8 @@ def index():
 def update():
     Auth.verify_authentification()
     params = request.form
-    config_row = Configuration.query.filter_by(id=1).first()
+
+    config_row = ConfigurationDAO.search_by_id(1)
     # Si el valor ingresado en la seleccion de items por listado es invalida, entra al if
     if (int(params["items-per-page"])) not in Configuration.get_valid_paginations():
             flash("El valor de items por pagina es el incorrecto")
@@ -60,6 +66,6 @@ def update():
 
 
 def getViewConfigs():
-   config_row = Configuration.query.filter_by(id=1).first()
+   config_row = ConfigurationDAO.search_by_id(1)
    return { "bg" : config_row.background,
             "items-per-page" : config_row.items_per_page}

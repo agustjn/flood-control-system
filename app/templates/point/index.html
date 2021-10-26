@@ -12,9 +12,9 @@
   </div>
   <div class="col-2 p-1 m-1">
       <select name="status_id" class="form-select " id="status_id">
-          <option todos>Todos</option>
-          <option publicado>Publicado</option>
-          <option despublicado>Despublicado</option>
+          <option todos>{{filtro}}</option>
+          <option publicado>{{values[0]}}</option>
+          <option despublicado>{{values[1]}}</option>
       </select>
   </div>
     <button class=" p-1 col-2 btn btn-outline-warning btn-lg " type="submit">Filtrar</button>

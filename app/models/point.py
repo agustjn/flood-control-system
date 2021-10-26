@@ -40,18 +40,3 @@ class Point(db.Model):
                 return ("direccion " + direccion)
             else:
                 return (None)
-
-        @classmethod
-        def filter_by_key(cls,status,key):
-            key_filtered = "%" + key + "%"
-            if status == "Todos":
-                return cls.query.filter(cls.nombre.like(key_filtered)).all()
-            else:
-                return cls.query.filter(cls.nombre.like(key_filtered)).filter_by(estado = status).all()
-
-        @classmethod
-        def filter_by(cls,status):
-            if status == "Todos":
-                return cls.query.all()
-            else:
-                return cls.query.filter_by(estado = status).all()

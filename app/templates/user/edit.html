@@ -4,6 +4,9 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
+<div class="alert alert-primary" role="alert">
+    {{msj}}
+</div>
   <h1>Editar un usuario</h1>
   <form class="row g-3" action="{{ url_for('user_modification',user_id = user.id)}}" method="POST">
     <div class="col-md-6">
