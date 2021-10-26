@@ -6,14 +6,18 @@
 
 {% block content %}
 <h1>Puntos de encuentros</h1>
-<form class="row g-3" action="{{url_for('index_filtro') }}" method="POST">
-  <div class="col-4">
-      <select name="status_id" class="form-select" id="status_id">
-          <option publicado>Publicado</option>
-          <option despublicado>Despublicado</option>
-      </select>
-      <button class="btn btn-warning btn-sm mt-4" type="submit">Filtrar</button>
+<form class="row g-2" action="{{url_for('index_filtro') }}" method="POST">
+  <div class="col-3 p-2 m-1 " >
+      <input  type="text" name="texto_id" placeholder="Ingrese el nombre">
   </div>
+  <div class="col-2 p-1 m-1">
+      <select name="status_id" class="form-select " id="status_id">
+          <option todos>{{filtro}}</option>
+          <option publicado>{{values[0]}}</option>
+          <option despublicado>{{values[1]}}</option>
+      </select>
+  </div>
+    <button class=" p-1 col-2 btn btn-outline-warning btn-lg " type="submit">Filtrar</button>
 </form>
 <table class="table mt-4">
   <thead>

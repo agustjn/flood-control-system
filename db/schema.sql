@@ -132,7 +132,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `usuario`, `password`, `first_name`, `last_name`, `configuration_id`, `activo`, `created_at`) VALUES
-(1, 'admin', 'admin', '123123', 'Cosme', 'Fulanito', 1, 1, '15/10/2021');
+(1, 'admin', 'admin', '123123', 'Cosme', 'Fulanito', 1, 1, '2021-10-25 17:28:29.909529');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------

@@ -1,10 +1,10 @@
 from flask import redirect, render_template, request, url_for, session, abort,flash
-from app.models.user import User
+
 from app.models.configuration import Configuration
-from app.db import db
 from app.dao.user import UserDAO
 from app.helpers.auth import Auth
 # Protected resources
+
 
 
 
@@ -12,99 +12,77 @@ def index():
     Auth.verify_authentification()
     rows_per_page = session["configurations"]["items_per_page"]
     users = UserDAO.users_paginated(rows_per_page)
-
-
     return render_template("user/index.html", users=users)
 
 
 def new():
     Auth.verify_authentification()
-
     return render_template("user/new.html")
 
 
 def create():
     Auth.verify_authentification()
     parameter = request.form
-    new_user = User(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
-    validos = validate_empty_fields(new_user)
+    validos = validate_empty_fields(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
+
     if validos:
-        answer = User.exist(new_user.email,new_user.usuario)
-
-        db.session.add(new_user)
-        try:
-            db.session.commit()
-        except:
-            if answer:
-                msj = "El " + answer + " ya existe, ingrese otro"
-                flash(msj,"error")
-            return redirect(url_for("user_new"))
-        
-        if not answer:
-            msj = "Se creo el usuario " + new_user.usuario + " exitosamente"
-            flash(msj)
-            return redirect(url_for("user_index"))
-
+        if UserDAO.exist_email(parameter["email"]):
+            msj = "El email " + parameter["email"] +" ya existe, ingrese otro"
+        elif UserDAO.exist_username(parameter["user"]):
+            msj = "El usuario " + parameter["user"] + " ya existe, ingrese otro"
+        else:
+            new_user = UserDAO.new_user(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
+            if (UserDAO.create_user(new_user)):
+                msj = "Se creo el usuario " + new_user.usuario + " exitosamente"
+                flash(msj)
+                return redirect(url_for("user_index"))
     else:
         msj = "Por favor complete todos los campos"
-        flash(msj,"error")
-        return redirect(url_for("user_new"))
+    flash(msj)
+    return redirect(url_for("user_new"))
 
-def validate_empty_fields(new_user):
-    if  new_user.email  and new_user.password and new_user.usuario  and new_user.first_name and new_user.last_name:
+
+
+def validate_empty_fields(first_name,last_name,email,usuario,password):
+    if  email  and password and usuario  and first_name and last_name:
         return True
     else:
         return False
 
 def edit(user_id):
     Auth.verify_authentification()
-    modification_user = User.query.filter_by(id=user_id).first()
-    flash ("Los campos que desea dejar igual dejenlo sin rellenar")
-    return render_template("user/edit.html", user = modification_user)
+    UserDAO.search_by_id(user_id)
+    modification_user = UserDAO.search_by_id(user_id)
+    msj = "Los campos que desea dejar igual dejenlo sin rellenar"
+    return render_template("user/edit.html", user = modification_user, msj = msj)
 
 def modify(user_id):
     parameter = request.form
-    answer = User.exist(parameter["email"],parameter["user"])
-    user_update = User.query.filter_by(id = user_id).first()
-    if answer:
-        msj = "El " + answer + " ya existe, por favor ingrese otro"
-        flash(msj,"warning")
-        return render_template("user/edit.html" , user = user_update)
+    user_update = UserDAO.search_by_id(user_id)
+    emailBoolean = UserDAO.exist_email(parameter["email"])
+    if emailBoolean:
+        msj = "El email " + parameter["email"] +" ya existe, ingrese otro"
+    elif UserDAO.exist_username(parameter["user"]):
+        msj = "El usuario " + parameter["user"] + " ya existe, ingrese otro"
 
-    user_update = update(user_update,parameter)
-    try:
-        db.session.commit()
-        msj = "Se modifico el usuario "+ user_update.usuario + " exitosamente"
+    else:
+        obj = UserDAO.update(user_update,parameter)
+        if obj:
+            msj = "Se modifico el usuario " + user_update.usuario + " exitosamente"
+        else:
+            msj = "Se produjo un error al modificar, intente nuevamente "
+        flash (msj)
+        return redirect(url_for("user_index"))
 
-
-    except Exception as e:
-        msj = "Se produjo un error al modificar, intente nuevamente "
-    flash (msj)
-    return redirect(url_for("user_index"))
-
-def update (user_update,parameter):
-    if parameter["user"]:
-        user_update.usuario = parameter["user"]
-    if parameter["email"]:
-        user_update.email = parameter["email"]
-    if parameter["password"]:
-        user_update.password = parameter["password"]
-    if parameter["first_name"]:
-        user_update.first_name = parameter["first_name"]
-    if parameter["last_name"]:
-        user_update.last_name = parameter["last_name"]
-    return user_update
+    flash(msj)
+    return render_template("user/edit.html" , user = user_update)
 
 def delete(user_id):
     Auth.verify_authentification()
-    user_delete = User.query.filter_by(id=user_id).first()
-    db.session.delete(user_delete)
-    try:
-        db.session.commit()
-    except Exception:
+    user_delete = UserDAO.search_by_id(user_id)
+    if UserDAO.delete_by_id(user_id):
+        msj = "El usuario " + user_delete.usuario + " a sido eliminado con exito"
+    else:
         msj = "Error al quere borrar el usuario " + user_delete.usuario + " de la tabla"
-        flash (msj,"error")
-
-    msj = "El usuario " + user_delete.usuario + " a sido eliminado con exito"
     flash (msj,"info")
     return redirect(url_for("user_index"))
