@@ -7,7 +7,6 @@ def index():
    Auth.verify_authentification()
    dao = ConfigurationDAO()
    config_values = dao.values_to_render()
-   flash(config_values)
    return render_template("configuration/index.html", values = config_values)
 
 

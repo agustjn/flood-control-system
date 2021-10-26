@@ -11,11 +11,12 @@ class ConfigurationDAO:
 
     @property
     def background(self):
-        return (self._config_row.background)
+        return self._config_row.background
     
     @background.setter
     def background(self,value):
         try:
+            self._config_row.background = value
             db.session.commit()
         except:
             raise Exception
