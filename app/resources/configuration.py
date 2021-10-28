@@ -2,7 +2,7 @@ from flask import render_template, request, flash
 from app.models.configuration import Configuration
 from app.helpers.auth import Auth
 from app.dao.configuration import ConfigurationDAO
-
+from app.helpers.form_validator import FormValidator
 def index():
    Auth.verify_authentification()
    dao = ConfigurationDAO()
@@ -14,6 +14,7 @@ def update():
     Auth.verify_authentification()
     errors = []
     configDao = ConfigurationDAO()
+
     params = request.form
     if (int(params["items-per-page"])) not in Configuration.get_valid_paginations():
             errors.append("La cantidad de items por pagina que ingreso es invalida") 
@@ -22,8 +23,11 @@ def update():
             # configDao en su setter, hace el commit en la bd.
             configDao.items_per_page = int(params["items-per-page"])
 
-    if (params["color-background-selected"] not in Configuration.get_valid_colors()):
-       errors.append("Ingreso un color invalido para el color de fondo")
+   #  if (params["color-background-selected"] not in Configuration.get_valid_colors()):
+   #     errors.append("Ingreso un color invalido para el color de fondo")
+    if not (FormValidator.color_is_valid(params["color-background-selected"])):
+         errors.append("Ingreso un color invalido para el color de fondo")
+         #VERIFICAR
     else:
             configDao.background = params["color-background-selected"]
     if ( (params["user-col-selected"] not in Configuration.get_valid_user_columns()) or (params["user-type-selected"] not in Configuration.get_valid_sort_types()) ):

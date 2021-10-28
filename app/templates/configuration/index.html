@@ -33,7 +33,7 @@ Configuration
     <h5 class="mt-2">Ordenacion</h5>
     <p>Seleccione para cada vista, el criterio de ordenacion</p>
     <div class="row">
-        <div class="col-6 bg-dark bg-opacity-10 border border-dark">
+        <div class="col-4 bg-dark bg-opacity-10 border border-dark">
             <h4 class="text-center"> Usuarios </h4>
             <div class="row">
                 <div class="col-8">
@@ -52,7 +52,7 @@ Configuration
                 </select>
             </div>
         </div>
-        <div class="col-6 bg-dark bg-opacity-10 border border-dark">
+        <div class="col-4 bg-dark bg-opacity-10 border border-dark">
             <h4 class="text-center"> Puntos de encuentro </h4>
             <div class="row">
                 <div class="col-8">
@@ -65,6 +65,24 @@ Configuration
                     <select name="order-of-column-users" class="form-select" id="">
                         <option selected>Ascendente</option>
                         <option value="1">Descendente</option>
+                    </select>
+                </div>
+                </select>
+            </div>
+        </div>
+        <div class="col-4 bg-dark bg-opacity-10 border border-dark">
+            <h4 class="text-center"> Consultas </h4>
+            <div class="row">
+                <div class="col-8">
+                    <select name="issues-col-selected" class="form-select">
+                        <option selected value="email">Email</option>
+                        <option value="created_at">Fecha de creacion</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <select name="user-type-selected" class="form-select" id="">
+                        <option selected value='asc'>Ascendente</option>
+                        <option value="desc">Descendente</option>
                     </select>
                 </div>
                 </select>
