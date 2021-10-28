@@ -29,7 +29,7 @@ class User(db.Model):
             self.usuario = usuario
             self.password = password
             self.configuration_id = 1
-            self.activo = 1
+            self.activo = True
             self.created_at = dt.today()
 
 
