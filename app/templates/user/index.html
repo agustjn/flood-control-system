@@ -17,6 +17,7 @@
       <th scope="col">first_name</th>
       <th scope="col">last_name</th>
       <th scope="col">password</th>
+      <th scope="col">active</th>
     </tr>
   </thead>
   <tbody>
@@ -28,6 +29,7 @@
       <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>
       <td>{{ user.password }}</td>
+      <td>{{ user.activo }}</td>
       <td>
         <a href="{{ url_for('user_delete',user_id = user.id) }}" class="btn btn-secondary btn-sm"
           onclick="return confirm('¿Estas seguro de eliminar al usuario {{user.usuario}}?');"> Eliminar </a>
@@ -35,6 +37,15 @@
       <td>
         <a href="{{ url_for('user_edit',user_id = user.id) }}" class="btn btn-success btn-sm"> Modificar </a>
       </td>
+      {% if user.activo %}
+        <td>
+          <a href="{{ url_for('user_activate_desactivate',user_id = user.id) }}" class="btn btn-success btn-sm"> Bloquear </a>
+        </td>
+      {% else %}
+        <td>
+          <a href="{{ url_for('user_activate_desactivate',user_id = user.id) }}" class="btn btn-success btn-sm"> Desbloquear </a>
+        </td>
+      {% endif %}
     </tr>
     {% endfor %}
 

@@ -1,7 +1,7 @@
 from os import path, environ
 from flask import Flask, render_template, g, Blueprint,session
 from flask_session import Session
-from flask_bootstrap import Bootstrap
+#from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
@@ -47,7 +47,7 @@ def create_app(environment="development"):
     db.init_app(app)
 
     # Bootstrap
-    Bootstrap(app)
+    #Bootstrap(app)
 
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=Auth.verify_authentification)
@@ -73,7 +73,8 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
     app.add_url_rule("/usuarios/edit/<user_id>", "user_edit", user.edit)
     app.add_url_rule("/usuarios/modification/<user_id>", "user_modification", user.modify,methods=["POST"])
-
+    app.add_url_rule("/usuarios/desactivate_activate/<user_id>", "user_activate_desactivate", user.activate_desactivate,methods=["POST", "GET"])
+    
     # Rutas de Puntos de encuentro
     app.add_url_rule("/puntos", "index_filtro", point.index_filtro, methods=["POST"])
     app.add_url_rule("/puntos", "point_index", point.index)

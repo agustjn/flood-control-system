@@ -1,5 +1,5 @@
 # Se estan reescribiendo las clases para utilizar la libreria SQLAlchemy
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from app.models.configuration import Configuration
 from datetime import datetime as dt
 
@@ -15,7 +15,7 @@ class User(db.Model):
         password = Column(String(50))
         first_name = Column(String(50))
         last_name = Column(String(50))
-        activo = Column(Integer)
+        activo = Column(Boolean)
         created_at = Column(String(30))
 
         configuration_id = Column(Integer,ForeignKey("configurations.id"))

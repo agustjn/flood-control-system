@@ -108,3 +108,10 @@ def delete(user_id):
     msj = "El usuario " + user_delete.usuario + " a sido eliminado con exito"
     flash (msj,"info")
     return redirect(url_for("user_index"))
+
+def activate_desactivate(user_id):
+    Auth.verify_authentification()
+    user = User.query.get(user_id)
+    user.activo = not (user.activo)
+    db.session.commit()
+    return redirect(url_for("user_index"))

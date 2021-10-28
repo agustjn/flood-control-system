@@ -8,11 +8,6 @@ package-lock.json
 __pycache__/
 *.py[cod]
 *$py.class
-<<<<<<< HEAD
-
-=======
-*.pyc
->>>>>>> master
 
 # C extensions
 *.so
