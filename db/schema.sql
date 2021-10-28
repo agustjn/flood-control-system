@@ -27,9 +27,9 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `categories`
 --
 
- CREATE DATABASE /*!32312 IF NOT EXISTS*/ `proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
+ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `grupo3` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
- USE `proyecto`;
+ USE `grupo3`;
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
