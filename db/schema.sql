@@ -169,7 +169,7 @@ CREATE TABLE `view_issues` (
 --
 
 INSERT INTO `view_issues` (`id`, `sorted_by_column`, `sort_type`) VALUES
-(1, 'fecha_creacion', 'DESC');
+(1, 'fecha_creacion', 'desc');
 
 -- --------------------------------------------------------
 
@@ -188,7 +188,7 @@ CREATE TABLE `view_meeting_points` (
 --
 
 INSERT INTO `view_meeting_points` (`id`, `sorted_by_column`, `sort_type`) VALUES
-(1, 'nombre', 'ASC');
+(1, 'nombre', 'asc');
 
 -- --------------------------------------------------------
 
@@ -198,7 +198,7 @@ INSERT INTO `view_meeting_points` (`id`, `sorted_by_column`, `sort_type`) VALUES
 
 CREATE TABLE `view_users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `sort_type` varchar(3) NOT NULL,
+  `sort_type` varchar(30) NOT NULL,
   `sorted_by_column` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -207,7 +207,7 @@ CREATE TABLE `view_users` (
 --
 
 INSERT INTO `view_users` (`id`, `sort_type`, `sorted_by_column`) VALUES
-(1, 'ASC', 'first_name');
+(1, 'asc', 'first_name');
 
 --
 -- Índices para tablas volcadas
