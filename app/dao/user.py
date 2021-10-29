@@ -15,7 +15,7 @@ class UserDAO():
         return users.paginate(page=page, per_page=items_per_page)
 
     @staticmethod
-    def create_user(parameter):
+    def create_user(cls,parameter):
         new_user = User(parameter["first_name"],parameter["last_name"],parameter["email"],parameter["user"],parameter["password"])
         db.session.add(new_user)
         try:
@@ -25,8 +25,15 @@ class UserDAO():
             return False
 
     @staticmethod
-    def new_user(first_name = None , last_name = None, email = None, usuario = None, password = None):
-        return User(first_name,last_name,email,usuario,password)
+    def activate_desactivate(user_id):
+        user = User.query.get(user_id)
+        user.activo = not (user.activo)
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False
+
 
     @staticmethod
     def exist_email(email):

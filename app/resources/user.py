@@ -88,7 +88,5 @@ def delete(user_id):
 
 def activate_desactivate(user_id):
     Auth.verify_authentification()
-    user = User.query.get(user_id)
-    user.activo = not (user.activo)
-    db.session.commit()
+    UserDAO.activate_desactivate(user_id)        
     return redirect(url_for("user_index"))
