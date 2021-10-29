@@ -31,9 +31,9 @@ def create():
         elif UserDAO.exist_username(parameter["user"]):
             msj = "El usuario " + parameter["user"] + " ya existe, ingrese otro"
         else:
-            new_user = UserDAO.new_user(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
-            if (UserDAO.create_user(new_user)):
-                msj = "Se creo el usuario " + new_user.usuario + " exitosamente"
+            #new_user = UserDAO.new_user(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
+            if (UserDAO.create_user(parameter)):
+                msj = "Se creo el usuario " + parameter["user"] + " exitosamente"
                 flash(msj)
                 return redirect(url_for("user_index"))
     else:

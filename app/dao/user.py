@@ -15,7 +15,8 @@ class UserDAO():
         return users.paginate(page=page, per_page=items_per_page)
 
     @staticmethod
-    def create_user(new_user):
+    def create_user(parameter):
+        new_user = User(parameter["first_name"],parameter["last_name"],parameter["email"],parameter["user"],parameter["password"])
         db.session.add(new_user)
         try:
             db.session.commit()
