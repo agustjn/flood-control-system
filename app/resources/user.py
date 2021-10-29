@@ -85,3 +85,10 @@ def delete(user_id):
         msj = "Error al quere borrar el usuario " + user_delete.usuario + " de la tabla"
     flash (msj,"info")
     return redirect(url_for("user_index"))
+
+def activate_desactivate(user_id):
+    Auth.verify_authentification()
+    user = User.query.get(user_id)
+    user.activo = not (user.activo)
+    db.session.commit()
+    return redirect(url_for("user_index"))
