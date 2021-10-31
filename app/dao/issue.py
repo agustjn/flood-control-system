@@ -10,9 +10,12 @@ class IssueDAO():
     def all_paginated_issues():
         configDao = ConfigurationDAO()
         page = request.args.get('page', 1, type=int)
-        # view_dict = View_issues.query.first().formatted_values()
-        # issues = eval("Issue.query.order_by(Issue.{}.{}())".format(view_dict["column"], view_dict["type"]))
-        issues = Issue.query.paginate(page=page, per_page=configDao.items_per_page)
+        view_dict = View_issues.query.first().formatted_values()
+        # column = getattr(Issue,view_dict["column"])
+        # order = getattr(column,view_dict["type"])
+        # issues = Issue.query.order_by(order)
+        issues = eval("Issue.query.order_by(Issue.{}.{}())".format(view_dict["column"], view_dict["type"]))
+        issues = issues.paginate(page=page, per_page=configDao.items_per_page)
         return issues
 
     @staticmethod

@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for,flash
+from flask import redirect, render_template, request, url_for,flash,session
 from app.dao.configuration import ConfigurationDAO
 from app.dao.user import UserDAO
 from app.helpers.auth import Auth
@@ -16,12 +16,21 @@ def index():
 
 
 def new():
-    Auth.verify_authentification()
+    # Auth.verify_authentification()
     return render_template("user/new.html")
 
+# def assert_permission(session,permission_name):
+#     Auth.verify_authentification()
+#     user = session["user"]
+#     if user.is_admin:
+#         return True
+#     if not PermissionDAO.has_permission(user,permission_name):
+#         abort(403)
+    
 
 def create():
     Auth.verify_authentification()
+    # assert_permission(session,"user_create")
     parameter = request.form
     validos = validate_empty_fields(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
 
