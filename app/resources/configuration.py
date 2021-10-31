@@ -41,6 +41,13 @@ def update():
        })
     else:
        errors.append("El campo seleccionado para ordenar las consultas o su tipo de orden son incorrectos.")
+    if frmValidator.validate_point_values(params["point-col-selected"], params["point-type-selected"]):
+       configDao.set_view_point_values({ 
+          "column":params["point-col-selected"],
+          "type":params["point-type-selected"]
+       })
+    else:
+       errors.append("El campo seleccionado para ordenar los puntos de encuentro o su tipo de orden son incorrectos.")
       
 
     return render_template("configuration/index.html", values = configDao.values_to_render(), errors = errors)

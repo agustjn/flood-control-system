@@ -12,3 +12,9 @@ class FormConfigValidator():
         if( (column in Configuration.get_valid_issues_column()) and (type in Configuration.get_valid_sort_types()) ):
             return True
         return False
+
+    @staticmethod
+    def validate_point_values(column, type):
+        if( (column in Configuration.get_valid_point_columns()) and (type in Configuration.get_valid_sort_types()) ):
+            return True
+        return False

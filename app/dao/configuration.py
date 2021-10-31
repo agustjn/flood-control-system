@@ -67,3 +67,12 @@ class ConfigurationDAO:
             db.session.commit()
         except:
             raise Exception
+    
+    def set_view_point_values(self, values):
+        point_row = View_meeting_points.query.first()
+        point_row.sorted_by_column = values["column"]
+        point_row.sort_type = values["type"]
+        try:
+            db.session.commit()
+        except:
+            raise Exception    
