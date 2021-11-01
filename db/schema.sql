@@ -44,6 +44,20 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (1, 'Bug'),
 (2, 'Question');
 
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `role`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
 -- --------------------------------------------------------
 
 --
@@ -131,8 +145,8 @@ CREATE TABLE `users` (
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `usuario`, `password`, `first_name`, `last_name`, `configuration_id`, `activo`, `created_at`) VALUES
-(1, 'admin', 'admin', '123123', 'Cosme', 'Fulanito', 1, 1, '2021-10-25 17:28:29.909529');
+--INSERT INTO `users` (`id`, `email`, `usuario`, `password`, `first_name`, `last_name`, `configuration_id`, `activo`, `created_at`) VALUES
+--(1, 'admin', 'admin', '123123', 'Cosme', 'Fulanito', 1, 1, '2021-10-25 17:28:29.909529');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -174,6 +188,18 @@ INSERT INTO `view_issues` (`id`, `sorted_by_column`, `sort_type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `permission`
+--
+
+CREATE TABLE `permissions` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `view_meeting_points`
 --
 
@@ -209,9 +235,32 @@ CREATE TABLE `view_users` (
 INSERT INTO `view_users` (`id`, `sort_type`, `sorted_by_column`) VALUES
 (1, 'asc', 'first_name');
 
+
+
+
+--
+-- Estructura de tabla para la tabla `role_has_permission`
+--
+
+CREATE TABLE `role_has_permission` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
 -- Índices para tablas volcadas
 --
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_has_role`
+--
+
+CREATE TABLE `user_has_role` (
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Indices de la tabla `categories`
@@ -269,6 +318,17 @@ ALTER TABLE `users`
     ADD KEY `telefono` (`telefono`),
     ADD KEY `email` (`email`);
 
+--
+-- Indices de la tabla `role`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `permission`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`);
 
 
 --
@@ -301,56 +361,72 @@ ALTER TABLE `view_users`
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `configurations`
 --
 ALTER TABLE `configurations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `issues`
 --
 ALTER TABLE `issues`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `points`
 --
 ALTER TABLE `points`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 
 --
 -- AUTO_INCREMENT de la tabla `view_issues`
 --
 ALTER TABLE `view_issues`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `view_meeting_points`
 --
 ALTER TABLE `view_meeting_points`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `view_users`
 --
 ALTER TABLE `view_users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+
+  --
+  -- AUTO_INCREMENT de la tabla `roles`
+  --
+  ALTER TABLE `roles`
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+
+--
+-- AUTO_INCREMENT de la tabla `permission`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 
 --
 -- Restricciones para tablas volcadas

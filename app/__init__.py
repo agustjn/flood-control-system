@@ -4,17 +4,14 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
-from app.resources import issue
-from app.resources import user
-from app.resources import point
-from app.resources import configuration
-from app.resources import auth
+from app.resources import issue,user,point,configuration,auth
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers.auth import Auth
 import logging
 from app.helpers.routes import RoutesConfig
 from app.helpers.configurations import format_background
+from app.helpers.permission import PermissionDAO
 
 
 #Activo los loggins en la terminal de las query generadas
@@ -50,6 +47,9 @@ def create_app(environment="development"):
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=Auth.is_authenticated)
     app.jinja_env.globals.update(format_background=format_background)
+
+    app.jinja_env.globals.update(has_permission=PermissionDAO.has_permission)
+    app.jinja_env.globals.update(has_rol = PermissionDAO.has_rol)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion/", "auth_login", auth.login)

@@ -1,7 +1,9 @@
-from flask import redirect, render_template, request, url_for,flash
+from flask import redirect, render_template, request, url_for,flash,session
 from app.dao.configuration import ConfigurationDAO
 from app.dao.user import UserDAO
 from app.helpers.auth import Auth
+
+from app.helpers.permission import PermissionDAO
 
 # Protected resources
 
@@ -9,7 +11,6 @@ from app.helpers.auth import Auth
 
 
 def index():
-    Auth.verify_authentification()
     dao = ConfigurationDAO()
     users = UserDAO.users_paginated(dao.items_per_page)
     return render_template("user/index.html", users=users)
@@ -48,7 +49,11 @@ def validate_empty_fields(first_name,last_name,email,usuario,password):
     else:
         return False
 
+
 def edit(user_id):
+
+    PermissionDAO.assert_permission(user_id,"usuario_update")
+
     Auth.verify_authentification()
     UserDAO.search_by_id(user_id)
     modification_user = UserDAO.search_by_id(user_id)
@@ -88,5 +93,5 @@ def delete(user_id):
 
 def activate_desactivate(user_id):
     Auth.verify_authentification()
-    UserDAO.activate_desactivate(user_id)        
+    UserDAO.activate_desactivate(user_id)
     return redirect(url_for("user_index"))

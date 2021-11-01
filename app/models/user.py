@@ -6,6 +6,7 @@ from datetime import datetime as dt
 from app.db import db
 from sqlalchemy.orm import relationship
 
+from app.models.permission import Role , User_has_role
 
 class User(db.Model):
         __tablename__ = "users"
@@ -21,6 +22,12 @@ class User(db.Model):
         configuration_id = Column(Integer,ForeignKey("configurations.id"))
         configuration = relationship(Configuration)
 
+        role = db.relationship(
+            "Role",
+            secondary = User_has_role.get_table_user_has_role(),
+            backref= db.backref("roles_user", lazy="dynamic"),
+            lazy = "dynamic",
+        )
 
         def __init__ (self,first_name = None , last_name = None, email = None, usuario = None, password = None):
             self.first_name = first_name
@@ -35,14 +42,3 @@ class User(db.Model):
 
         def __repr__(self):
             return (f"{self.first_name} {self.last_name} email: {self.email}")
-
-        @classmethod
-        def exist(cls,email,user):
-            exist_email = cls.query.filter_by(email = email).first()
-            exist_usuario = cls.query.filter_by(usuario = user).first()
-            if exist_email:
-                return ("email "+ email )
-            elif exist_usuario:
-                return ("usuario " + user)
-            else:
-                return (None)
