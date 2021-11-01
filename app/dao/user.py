@@ -13,11 +13,9 @@ class UserDAO():
         users = eval("User.query.order_by(User.{}.{}())".format(view["column"], view["type"]))
         # column = getattr(User,view["column"])
         # order = getattr(column,view["type"])
-        # users = User.query.order_by(order)
-        users = eval("User.query.order_by(User.{}.{}())".format(view["column"], view["type"]))
-        # Luego de ya tenerlos ordenados por la columna y el tipo correspondiente, se los pagina
-        users = users.paginate(page=page, per_page=items_per_page)
-        return users
+        # users = User.query.order_by(order)        
+        # # Luego de ya tenerlos ordenados por la columna y el tipo correspondiente, se los pagina
+        return users.paginate(page=page, per_page=items_per_page)
         
     @staticmethod
     def create_user(cls,parameter):
@@ -42,7 +40,8 @@ class UserDAO():
 
     @staticmethod
     def exist_email(email):
-        return User.query.filter_by(email=email).exist()
+        # return User.query.filter_by(email=email).exists()
+        return bool(User.query.filter_by(email=email).first())
 
     @staticmethod
     def exist_username(username):

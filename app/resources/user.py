@@ -32,13 +32,13 @@ def create():
     Auth.verify_authentification()
     # assert_permission(session,"user_create")
     parameter = request.form
+    errors = []
     validos = validate_empty_fields(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
-
     if validos:
         if UserDAO.exist_email(parameter["email"]):
-            msj = "El email " + parameter["email"] +" ya existe, ingrese otro"
+            errors.append("El email " + parameter["email"] +" ya existe, ingrese otro")
         elif UserDAO.exist_username(parameter["user"]):
-            msj = "El usuario " + parameter["user"] + " ya existe, ingrese otro"
+            errors.append("El usuario " + parameter["user"] + " ya existe, ingrese otro")
         else:
             #new_user = UserDAO.new_user(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
             if (UserDAO.create_user(parameter)):
@@ -46,9 +46,9 @@ def create():
                 flash(msj)
                 return redirect(url_for("user_index"))
     else:
-        msj = "Por favor complete todos los campos"
-    flash(msj)
-    return redirect(url_for("user_new"))
+        errors.append("Por favor complete todos los campos")
+    # flash(msj)
+    return render_template("user/new.html", errors = errors)
 
 
 def validate_empty_fields(first_name,last_name,email,usuario,password):
