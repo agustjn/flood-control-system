@@ -31,12 +31,14 @@
       <td>{{ user.last_name }}</td>
       <td>{{ user.password }}</td>
       <td>{{ user.activo }}</td>
+
+
       <td>
         <a href="{{ url_for('user_delete',user_id = user.id) }}" class="btn btn-secondary btn-sm"
           onclick="return confirm('¿Estas seguro de eliminar al usuario {{user.usuario}}?');"> Eliminar </a>
       </td>
       <td>
-        <a href="{{ url_for('user_edit',user_id = user.id) }}" class="btn btn-success btn-sm"> Modificar </a>
+        <a href="{{ url_for('user_edit',user_id = user.id) }}" class="btn btn-success btn-sm"  > Modificar </a>
       </td>
       {% if user.activo %}
         <td>

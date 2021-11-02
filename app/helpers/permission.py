@@ -4,18 +4,15 @@ from app.dao.user import UserDAO
 
 class PermissionDAO ():
 
-    @staticmethod
-    def is_admin():
-        return session["user"] ==  "Jorgelin"
+
 
     @classmethod
     def assert_permission(cls,user_id,permission_name):
         user = UserDAO.search_by_id(user_id)
         Auth.verify_authentification()
-        if cls.is_admin():
+        if cls.has_permission(user,permission_name):
             return True
-        if not cls.has_permission(user,permission_name):
-            abort(403)
+        abort(403)
 
     @staticmethod
     def has_permission(user,permission):

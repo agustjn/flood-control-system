@@ -16,7 +16,7 @@ def update():
     configDao = ConfigurationDAO()
     params = request.form
     if (int(params["items-per-page"])) not in Configuration.get_valid_paginations():
-            errors.append("La cantidad de items por pagina que ingreso es invalida") 
+            errors.append("La cantidad de items por pagina que ingreso es invalida")
 
     else:
             # configDao en su setter, hace el commit en la bd.
@@ -29,7 +29,7 @@ def update():
     if ( (params["user-col-selected"] not in Configuration.get_valid_user_columns()) or (params["user-type-selected"] not in Configuration.get_valid_sort_types()) ):
          errors.append("El campo seleccionado para ordenar los usuario o su tipo de orden son incorrectos.")
     else:
-       configDao.set_view_user_values({ 
+       configDao.set_view_user_values({
           "column":params["user-col-selected"],
           "type":params["user-type-selected"]
        })

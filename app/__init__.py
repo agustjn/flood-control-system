@@ -50,6 +50,7 @@ def create_app(environment="development"):
 
     app.jinja_env.globals.update(has_permission=PermissionDAO.has_permission)
     app.jinja_env.globals.update(has_rol = PermissionDAO.has_rol)
+    app.jinja_env.globals.update(assert_permission = PermissionDAO.assert_permission)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion/", "auth_login", auth.login)
