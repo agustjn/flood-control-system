@@ -25,7 +25,7 @@ class PointDAO():
             points =  Point.query.filter(Point.nombre.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
             points =  Point.query.filter(Point.nombre.like(key_filtered)).filter_by(estado = status).paginate(page=page, per_page=items_per_page)
-        points.order_by(Point.email)
+        #points.order_by(Point.email)
         return points
 
 

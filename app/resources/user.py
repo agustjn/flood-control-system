@@ -6,13 +6,38 @@ from app.helpers.auth import Auth
 # Protected resources
 
 
+def get_values_filter_columns():
+    return ["Activo","Bloqueado","Todos"]
+
+
+def index_filtro_users():
+    filtro = request.form["status_id"]
+    Auth.verify_authentification()
+
+    dao = ConfigurationDAO()
+
+
+    if request.form["texto_id"]:
+        filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page,request.form["texto_id"])
+        texto = request.form["texto_id"]
+    else:
+        texto = None
+        filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page)
+
+    values = get_values_filter_columns()
+    values.remove(filtro)
+
+    return render_template("user/index.html", users=filtered_users,values=values, filtro = filtro,texto=texto)
 
 
 def index():
     Auth.verify_authentification()
+    users = UserDAO.recover_users()
+    values = get_values_filter_columns()
+
     dao = ConfigurationDAO()
-    users = UserDAO.users_paginated(dao.items_per_page)
-    return render_template("user/index.html", users=users)
+    all_users = UserDAO.users_paginated(dao.items_per_page)
+    return render_template("user/index.html", users = all_users, values = values, filtro = values[2])
 
 
 def new():
