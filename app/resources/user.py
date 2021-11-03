@@ -87,7 +87,7 @@ def validate_empty_fields(first_name,last_name,email,usuario,password):
 
 def edit(user_id):
 
-    PermissionDAO.assert_permission(user_id,"usuario_update")
+    PermissionDAO.assert_permission(session["id"],"usuario_update")
 
     Auth.verify_authentification()
     UserDAO.search_by_id(user_id)

@@ -20,7 +20,7 @@ class PermissionDAO ():
             for permiso in role.permission:
                 if permiso.name   == permission:
                     return True
-        return False
+            return False
 
     @staticmethod
     def has_rol(user_id,role):

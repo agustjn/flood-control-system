@@ -10,4 +10,3 @@ class Auth():
         if not session.get("user"):
             return False
         return True
-   

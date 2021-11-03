@@ -5,10 +5,9 @@ from app.db import db
 
 def configSessionAttributes(user):
     #Hacer una consulta a la clase configuracion, y traerme los atributos de la clase
-    session["user_object"] = user
+    session["id"] = user.id
     session["user"] = user.usuario
     session["first_and_last_name"] = user.first_name + ' ' + user.last_name
     session["first_name"] = user.first_name
     session["last_name"] = user.last_name
     session["email"] = user.email
-    putConfigurationsValuesInSession()  # sirve?
