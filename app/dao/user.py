@@ -8,14 +8,36 @@ class UserDAO():
     """Genera las consultas necesarioas para el resource hacia el modelo de la base de datos"""
     def users_paginated(items_per_page):
         page = request.args.get('page', 1, type=int)
-        # View posee un diccionario con la columna y tipo de orden(asc,desc), para los respectivos ordenes de las listas
         view = View_users.query.first().formatted_values()
         # Con la funcio eval, se "convierte" el string a una funcion
         users = eval("User.query.order_by(User.{}.{}())".format(view["column"], view["type"]))
+        # column = getattr(User,view["column"])
+        # order = getattr(column,view["type"])
+        # users = User.query.order_by(order)
+        # # Luego de ya tenerlos ordenados por la columna y el tipo correspondiente, se los pagina
         return users.paginate(page=page, per_page=items_per_page)
 
     @staticmethod
-    def create_user(parameter):
+    def filter_by_key(status,items_per_page, key=""):
+        key_filtered = "%" + key + "%"
+        page = request.args.get('page', 1, type=int)
+
+        if status == "Todos":
+            points =  User.query.filter(User.usuario.like(key_filtered)).paginate(page=page, per_page=items_per_page)
+        else:
+            if status == "Activo":
+                points =  User.query.filter(User.usuario.like(key_filtered)).filter_by(activo = True).paginate(page=page, per_page=items_per_page)
+            else:
+                points =  User.query.filter(User.usuario.like(key_filtered)).filter_by(activo = False).paginate(page=page, per_page=items_per_page)
+        #points.order_by(Point.email)
+        return points
+
+    @staticmethod
+    def recover_users():
+         return User.query.all()
+
+    @staticmethod
+    def create_user(cls,parameter):
         new_user = User(parameter["first_name"],parameter["last_name"],parameter["email"],parameter["user"],parameter["password"])
         db.session.add(new_user)
         try:
@@ -37,7 +59,8 @@ class UserDAO():
 
     @staticmethod
     def exist_email(email):
-        return bool((User.query.filter_by(email=email).first()))
+        # return User.query.filter_by(email=email).exists()
+        return bool(User.query.filter_by(email=email).first())
 
     @staticmethod
     def exist_username(username):

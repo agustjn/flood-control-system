@@ -26,6 +26,7 @@ def create_app(environment="development"):
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)
     app.config.from_object(config[env])
+    app.config['UPLOAD_FOLDER'] =  'static'
 
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
@@ -67,12 +68,14 @@ def create_app(environment="development"):
     # Rutas de Usuarios
 
     app.add_url_rule("/usuarios", "user_index", user.index)
+    app.add_url_rule("/usuarios", "index_filtro_users", user.index_filtro_users, methods=["POST"])
     app.add_url_rule("/usuario/delete/<user_id>", "user_delete", user.delete)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
     app.add_url_rule("/usuarios/edit/<user_id>", "user_edit", user.edit)
     app.add_url_rule("/usuarios/modification/<user_id>", "user_modification", user.modify,methods=["POST"])
     app.add_url_rule("/usuarios/desactivate_activate/<user_id>", "user_activate_desactivate", user.activate_desactivate,methods=["POST", "GET"])
+    
 
     # Rutas de Puntos de encuentro
     app.add_url_rule("/puntos", "index_filtro", point.index_filtro, methods=["POST"])

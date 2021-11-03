@@ -8,6 +8,25 @@
 
 
 <h1>Usuarios del sistema</h1>
+<form class="row g-2" action="{{url_for('index_filtro_users') }}" method="POST">
+  <div class="col-3 p-2 m-1 " >
+    {% if texto %}
+        <input  type="text" name="texto_id" placeholder={{texto}}>
+    {% else %}
+        <input  type="text" name="texto_id" placeholder="Ingrese el nombre">
+    {% endif %}
+  </div>
+
+  <div class="col-2 p-1 m-1">
+    <select name="status_id" class="form-select " id="status_id">
+        <option todos>{{filtro}}</option>
+        <option publicado>{{values[0]}}</option>
+        <option despublicado>{{values[1]}}</option>
+    </select>
+</div>
+<button class=" p-1 col-2 btn btn-outline-warning btn-lg " type="submit">Filtrar</button>
+</form>
+
 <table class="table">
   <thead>
     <tr>
@@ -51,11 +70,6 @@
       {% endif %}
     </tr>
     {% endfor %}
-
-
-
-
-
   </tbody>
 </table>
 

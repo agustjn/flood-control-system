@@ -1,6 +1,7 @@
 from flask import request
 from app.models.point import Point
 from app.db import db
+from app.models.views_sort import View_meeting_points
 
 
 
@@ -8,17 +9,24 @@ from app.db import db
 class PointDAO():
     def points_paginated(items_per_page):
         page = request.args.get('page', 1, type=int)
-        points = Point.query.paginate(page=page, per_page=items_per_page)
+        # points = Point.query.order_by(Point.email.desc())
+        view_dict = View_meeting_points.query.first().formatted_values()
+        points = eval("Point.query.order_by(Point.{}.{}())".format(view_dict["column"], view_dict["type"]))
+        points = points.paginate(page=page, per_page=items_per_page)
         return points
 
     @staticmethod
     def filter_by_key(status,items_per_page, key=""):
         key_filtered = "%" + key + "%"
         page = request.args.get('page', 1, type=int)
+        
         if status == "Todos":
-            return Point.query.filter(Point.nombre.like(key_filtered)).paginate(page=page, per_page=items_per_page)
+            
+            points =  Point.query.filter(Point.nombre.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
-            return Point.query.filter(Point.nombre.like(key_filtered)).filter_by(estado = status).paginate(page=page, per_page=items_per_page)
+            points =  Point.query.filter(Point.nombre.like(key_filtered)).filter_by(estado = status).paginate(page=page, per_page=items_per_page)
+        #points.order_by(Point.email)
+        return points
 
 
     @staticmethod

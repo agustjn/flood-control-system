@@ -8,29 +8,64 @@ from app.helpers.permission import PermissionDAO
 # Protected resources
 
 
+def get_values_filter_columns():
+    return ["Activo","Bloqueado","Todos"]
+
+
+def index_filtro_users():
+    filtro = request.form["status_id"]
+    Auth.verify_authentification()
+
+    dao = ConfigurationDAO()
+
+
+    if request.form["texto_id"]:
+        filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page,request.form["texto_id"])
+        texto = request.form["texto_id"]
+    else:
+        texto = None
+        filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page)
+
+    values = get_values_filter_columns()
+    values.remove(filtro)
+
+    return render_template("user/index.html", users=filtered_users,values=values, filtro = filtro,texto=texto)
 
 
 def index():
+    Auth.verify_authentification()
+    users = UserDAO.recover_users()
+    values = get_values_filter_columns()
+
     dao = ConfigurationDAO()
-    users = UserDAO.users_paginated(dao.items_per_page)
-    return render_template("user/index.html", users=users)
+    all_users = UserDAO.users_paginated(dao.items_per_page)
+    return render_template("user/index.html", users = all_users, values = values, filtro = values[2])
 
 
 def new():
-    Auth.verify_authentification()
+    # Auth.verify_authentification()
     return render_template("user/new.html")
+
+# def assert_permission(session,permission_name):
+#     Auth.verify_authentification()
+#     user = session["user"]
+#     if user.is_admin:
+#         return True
+#     if not PermissionDAO.has_permission(user,permission_name):
+#         abort(403)
 
 
 def create():
     Auth.verify_authentification()
+    # assert_permission(session,"user_create")
     parameter = request.form
+    errors = []
     validos = validate_empty_fields(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
-
     if validos:
         if UserDAO.exist_email(parameter["email"]):
-            msj = "El email " + parameter["email"] +" ya existe, ingrese otro"
+            errors.append("El email " + parameter["email"] +" ya existe, ingrese otro")
         elif UserDAO.exist_username(parameter["user"]):
-            msj = "El usuario " + parameter["user"] + " ya existe, ingrese otro"
+            errors.append("El usuario " + parameter["user"] + " ya existe, ingrese otro")
         else:
             #new_user = UserDAO.new_user(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
             if (UserDAO.create_user(parameter)):
@@ -38,9 +73,9 @@ def create():
                 flash(msj)
                 return redirect(url_for("user_index"))
     else:
-        msj = "Por favor complete todos los campos"
-    flash(msj)
-    return redirect(url_for("user_new"))
+        errors.append("Por favor complete todos los campos")
+    # flash(msj)
+    return render_template("user/new.html", errors = errors)
 
 
 def validate_empty_fields(first_name,last_name,email,usuario,password):

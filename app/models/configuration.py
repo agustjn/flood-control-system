@@ -47,6 +47,15 @@ class Configuration(db.Model):
   @staticmethod
   def get_valid_sort_types():
     return ['asc','desc']
+
+  @staticmethod 
+  def get_valid_issues_column():
+    return ["email","created_at"]
+
+  @staticmethod
+  def get_valid_point_columns():
+    return ["nombre", "email"]
+     
     
   
 
