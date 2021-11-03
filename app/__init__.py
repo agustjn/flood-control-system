@@ -29,6 +29,7 @@ def create_app(environment="development"):
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)
     app.config.from_object(config[env])
+    app.config['UPLOAD_FOLDER'] =  'static'
 
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
