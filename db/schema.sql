@@ -169,7 +169,7 @@ CREATE TABLE `view_issues` (
 --
 
 INSERT INTO `view_issues` (`id`, `sorted_by_column`, `sort_type`) VALUES
-(1, 'fecha_creacion', 'desc');
+(1, 'email', 'desc');
 
 -- --------------------------------------------------------
 
