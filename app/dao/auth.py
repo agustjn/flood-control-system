@@ -4,7 +4,7 @@ class AuthDAO():
     @staticmethod
     def authenticate(email,password):
          try:
-              user = User.query.filter_by( email == email and password == password).first()
+              user = User.query.filter( User.email == email and User.password == password).first()
               return user
          except:
              False

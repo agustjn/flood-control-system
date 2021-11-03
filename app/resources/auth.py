@@ -9,6 +9,9 @@ def login():
 
 def authenticate():
     params = request.form
+    us = request.form["email"]
+    pa = request.form["password"]
+    print (f"el usuario es {us} y la contra {pa} --------------------------------------------")
     user = AuthDAO.authenticate(params["email"],params["password"])
 
 
