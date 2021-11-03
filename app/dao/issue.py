@@ -2,7 +2,7 @@ from flask import request
 from app.models.issue import Issue
 from app.db import db
 from app.dao.configuration import ConfigurationDAO
-from app.models.views_sort import View_issues
+from app.models.views_sort import View
 
 
 class IssueDAO():
@@ -10,7 +10,7 @@ class IssueDAO():
     def all_paginated_issues():
         configDao = ConfigurationDAO()
         page = request.args.get('page', 1, type=int)
-        view_dict = View_issues.query.first().formatted_values()
+        view_dict = View.query.filter_by(id = "issue").first().formatted_values()
         # column = getattr(Issue,view_dict["column"])
         # order = getattr(column,view_dict["type"])
         # issues = Issue.query.order_by(order)

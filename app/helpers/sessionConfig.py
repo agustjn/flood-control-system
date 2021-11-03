@@ -1,6 +1,5 @@
 from flask import request,session
 from app.models.configuration import Configuration
-from app.models.views_sort import View_issues, View_users, View_meeting_points
 from app.db import db
 
 def configSessionAttributes(user):

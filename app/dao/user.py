@@ -1,14 +1,14 @@
 
 from flask import request
 from app.models.user import User
-from app.models.views_sort import View_users
+from app.models.views_sort import View
 from app.db import db
 
 class UserDAO():
     """Genera las consultas necesarioas para el resource hacia el modelo de la base de datos"""
     def users_paginated(items_per_page):
         page = request.args.get('page', 1, type=int)
-        view = View_users.query.first().formatted_values()
+        view = View.query.filter_by(id = "user").first().formatted_values()
         # Con la funcio eval, se "convierte" el string a una funcion
         users = eval("User.query.order_by(User.{}.{}())".format(view["column"], view["type"]))
         # column = getattr(User,view["column"])

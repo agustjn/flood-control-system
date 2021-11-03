@@ -2,6 +2,28 @@ from app.models.permission import Role, Permission
 from app.models.user import User
 from app.db import db
 from app.models.point import Point
+from app.models.configuration import Configuration
+from app.models.views_sort import View
+
+#Creo y agregago la configuraicon
+
+config = Configuration("Amarillo",5)
+db.session.add(config)
+db.session.commit()
+
+#Creo y agrego las vistas
+
+
+view_user = View("user","last_name","asc")
+view_issue = View("issue","email","desc")
+view_meeting_point = View("point","nombre","asc")
+
+db.session.add(view_user)
+db.session.add(view_issue)
+db.session.add(view_meeting_point)
+db.session.commit()
+
+
 
 usuario_index = Permission("usuario_index")
 

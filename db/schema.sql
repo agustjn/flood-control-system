@@ -66,19 +66,10 @@ CREATE TABLE `roles` (
 
 CREATE TABLE `configurations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `view_users_id` int(11) UNSIGNED NOT NULL,
-  `view_meeting_points_id` int(11) UNSIGNED NOT NULL,
-  `view_issues_id` int(11) UNSIGNED NOT NULL,
   `background` varchar(50) NOT NULL,
   `items_per_page` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `configurations`
---
-
-INSERT INTO `configurations` (`id`, `view_users_id`, `view_meeting_points_id`, `view_issues_id`, `background`, `items_per_page`) VALUES
-(1, 1, 1, 1, 'Amarillo', 15);
 
 -- --------------------------------------------------------
 
@@ -169,21 +160,16 @@ CREATE TABLE `points` (
 
 
 --
--- Estructura de tabla para la tabla `view_issues`
+-- Estructura de tabla para la tabla `view de usuarios`
 --
 
-CREATE TABLE `view_issues` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE `view` (
+  `id` varchar(100) NOT NULL,
   `sorted_by_column` varchar(30) NOT NULL,
   `sort_type` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `view_issues`
---
 
-INSERT INTO `view_issues` (`id`, `sorted_by_column`, `sort_type`) VALUES
-(1, 'email', 'desc');
 
 -- --------------------------------------------------------
 
@@ -198,43 +184,6 @@ CREATE TABLE `permissions` (
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `view_meeting_points`
---
-
-CREATE TABLE `view_meeting_points` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `sorted_by_column` varchar(30) NOT NULL,
-  `sort_type` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `view_meeting_points`
---
-
-INSERT INTO `view_meeting_points` (`id`, `sorted_by_column`, `sort_type`) VALUES
-(1, 'nombre', 'asc');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `view_users`
---
-
-CREATE TABLE `view_users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `sort_type` varchar(30) NOT NULL,
-  `sorted_by_column` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `view_users`
---
-
-INSERT INTO `view_users` (`id`, `sort_type`, `sorted_by_column`) VALUES
-(1, 'asc', 'first_name');
-
 
 
 
@@ -272,10 +221,7 @@ ALTER TABLE `categories`
 -- Indices de la tabla `configurations`
 --
 ALTER TABLE `configurations`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `view_meeting_points_id` (`view_meeting_points_id`) USING BTREE,
-  ADD KEY `view_users_id` (`view_users_id`) USING BTREE,
-  ADD KEY `view_issues_id` (`view_issues_id`) USING BTREE;
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `issues`
@@ -334,28 +280,9 @@ ALTER TABLE `permissions`
 --
 -- Indices de la tabla `view_issues`
 --
-ALTER TABLE `view_issues`
-  ADD PRIMARY KEY (`id`) USING ;
+ALTER TABLE `view`
+  ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `view_meeting_points`
---
-ALTER TABLE `view_meeting_points`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_by` (`sorted_by_column`),
-  ADD KEY `type` (`sort_type`);
-
---
--- Indices de la tabla `view_users`
---
-ALTER TABLE `view_users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_by` (`sort_type`),
-  ADD KEY `type` (`sorted_by_column`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -393,26 +320,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `points`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
-
---
--- AUTO_INCREMENT de la tabla `view_issues`
---
-ALTER TABLE `view_issues`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `view_meeting_points`
---
-ALTER TABLE `view_meeting_points`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `view_users`
---
-ALTER TABLE `view_users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 
   --
   -- AUTO_INCREMENT de la tabla `roles`
