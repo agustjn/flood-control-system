@@ -8,14 +8,14 @@ class PermissionDAO ():
 
     @classmethod
     def assert_permission(cls,user_id,permission_name):
-        user = UserDAO.search_by_id(user_id)
         Auth.verify_authentification()
-        if cls.has_permission(user,permission_name):
+        if cls.has_permission(user_id,permission_name):
             return True
         abort(403)
 
     @staticmethod
-    def has_permission(user,permission):
+    def has_permission(user_id,permission):
+        user = UserDAO.search_by_id(user_id)
         for role in user.role:
             for permiso in role.permission:
                 if permiso.name   == permission:

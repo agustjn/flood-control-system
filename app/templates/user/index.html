@@ -51,11 +51,12 @@
       <td>{{ user.password }}</td>
       <td>{{ user.activo }}</td>
 
-
+      {% if has_permission(session["id"],"usuario_destroy") %}
       <td>
         <a href="{{ url_for('user_delete',user_id = user.id) }}" class="btn btn-secondary btn-sm"
           onclick="return confirm('¿Estas seguro de eliminar al usuario {{user.usuario}}?');"> Eliminar </a>
       </td>
+      {% endif %}
       <td>
         <a href="{{ url_for('user_edit',user_id = user.id) }}" class="btn btn-success btn-sm"  > Modificar </a>
       </td>
