@@ -4,6 +4,8 @@ from app.dao.configuration import ConfigurationDAO
 from app.models.configuration import Configuration
 from app.helpers.auth import Auth
 
+from app.helpers.permission import PermissionDAO
+
 
 from app.db import db
 from app.models.point import Point
@@ -15,41 +17,36 @@ def get_values_filter_columns():
 
 def _obtener_valores(status,texto):
     """ Obtengo los valores para mostrar los puntos de encuentro, ya sea con un filtro o no"""
-    try:
-        filtro = request.form["status_id"]
-    except:
+    if request.args.get('status_id') is None:
         filtro = status
-    try:
-        texto_a_filtrar = request.form["texto_id"]
-    except:
+    else:
+        filtro = request.args.get("status_id")
+    if request.args.get('texto_id') is None:
         texto_a_filtrar = texto
+    else:
+        texto_a_filtrar = request.args.get("texto_id")
     return (filtro,texto_a_filtrar)
 
 def index():
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_index")
+
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
-    if texto_a_filtrar:
-        filtered_points = PointDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
-        texto = texto_a_filtrar
-    else:
-        texto = None
-        filtered_points = PointDAO.filter_by_key(filtro,dao.items_per_page)
-
+    filtered_points = PointDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
     values = get_values_filter_columns()
     values.remove(filtro)
-    return render_template("point/index.html", points=filtered_points,values=values, filtro = filtro,texto=texto)
+    return render_template("point/index.html", points=filtered_points,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 def new():
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_new")
     return render_template("point/new.html")
 
 
 def create():
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_new")
 
     parameter = request.form
-    validos = validate_empty_fields(parameter["name"], parameter["address"], parameter["coordinates_lat"],parameter["coordinates_long"],parameter["phone"],parameter["email"],parameter["status"])
+    validos = _validate_empty_fields(parameter["name"], parameter["address"], parameter["coordinates_lat"],parameter["coordinates_long"],parameter["phone"],parameter["email"],parameter["status"])
     if validos:
         if PointDAO.exist_name(parameter["name"]):
             msj = "el Nombre "+ parameter["name"] + " ya existe, ingrese otro"
@@ -70,20 +67,22 @@ def create():
 
 
 
-def validate_empty_fields(name, adress, coordinates,phone,email,status):
-    if  name  and adress and coordinates  and phone and email and status:
+def _validate_empty_fields(name, adress, coordinates_lat,coordinates_long,phone,email,status):
+    if  name  and adress and coordinates_lat and coordinates_long and phone and email and status:
         return True
     else:
         return False
 
 def edit(point_id):
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_update")
 
     modification_point = PointDAO.search_by_id(point_id)
     msj = "Los campos que desea dejar igual dejenlo sin rellenar"
     return render_template("point/edit.html", point = modification_point, msj= msj)
 
 def modify(point_id):
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_update")
+
     parameter = request.form
     point_update = PointDAO.search_by_id(point_id)
     a = parameter["address"]
@@ -105,7 +104,9 @@ def modify(point_id):
 
 
 def delete(point_id):
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_destroy")
+
+
     point_delete = PointDAO.search_by_id(point_id)
     if PointDAO.delete(point_delete):
          msj = "El punto de encuentro " + point_delete.name + " a sido eliminado con exito"

@@ -26,7 +26,6 @@ class UserDAO():
     def filter_by_key(status,items_per_page, key=""):
         key_filtered = "%" + key + "%"
         page = request.args.get('page', 1, type=int)
-
         if status == "Todos":
             users =  User.query.filter(User.username.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
@@ -34,7 +33,6 @@ class UserDAO():
                 users =  User.query.filter(User.username.like(key_filtered)).filter_by(active = True).paginate(page=page, per_page=items_per_page)
             else:
                 users =  User.query.filter(User.username.like(key_filtered)).filter_by(active = False).paginate(page=page, per_page=items_per_page)
-        #points.order_by(Point.email)
         return users
 
     @staticmethod
@@ -42,8 +40,8 @@ class UserDAO():
          return User.query.all()
 
     @staticmethod
-    def create_user(parameter):
-        new_user = User(parameter["first_name"],parameter["last_name"],parameter["email"],parameter["user"],parameter["password"])
+    def create_user(first_name,last_name,email,user,password):
+        new_user = User(first_name,last_name,email,user,password)
         db.session.add(new_user)
         try:
             db.session.commit()

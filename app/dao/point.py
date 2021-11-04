@@ -19,13 +19,10 @@ class PointDAO():
     def filter_by_key(status,items_per_page, key=""):
         key_filtered = "%" + key + "%"
         page = request.args.get('page', 1, type=int)
-
         if status == "Todos":
-
             points =  Point.query.filter(Point.name.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
             points =  Point.query.filter(Point.name.like(key_filtered)).filter_by(status = status).paginate(page=page, per_page=items_per_page)
-        #points.order_by(Point.email)
         return points
 
 

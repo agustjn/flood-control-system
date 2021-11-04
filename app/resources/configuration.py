@@ -1,17 +1,22 @@
-from flask import render_template, request, flash
+from flask import render_template, request, flash,session
 from app.models.configuration import Configuration
 from app.helpers.auth import Auth
 from app.dao.configuration import ConfigurationDAO
 from app.helpers.form_validator import FormConfigValidator
+
+from app.helpers.permission import PermissionDAO
+
 def index():
-   Auth.verify_authentification()
-   dao = ConfigurationDAO()
-   config_values = dao.values_to_render()
-   return render_template("configuration/index.html", values = config_values)
+    PermissionDAO.assert_permission(session["id"],"configuracion_index")
+
+    dao = ConfigurationDAO()
+    config_values = dao.values_to_render()
+    return render_template("configuration/index.html", values = config_values)
 
 
 def update():
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"configuracion_index")
+
     errors = []
     configDao = ConfigurationDAO()
     frmValidator = FormConfigValidator()
@@ -33,21 +38,21 @@ def update():
           "column":params["user-col-selected"],
           "type":params["user-type-selected"]
        })
-      
+
     if frmValidator.validate_issue_values(params["issue-col-selected"], params["issue-type-selected"]):
-       configDao.set_view_issue_values({ 
+       configDao.set_view_issue_values({
           "column":params["issue-col-selected"],
           "type":params["issue-type-selected"]
        })
     else:
        errors.append("El campo seleccionado para ordenar las consultas o su tipo de orden son incorrectos.")
     if frmValidator.validate_point_values(params["point-col-selected"], params["point-type-selected"]):
-       configDao.set_view_point_values({ 
+       configDao.set_view_point_values({
           "column":params["point-col-selected"],
           "type":params["point-type-selected"]
        })
     else:
        errors.append("El campo seleccionado para ordenar los puntos de encuentro o su tipo de orden son incorrectos.")
-      
+
 
     return render_template("configuration/index.html", values = configDao.values_to_render(), errors = errors)

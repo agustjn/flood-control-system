@@ -8,12 +8,12 @@
 
 
 <h1>Usuarios del sistema</h1>
-<form class="row g-2" action="{{url_for('user_index') }}" method="GET>
+<form class="row g-2" action="{{url_for('user_index') }}" method="GET">
   <div class="col-3 p-2 m-1 " >
     {% if texto %}
         <input  type="text" name="texto_id" placeholder={{texto}}>
     {% else %}
-        <input  type="text" name="texto_id" placeholder="Ingrese el nombre">
+        <input  type="text" name="texto_id" placeholder="Ingrese el nombre de usuario">
     {% endif %}
   </div>
 
@@ -44,7 +44,7 @@
     {% for user in users.items %}
     <tr>
       <th scope="row">{{loop.index}}</th>
-      <td>{{ user.user }}</td>
+      <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>

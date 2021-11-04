@@ -12,77 +12,60 @@ def get_values_filter_columns():
     return ["Activo","Bloqueado","Todos"]
 
 
-def obtener_valores(status, texto):
+def _obtener_valores(status, texto):
     """ Obtengo los valores para mostrar los usuarios, ya sea con un filtro o no"""
-    try:
-        filtro = request.form["status_id"]
-        print (f"------------------ status funcionnn tiene {p}----------------------------")
-    except:
+    if request.args.get('status_id') is None:
         filtro = status
-    try:
-        texto_a_filtrar = request.form["texto_id"]
-    except:
+    else:
+        filtro = request.args.get('status_id')
+    if request.args.get('texto_id') is None:
         texto_a_filtrar = texto
+    else:
+        texto_a_filtrar = request.args.get('texto_id')
     return (filtro,texto_a_filtrar)
 
 def index():
-    Auth.verify_authentification()
-    #p = request.form["status_id"]
-    #print (f"------------------ status tiene {p}----------------------------")
-    filtro,texto_a_filtrar = obtener_valores(status = "Todos",texto = "")
-    print (f"------------------{filtro}---------------texto {texto_a_filtrar}-----------")
-    dao = ConfigurationDAO()
-    if texto_a_filtrar:
-        filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
-        texto = texto_a_filtrar
-    else:
-        texto = None
-        filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page)
+    PermissionDAO.assert_permission(session["id"],"usuario_index")
 
+    filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
+    dao = ConfigurationDAO()
+    filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
     values = get_values_filter_columns()
     values.remove(filtro)
-    print (f"------------------{values}-----------------")
-
-    return render_template("user/index.html", users=filtered_users,values=values, filtro = filtro,texto=texto)
+    return render_template("user/index.html", users=filtered_users,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 
 def new():
-    # Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"usuario_new")
     return render_template("user/new.html")
 
-# def assert_permission(session,permission_name):
-#     Auth.verify_authentification()
-#     user = session["user"]
-#     if user.is_admin:
-#         return True
-#     if not PermissionDAO.has_permission(user,permission_name):
-#         abort(403)
 
 
 def create():
+    PermissionDAO.assert_permission(session["id"],"usuario_new")
+
     Auth.verify_authentification()
     # assert_permission(session,"user_create")
     parameter = request.form
     errors = []
 
-    validos = validate_empty_fields(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
+    validos = _validate_empty_fields(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
     if validos:
         if UserDAO.exist_email(parameter["email"]):
             errors.append("El email " + parameter["email"] +" ya existe, ingrese otro")
         elif UserDAO.exist_username(parameter["user"]):
             errors.append("El usuario " + parameter["user"] + " ya existe, ingrese otro")
         else:
-            if (UserDAO.create_user(parameter)):
+            if (UserDAO.create_user(parameter["first_name"],parameter["last_name"],parameter["email"],parameter["user"],parameter["password"])):
                 msj = "Se creo el usuario " + parameter["user"] + " exitosamente"
                 flash(msj)
                 return redirect(url_for("user_index"))
     else:
         errors.append("Por favor complete todos los campos")
-    # flash(msj)
     return render_template("user/new.html", errors = errors)
 
 
-def validate_empty_fields(first_name,last_name,email,user,password):
+def _validate_empty_fields(first_name,last_name,email,user,password):
     if  email  and password and user  and first_name and last_name:
         return True
     else:
@@ -91,7 +74,7 @@ def validate_empty_fields(first_name,last_name,email,user,password):
 
 def edit(user_id):
 
-    PermissionDAO.assert_permission(session["id"],"usuario_actualizate")
+    PermissionDAO.assert_permission(session["id"],"usuario_update")
 
     Auth.verify_authentification()
     UserDAO.search_by_id(user_id)
@@ -100,6 +83,8 @@ def edit(user_id):
     return render_template("user/edit.html", user = modification_user, msj = msj)
 
 def modify(user_id):
+    PermissionDAO.assert_permission(session["id"],"usuario_update")
+
     parameter = request.form
     user_update = UserDAO.search_by_id(user_id)
     emailBoolean = UserDAO.exist_email(parameter["email"])
@@ -121,6 +106,8 @@ def modify(user_id):
     return render_template("user/edit.html" , user = user_update)
 
 def delete(user_id):
+    PermissionDAO.assert_permission(session["id"],"usuario_destroy")
+    
     Auth.verify_authentification()
     user_delete = UserDAO.search_by_id(user_id)
     if UserDAO.delete_by_id(user_id):

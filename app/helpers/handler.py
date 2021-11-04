@@ -15,3 +15,11 @@ def unauthorized_error(e):
         "error_description": "No está autorizado para acceder a la url",
     }
     return render_template("error.html", **kwargs), 401
+
+
+def Forbidden_error(e):
+    kwargs = {
+        "error_name": "403 Forbidden Error",
+        "error_description": "No cuenta con los permisos para acceder ",
+    }
+    return render_template("error.html", **kwargs), 403
