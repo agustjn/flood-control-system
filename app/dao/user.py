@@ -23,14 +23,14 @@ class UserDAO():
         page = request.args.get('page', 1, type=int)
 
         if status == "Todos":
-            points =  User.query.filter(User.user.like(key_filtered)).paginate(page=page, per_page=items_per_page)
+            users =  User.query.filter(User.username.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
             if status == "Activo":
-                points =  User.query.filter(User.user.like(key_filtered)).filter_by(active = True).paginate(page=page, per_page=items_per_page)
+                users =  User.query.filter(User.username.like(key_filtered)).filter_by(active = True).paginate(page=page, per_page=items_per_page)
             else:
-                points =  User.query.filter(User.user.like(key_filtered)).filter_by(active = False).paginate(page=page, per_page=items_per_page)
+                users =  User.query.filter(User.username.like(key_filtered)).filter_by(active = False).paginate(page=page, per_page=items_per_page)
         #points.order_by(Point.email)
-        return points
+        return users
 
     @staticmethod
     def recover_users():

@@ -71,7 +71,9 @@ def create():
             if (UserDAO.create_user(parameter)):
                 msj = "Se creo el usuario " + parameter["user"] + " exitosamente"
                 flash(msj)
-                return redirect(url_for("user_index"))
+                return redirect(url_for("user_new"))
+            else:
+                print("TIRO ERROR")
     else:
         errors.append("Por favor complete todos los campos")
     # flash(msj)
