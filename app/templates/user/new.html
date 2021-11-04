@@ -10,7 +10,7 @@
     <div class="alert alert-danger" role="alert">
         {{ error }}
     </div>
-  {% endfor %} 
+  {% endfor %}
 {% endif %}
 
   <h1>Crear un usuario</h1>
@@ -39,15 +39,15 @@
       <div class="col-4">
         <button type="submit" class="btn btn-success" >Crear</button>
       </div>
-    
+
     <div class="col-4">
        <button type="reset" class="btn btn-secondary" >Limpiar</button>
     </div>
-    <div class="col-4">
-      <a href="{{ url_for('user_index') }}" class="btn btn-danger " >Volver</a>
-    </div>
    </div>
   </form>
+  <div class="col-4">
+    <a href="{{ url_for('user_index') }}" class="btn btn-danger " >Volver</a>
+  </div>  
 
   </div>
 {% endblock %}

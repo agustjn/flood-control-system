@@ -114,9 +114,6 @@ rol_operador.permission.append(puntos_encuentro_update)
 db.session.commit()
 
 
-usuario_admin = User('cosme', 'Fulanito', 'admin', 'admin', '123123')
-usuario_admin.role.append(rol_administrador)
-db.session.commit()
 
 
 #Creo usuario de prueba
@@ -138,6 +135,10 @@ db.session.add(usuario2)
 db.session.add(usuario1)
 db.session.commit()
 
+
+usuario_admin = User('cosme', 'Fulanito', 'admin', 'admin', '123123')
+usuario_admin.role.append(rol_administrador)
+db.session.commit()
 
 #Creo los puntos de encuentro de prueba
 puntos_encuentro1 = Point('punto2','46 entre 26 y 27', '2546 545', '2213645852','point1@unEmail.com', 'Publicado')

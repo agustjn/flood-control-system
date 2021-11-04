@@ -15,10 +15,7 @@ def get_values_filter_columns():
 def index_filtro_users():
     filtro = request.form["status_id"]
     Auth.verify_authentification()
-
     dao = ConfigurationDAO()
-
-
     if request.form["texto_id"]:
         filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page,request.form["texto_id"])
         texto = request.form["texto_id"]
@@ -39,6 +36,7 @@ def index():
 
     dao = ConfigurationDAO()
     all_users = UserDAO.users_paginated(dao.items_per_page)
+    print (f"--------------------------------------------------entro al index user-------------------------------------------------")
     return render_template("user/index.html", users = all_users, values = values, filtro = values[2])
 
 
@@ -56,24 +54,25 @@ def new():
 
 
 def create():
+    print (f"--------------------------------------------------entro al crear-------------------------------------------------")
     Auth.verify_authentification()
     # assert_permission(session,"user_create")
     parameter = request.form
     errors = []
     validos = validate_empty_fields(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
     if validos:
+        print (f"--------------------------------------------------entro al validos-------------------------------------------------")
         if UserDAO.exist_email(parameter["email"]):
             errors.append("El email " + parameter["email"] +" ya existe, ingrese otro")
         elif UserDAO.exist_username(parameter["user"]):
             errors.append("El usuario " + parameter["user"] + " ya existe, ingrese otro")
         else:
-            #new_user = UserDAO.new_user(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
+            print (f"--------------------------------------------------entro al crear2-------------------------------------------------")
             if (UserDAO.create_user(parameter)):
                 msj = "Se creo el usuario " + parameter["user"] + " exitosamente"
                 flash(msj)
-                return redirect(url_for("user_new"))
-            else:
-                print("TIRO ERROR")
+                print (f"-------------------------------------------Redirige------------------------------------------------------")
+                return redirect(url_for("user_index"))
     else:
         errors.append("Por favor complete todos los campos")
     # flash(msj)

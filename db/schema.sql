@@ -234,7 +234,7 @@ ALTER TABLE `statuses`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `user` (`user`),
+  ADD UNIQUE KEY `username` (`username`),
   ADD KEY `last_name` (`last_name`),
   ADD KEY `password` (`password`),
   ADD KEY `first_name` (`first_name`),
