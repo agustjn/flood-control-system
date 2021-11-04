@@ -64,7 +64,7 @@ class UserDAO():
 
     @staticmethod
     def exist_username(username):
-        return bool((User.query.filter_by(usuario=username).first()))
+        return bool((User.query.filter_by(username=username).first()))
 
     @staticmethod
     def search_by_id(user_id):
@@ -73,7 +73,7 @@ class UserDAO():
     @staticmethod
     def update (user_update,parameter):
         if parameter["user"]:
-            user_update.user = parameter["user"]
+            user_update.username = parameter["user"]
         if parameter["email"]:
             user_update.email = parameter["email"]
         if parameter["password"]:

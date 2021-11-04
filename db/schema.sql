@@ -82,7 +82,8 @@ CREATE TABLE `issues` (
   `email` varchar(30) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `category_id` int(10) NOT NULL,
-  `status_id` int(10) NOT NULL
+  `status_id` int(10) NOT NULL,
+  `created_at` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
