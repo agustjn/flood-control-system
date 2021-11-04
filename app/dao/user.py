@@ -4,6 +4,11 @@ from app.models.user import User
 from app.models.views_sort import View
 from app.db import db
 
+#import logging
+#logger = logging.getLogger(__name__)
+#logger.exception("mensaje")
+
+
 class UserDAO():
     """Genera las consultas necesarios para consultar la informacion del usuario en la base de datos en el resource"""
     def users_paginated(items_per_page):
@@ -23,21 +28,21 @@ class UserDAO():
         page = request.args.get('page', 1, type=int)
 
         if status == "Todos":
-            points =  User.query.filter(User.user.like(key_filtered)).paginate(page=page, per_page=items_per_page)
+            users =  User.query.filter(User.username.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
             if status == "Activo":
-                points =  User.query.filter(User.user.like(key_filtered)).filter_by(active = True).paginate(page=page, per_page=items_per_page)
+                users =  User.query.filter(User.username.like(key_filtered)).filter_by(active = True).paginate(page=page, per_page=items_per_page)
             else:
-                points =  User.query.filter(User.user.like(key_filtered)).filter_by(active = False).paginate(page=page, per_page=items_per_page)
+                users =  User.query.filter(User.username.like(key_filtered)).filter_by(active = False).paginate(page=page, per_page=items_per_page)
         #points.order_by(Point.email)
-        return points
+        return users
 
     @staticmethod
     def recover_users():
          return User.query.all()
 
     @staticmethod
-    def create_user(cls,parameter):
+    def create_user(parameter):
         new_user = User(parameter["first_name"],parameter["last_name"],parameter["email"],parameter["user"],parameter["password"])
         db.session.add(new_user)
         try:
@@ -64,7 +69,7 @@ class UserDAO():
 
     @staticmethod
     def exist_username(username):
-        return bool((User.query.filter_by(usuario=username).first()))
+        return bool((User.query.filter_by(username=username).first()))
 
     @staticmethod
     def search_by_id(user_id):
@@ -73,7 +78,7 @@ class UserDAO():
     @staticmethod
     def update (user_update,parameter):
         if parameter["user"]:
-            user_update.user = parameter["user"]
+            user_update.username = parameter["user"]
         if parameter["email"]:
             user_update.email = parameter["email"]
         if parameter["password"]:

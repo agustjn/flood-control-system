@@ -82,7 +82,8 @@ CREATE TABLE `issues` (
   `email` varchar(30) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `category_id` int(10) NOT NULL,
-  `status_id` int(10) NOT NULL
+  `status_id` int(10) NOT NULL,
+  `created_at` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -117,7 +118,7 @@ INSERT INTO `statuses` (`id`, `name`) VALUES
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(30) NOT NULL,
-  `user` varchar(30) NOT NULL,
+  `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(30) NOT NULL,
@@ -233,7 +234,7 @@ ALTER TABLE `statuses`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `user` (`user`),
+  ADD UNIQUE KEY `username` (`username`),
   ADD KEY `last_name` (`last_name`),
   ADD KEY `password` (`password`),
   ADD KEY `first_name` (`first_name`),

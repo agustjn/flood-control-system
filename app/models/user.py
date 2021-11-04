@@ -12,7 +12,7 @@ class User(db.Model):
         __tablename__ = "users"
         id = Column(Integer, primary_key=True)
         email = Column(String(50), unique=True)
-        user = Column (String (50),unique=True)
+        username = Column (String (50),unique=True)
         password = Column(String(50))
         first_name = Column(String(50))
         last_name = Column(String(50))
@@ -33,7 +33,7 @@ class User(db.Model):
             self.first_name = first_name
             self.last_name = last_name
             self.email = email
-            self.user = user
+            self.username = user
             self.password = password
             self.configuration_id = 1
             self.active = True
