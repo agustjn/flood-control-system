@@ -85,14 +85,8 @@ CREATE TABLE `issues` (
   `status_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `issues`
---
 
-INSERT INTO `issues` (`id`, `email`, `description`, `category_id`, `status_id`) VALUES
-(1, 'fede@mail.com', 'No puedo iniciar sesi?n correctamente', 1, 1),
-(2, 'jose@mail.com', 'El sistema de dice que hay un error', 1, 2),
-(4, 'maria@mail.com', 'No tengo acceso al sistema', 1, 1);
+
 
 -- --------------------------------------------------------
 
@@ -133,11 +127,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `users`
---
 
---INSERT INTO `users` (`id`, `email`, `usuario`, `password`, `first_name`, `last_name`, `configuration_id`, `activo`, `created_at`) VALUES
---(1, 'admin', 'admin', '123123', 'Cosme', 'Fulanito', 1, 1, '2021-10-25 17:28:29.909529');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------

@@ -4,14 +4,33 @@ from app.db import db
 from app.models.point import Point
 from app.models.configuration import Configuration
 from app.models.views_sort import View
-
+from app.models.issue import Issue
 #Creo y agregago la configuraicon
 
 config = Configuration("Amarillo",5)
 db.session.add(config)
 db.session.commit()
 
-#Creo y agrego las vistas
+
+#Creo y agrego las issues de prueba
+
+
+issue1 = Issue('fede@mail.com', 'No puedo iniciar sesion correctamente', 1, 1)
+issue2 = Issue('jose@mail.com', 'El sistema de dice que hay un error', 1, 2)
+issue3 = Issue('maria@mail.com', 'No tengo acceso al sistema', 1, 1)
+issue4 = Issue('Josue@mail.com', 'No tengo acceso al sistema', 1, 1)
+issue5 = Issue('Pedrinio@mail.com', 'No tengo acceso a mi cuenta', 1, 2)
+issue6 = Issue('Luisa@mail.com', 'No tengo me acuerdo mi contraseña', 1, 2)
+
+db.session.add(issue1)
+db.session.add(issue2)
+db.session.add(issue3)
+db.session.add(issue4)
+db.session.add(issue5)
+db.session.add(issue6)
+db.session.commit()
+
+#Creo y agrego las vistas de prueba
 
 
 view_user = View("user","last_name","asc")
