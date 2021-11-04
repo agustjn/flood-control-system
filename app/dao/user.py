@@ -5,7 +5,7 @@ from app.models.views_sort import View
 from app.db import db
 
 class UserDAO():
-    """Genera las consultas necesarioas para el resource hacia el modelo de la base de datos"""
+    """Genera las consultas necesarios para consultar la informacion del usuario en la base de datos en el resource"""
     def users_paginated(items_per_page):
         page = request.args.get('page', 1, type=int)
         view = View.query.filter_by(id = "user").first().formatted_values()
