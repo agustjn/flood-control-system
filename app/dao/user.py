@@ -4,6 +4,11 @@ from app.models.user import User
 from app.models.views_sort import View
 from app.db import db
 
+#import logging
+#logger = logging.getLogger(__name__)
+#logger.exception("mensaje")
+
+
 class UserDAO():
     """Genera las consultas necesarioas para el resource hacia el modelo de la base de datos"""
     def users_paginated(items_per_page):
@@ -37,7 +42,7 @@ class UserDAO():
          return User.query.all()
 
     @staticmethod
-    def create_user(cls,parameter):
+    def create_user(parameter):
         new_user = User(parameter["first_name"],parameter["last_name"],parameter["email"],parameter["user"],parameter["password"])
         db.session.add(new_user)
         try:

@@ -36,7 +36,6 @@ def index():
 
     dao = ConfigurationDAO()
     all_users = UserDAO.users_paginated(dao.items_per_page)
-    print (f"--------------------------------------------------entro al index user-------------------------------------------------")
     return render_template("user/index.html", users = all_users, values = values, filtro = values[2])
 
 
@@ -54,24 +53,21 @@ def new():
 
 
 def create():
-    print (f"--------------------------------------------------entro al crear-------------------------------------------------")
     Auth.verify_authentification()
     # assert_permission(session,"user_create")
     parameter = request.form
     errors = []
+
     validos = validate_empty_fields(parameter["first_name"], parameter["last_name"], parameter["email"],parameter["user"],parameter["password"])
     if validos:
-        print (f"--------------------------------------------------entro al validos-------------------------------------------------")
         if UserDAO.exist_email(parameter["email"]):
             errors.append("El email " + parameter["email"] +" ya existe, ingrese otro")
         elif UserDAO.exist_username(parameter["user"]):
             errors.append("El usuario " + parameter["user"] + " ya existe, ingrese otro")
         else:
-            print (f"--------------------------------------------------entro al crear2-------------------------------------------------")
             if (UserDAO.create_user(parameter)):
                 msj = "Se creo el usuario " + parameter["user"] + " exitosamente"
                 flash(msj)
-                print (f"-------------------------------------------Redirige------------------------------------------------------")
                 return redirect(url_for("user_index"))
     else:
         errors.append("Por favor complete todos los campos")
