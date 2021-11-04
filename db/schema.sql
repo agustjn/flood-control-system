@@ -147,11 +147,11 @@ CREATE TABLE `users` (
 --
 CREATE TABLE `points` (
   `id` int(10) UNSIGNED NOT NULL,
-  `nombre` varchar(30) NOT NULL,
-  `direccion` varchar(30) NOT NULL,
-  `coordenadas` varchar(30) NOT NULL,
-  `estado` varchar(30) NOT NULL,
-  `telefono` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `address` varchar(30) NOT NULL,
+  `coordinates` varchar(30) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `phone` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -257,11 +257,11 @@ ALTER TABLE `users`
   --
   ALTER TABLE `points`
     ADD PRIMARY KEY (`id`),
-    ADD UNIQUE KEY `nombre` (`nombre`),
-    ADD UNIQUE KEY `direccion` (`direccion`),
-    ADD KEY `coordenadas` (`coordenadas`),
-    ADD KEY `estado` (`estado`),
-    ADD KEY `telefono` (`telefono`),
+    ADD UNIQUE KEY `name` (`name`),
+    ADD UNIQUE KEY `address` (`address`),
+    ADD KEY `coordinates` (`coordinates`),
+    ADD KEY `status` (`status`),
+    ADD KEY `phone` (`phone`),
     ADD KEY `email` (`email`);
 
 --

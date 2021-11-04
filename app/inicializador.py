@@ -16,7 +16,7 @@ db.session.commit()
 
 view_user = View("user","last_name","asc")
 view_issue = View("issue","email","desc")
-view_meeting_point = View("point","nombre","asc")
+view_meeting_point = View("point","name","asc")
 
 db.session.add(view_user)
 db.session.add(view_issue)

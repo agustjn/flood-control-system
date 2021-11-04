@@ -7,7 +7,6 @@ class ConfigurationDAO:
 
     def __init__(self):
         self._config_row = Configuration.query.filter_by(id=1).first()
-        print (f"entro-----------------------{self._config_row}")
 
 
     @property

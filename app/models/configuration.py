@@ -49,4 +49,4 @@ class Configuration(db.Model):
 
   @staticmethod
   def get_valid_point_columns():
-    return ["nombre", "email"]
+    return ["name", "email"]

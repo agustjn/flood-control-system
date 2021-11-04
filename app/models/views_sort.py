@@ -12,7 +12,6 @@ class View(db.Model):
     sort_type = Column(VARCHAR(30))
 
     def __init__(self,id = None, column = None , type = None):
-        print (f"---------------------{id}------------{column}---------{type}")
         self.id = id
         self.sorted_by_column = column
         self.sort_type = type

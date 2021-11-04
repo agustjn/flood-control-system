@@ -22,9 +22,9 @@ class PointDAO():
 
         if status == "Todos":
 
-            points =  Point.query.filter(Point.nombre.like(key_filtered)).paginate(page=page, per_page=items_per_page)
+            points =  Point.query.filter(Point.name.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
-            points =  Point.query.filter(Point.nombre.like(key_filtered)).filter_by(estado = status).paginate(page=page, per_page=items_per_page)
+            points =  Point.query.filter(Point.name.like(key_filtered)).filter_by(status = status).paginate(page=page, per_page=items_per_page)
         #points.order_by(Point.email)
         return points
 
@@ -34,12 +34,12 @@ class PointDAO():
          return Point.query.all()
 
     @staticmethod
-    def exist_name(nombre):
-        return bool((Point.query.filter_by(nombre=nombre).first()))
+    def exist_name(name):
+        return bool((Point.query.filter_by(name=name).first()))
 
     @staticmethod
-    def exist_adress(direccion):
-        return bool((Point.query.filter_by(direccion=direccion).first()))
+    def exist_adress(address):
+        return bool((Point.query.filter_by(address=address).first()))
 
 
     @staticmethod
@@ -59,15 +59,15 @@ class PointDAO():
     @staticmethod
     def update(point_update,parameter):
         if parameter["name"]:
-            point_update.nombre = parameter["name"]
+            point_update.name = parameter["name"]
         if parameter["address"]:
-            point_update.direccion = parameter["address"]
+            point_update.address = parameter["address"]
         if parameter["coordinates"]:
-            point_update.coordenadas = parameter["coordinates"]
+            point_update.coodinates = parameter["coordinates"]
         if parameter["status"]:
-            point_update.estadp = parameter["status"]
+            point_update.status = parameter["status"]
         if parameter["phone"]:
-            point_update.telefono = parameter["phone"]
+            point_update.phone = parameter["phone"]
         if parameter["email"]:
             point_update.email = parameter["email"]
         try:

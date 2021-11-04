@@ -40,14 +40,14 @@
     {% for point in points.items %}
       <tr>
         <th scope="row">{{loop.index}}</th>
-        <td>{{ point.nombre }}</td>
-        <td>{{ point.direccion }}</td>
-        <td>{{ point.coordenadas }}</td>
-        <td>{{ point.estado }}</td>
-        <td>{{ point.telefono}}</td>
+        <td>{{ point.name }}</td>
+        <td>{{ point.address }}</td>
+        <td>{{ point.coordinates }}</td>
+        <td>{{ point.status }}</td>
+        <td>{{ point.phone}}</td>
         <td>{{ point.email}}</td>
         <td>
-          <a href="{{ url_for('point_delete',point_id = point.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al punto de encuentro  {{point.nombre}}?');"> Eliminar </a>
+          <a href="{{ url_for('point_delete',point_id = point.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al punto de encuentro  {{point.name}}?');"> Eliminar </a>
         </td>
         <td>
           <a href="{{ url_for('point_edit',point_id = point.id) }}" class="btn btn-success btn-sm" > Modificar </a>

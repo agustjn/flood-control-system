@@ -10,20 +10,20 @@ from sqlalchemy.orm import relationship
 class Point(db.Model):
     __tablename__ = "points"
     id = Column(Integer, primary_key=True)
-    nombre = Column(String(50), unique=True)
-    direccion = Column(String(50))
-    coordenadas = Column(String(50))
-    estado = Column(String(50))
-    telefono = Column(Integer)
+    name = Column(String(50), unique=True)
+    address = Column(String(50))
+    coordinates = Column(String(50))
+    status = Column(String(50))
+    phone = Column(Integer)
     email = Column(String(50))
 
     def __init__(self, nombre=None, direccion=None, coordenadas=None, telefono=None, email=None, estado=None):
-        self.nombre = nombre
-        self.direccion = direccion
-        self.coordenadas = coordenadas
-        self.estado = estado
-        self.telefono = telefono
+        self.name = nombre
+        self.address = direccion
+        self.coordinates = coordenadas
+        self.status = estado
+        self.phone = telefono
         self.email = email
 
     def __repr__(self):
-        return (self.nombre)
+        return (self.name)
