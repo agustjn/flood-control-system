@@ -118,7 +118,7 @@ INSERT INTO `statuses` (`id`, `name`) VALUES
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(30) NOT NULL,
-  `user` varchar(30) NOT NULL,
+  `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(30) NOT NULL,
