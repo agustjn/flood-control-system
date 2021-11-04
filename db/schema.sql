@@ -140,7 +140,8 @@ CREATE TABLE `points` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
   `address` varchar(30) NOT NULL,
-  `coordinates` varchar(30) NOT NULL,
+  `coordinates_latitude` varchar(50) NOT NULL,
+  `coordinates_longitude` varchar(50) NOT NULL,
   `status` varchar(30) NOT NULL,
   `phone` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL
@@ -250,7 +251,8 @@ ALTER TABLE `users`
     ADD PRIMARY KEY (`id`),
     ADD UNIQUE KEY `name` (`name`),
     ADD UNIQUE KEY `address` (`address`),
-    ADD KEY `coordinates` (`coordinates`),
+    ADD KEY `coordinates_latitude` (`coordinates_latitude`),
+    ADD KEY `coordinates_longitude` (`coordinates_longitude`),
     ADD KEY `status` (`status`),
     ADD KEY `phone` (`phone`),
     ADD KEY `email` (`email`);

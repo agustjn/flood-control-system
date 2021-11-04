@@ -12,31 +12,38 @@ def get_values_filter_columns():
     return ["Activo","Bloqueado","Todos"]
 
 
-def index_filtro_users():
-    filtro = request.form["status_id"]
+def obtener_valores(status, texto):
+    """ Obtengo los valores para mostrar los usuarios, ya sea con un filtro o no"""
+    try:
+        filtro = request.form["status_id"]
+        print (f"------------------ status funcionnn tiene {p}----------------------------")
+    except:
+        filtro = status
+    try:
+        texto_a_filtrar = request.form["texto_id"]
+    except:
+        texto_a_filtrar = texto
+    return (filtro,texto_a_filtrar)
+
+def index():
     Auth.verify_authentification()
+    #p = request.form["status_id"]
+    #print (f"------------------ status tiene {p}----------------------------")
+    filtro,texto_a_filtrar = obtener_valores(status = "Todos",texto = "")
+    print (f"------------------{filtro}---------------texto {texto_a_filtrar}-----------")
     dao = ConfigurationDAO()
-    if request.form["texto_id"]:
-        filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page,request.form["texto_id"])
-        texto = request.form["texto_id"]
+    if texto_a_filtrar:
+        filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
+        texto = texto_a_filtrar
     else:
         texto = None
         filtered_users = UserDAO.filter_by_key(filtro,dao.items_per_page)
 
     values = get_values_filter_columns()
     values.remove(filtro)
+    print (f"------------------{values}-----------------")
 
     return render_template("user/index.html", users=filtered_users,values=values, filtro = filtro,texto=texto)
-
-
-def index():
-    Auth.verify_authentification()
-    users = UserDAO.recover_users()
-    values = get_values_filter_columns()
-
-    dao = ConfigurationDAO()
-    all_users = UserDAO.users_paginated(dao.items_per_page)
-    return render_template("user/index.html", users = all_users, values = values, filtro = values[2])
 
 
 def new():

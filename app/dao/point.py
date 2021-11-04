@@ -43,8 +43,8 @@ class PointDAO():
 
 
     @staticmethod
-    def create_user(name, address, coordinates, phone, email, status):
-        new_point = Point(name,address,coordinates,phone,email,status)
+    def create_user(name, address, coordinates_lat,coordinates_long, phone, email, status):
+        new_point = Point(name,address,coordinates_lat,coordinates_long,phone,email,status)
         db.session.add(new_point)
         try:
             db.session.commit()
@@ -57,19 +57,21 @@ class PointDAO():
         return Point.query.filter_by(id=point_id).first()
 
     @staticmethod
-    def update(point_update,parameter):
-        if parameter["name"]:
-            point_update.name = parameter["name"]
-        if parameter["address"]:
-            point_update.address = parameter["address"]
-        if parameter["coordinates"]:
-            point_update.coodinates = parameter["coordinates"]
-        if parameter["status"]:
-            point_update.status = parameter["status"]
-        if parameter["phone"]:
-            point_update.phone = parameter["phone"]
-        if parameter["email"]:
-            point_update.email = parameter["email"]
+    def update(point_update,name, address, coordinates_lat,coordinates_long, phone, email, status):
+        if name:
+            point_update.name = name
+        if address:
+            point_update.address = address
+        if coordinates_lat:
+            point_update.coodinates_latitude = coordinates_lat
+        if coordinates_long:
+            point_update.coodinates_longitude = coordinates_long
+        if status:
+            point_update.status = status
+        if phone:
+            point_update.phone = phone
+        if email:
+            point_update.email = email
         try:
             db.session.commit()
             return True

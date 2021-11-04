@@ -6,7 +6,7 @@
 
 {% block content %}
 <h1>Puntos de encuentros</h1>
-<form class="row g-2" action="{{url_for('index_filtro') }}" method="POST">
+<form class="row g-2" action="{{url_for('point_index') }}" method="GET">
   <div class="col-3 p-2 m-1 " >
     {% if texto %}
         <input  type="text" name="texto_id" placeholder={{texto}}>

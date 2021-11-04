@@ -37,17 +37,17 @@
     </div>
     <div class="row mt-5">
       <div class="col-4">
-        <button type="submit" class="btn btn-success" >Crear</button>
+        <button type="submit" class="btn btn-success btn-lg" >Crear</button>
       </div>
-
+      <div class="col-4">
+        <a href="{{ url_for('user_index') }}" class="btn btn-danger btn-lg " >Volver</a>
+      </div>
     <div class="col-4">
-       <button type="reset" class="btn btn-secondary" >Limpiar</button>
+       <button type="reset" class="btn btn-secondary btn-lg" >Limpiar</button>
     </div>
    </div>
   </form>
-  <div class="col-4">
-    <a href="{{ url_for('user_index') }}" class="btn btn-danger " >Volver</a>
-  </div>  
+
 
   </div>
 {% endblock %}

@@ -12,15 +12,17 @@ class Point(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
     address = Column(String(50))
-    coordinates = Column(String(50))
+    coordinates_latitude = Column(String(50))
+    coordinates_longitude = Column(String(50))
     status = Column(String(50))
     phone = Column(Integer)
     email = Column(String(50))
 
-    def __init__(self, nombre=None, direccion=None, coordenadas=None, telefono=None, email=None, estado=None):
+    def __init__(self, nombre=None, direccion=None, coordenadas_latitud=None,coordenadas_longitud = None, telefono=None, email=None, estado=None):
         self.name = nombre
         self.address = direccion
-        self.coordinates = coordenadas
+        self.coordinates_latitude = coordenadas_latitud
+        self.coordinates_longitude = coordenadas_longitud
         self.status = estado
         self.phone = telefono
         self.email = email

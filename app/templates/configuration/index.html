@@ -20,7 +20,7 @@ Configuration
     <h2 class="text-center"> Configuraciones </h2>
     <h3 class="text-center mt-5"> Vistas </h3>
     </br>
-    <form action="/configuraciones" method="POST">
+    <form action = "{{ url_for ('config_update') }}" method="POST">
     <div class="row">
         <h5>Paginado</h5>
         <p>Selecciona la cantidad de items que se presentaran en cada listado del sistema</p>
@@ -97,14 +97,14 @@ Configuration
         <select name="color-background-selected" id="">
         {% for bg in values["background"] %}
         <option value={{bg}}> {{bg}} </option>
-        {% endfor %}    
+        {% endfor %}
         </select>
     </div>
 
 
 
     <div class="text-center mt-5">
-        <button type="submit" class="btn btn-success"> Guardar </button>
+        <button type="submit" class="btn btn-success btn-lg"> Guardar </button>
     </div>
 </form>
 </div>
