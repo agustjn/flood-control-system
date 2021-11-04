@@ -23,12 +23,12 @@ class UserDAO():
         page = request.args.get('page', 1, type=int)
 
         if status == "Todos":
-            points =  User.query.filter(User.usuario.like(key_filtered)).paginate(page=page, per_page=items_per_page)
+            points =  User.query.filter(User.user.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
             if status == "Activo":
-                points =  User.query.filter(User.usuario.like(key_filtered)).filter_by(activo = True).paginate(page=page, per_page=items_per_page)
+                points =  User.query.filter(User.user.like(key_filtered)).filter_by(active = True).paginate(page=page, per_page=items_per_page)
             else:
-                points =  User.query.filter(User.usuario.like(key_filtered)).filter_by(activo = False).paginate(page=page, per_page=items_per_page)
+                points =  User.query.filter(User.user.like(key_filtered)).filter_by(active = False).paginate(page=page, per_page=items_per_page)
         #points.order_by(Point.email)
         return points
 
@@ -49,7 +49,7 @@ class UserDAO():
     @staticmethod
     def activate_desactivate(user_id):
         user = User.query.get(user_id)
-        user.activo = not (user.activo)
+        user.active = not (user.active)
         try:
             db.session.commit()
             return True
@@ -73,7 +73,7 @@ class UserDAO():
     @staticmethod
     def update (user_update,parameter):
         if parameter["user"]:
-            user_update.usuario = parameter["user"]
+            user_update.user = parameter["user"]
         if parameter["email"]:
             user_update.email = parameter["email"]
         if parameter["password"]:

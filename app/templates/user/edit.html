@@ -11,7 +11,7 @@
   <form class="row g-3" action="{{ url_for('user_modification',user_id = user.id)}}" method="POST">
     <div class="col-md-6">
       <label for="user" class="form-label">Usuario</label>
-      <input type="text" class="form-control" id= "user" name ="user" placeholder={{user.usuario}}>
+      <input type="text" class="form-control" id= "user" name ="user" placeholder={{user.user}}>
     </div>
     <div class="col-md-6">
       <label for="password" class="form-label">Contraseña</label>
@@ -30,7 +30,7 @@
       <input type="text" class="form-control" id= "last_name" name ="last_name" placeholder={{user.last_name}}>
     </div>
     <div class="d-grid gap-1">
-      <button type="submit" class="btn btn-success"  onclick="return confirm('¿Estas seguro de modificar al usuario {{user.usuario}}?');">Modificar</button>
+      <button type="submit" class="btn btn-success"  onclick="return confirm('¿Estas seguro de modificar al usuario {{user.user}}?');">Modificar</button>
     </div>
     <button type="reset" class="btn btn-secondary" >Limpiar</button>
   </form>

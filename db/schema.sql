@@ -123,12 +123,12 @@ INSERT INTO `statuses` (`id`, `name`) VALUES
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(30) NOT NULL,
-  `usuario` varchar(30) NOT NULL,
+  `user` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(30) NOT NULL,
   `configuration_id` int(10) UNSIGNED NOT NULL,
-  `activo` tinyint(1) UNSIGNED NOT NULL,
+  `active` tinyint(1) UNSIGNED NOT NULL,
   `created_at` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -243,11 +243,11 @@ ALTER TABLE `statuses`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `usuario` (`usuario`),
+  ADD UNIQUE KEY `user` (`user`),
   ADD KEY `last_name` (`last_name`),
   ADD KEY `password` (`password`),
   ADD KEY `first_name` (`first_name`),
-  ADD KEY `activo` (`activo`),
+  ADD KEY `active` (`active`),
   ADD KEY `created_at` (`created_at`),
   ADD KEY `configuration_id` (`configuration_id`);
 

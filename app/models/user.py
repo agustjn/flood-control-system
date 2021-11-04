@@ -12,11 +12,11 @@ class User(db.Model):
         __tablename__ = "users"
         id = Column(Integer, primary_key=True)
         email = Column(String(50), unique=True)
-        usuario = Column (String (50),unique=True)
+        user = Column (String (50),unique=True)
         password = Column(String(50))
         first_name = Column(String(50))
         last_name = Column(String(50))
-        activo = Column(Boolean)
+        active = Column(Boolean)
         created_at = Column(String(30))
 
         configuration_id = Column(Integer,ForeignKey("configurations.id"))
@@ -29,14 +29,14 @@ class User(db.Model):
             lazy = "dynamic",
         )
 
-        def __init__ (self,first_name = None , last_name = None, email = None, usuario = None, password = None):
+        def __init__ (self,first_name = None , last_name = None, email = None, user = None, password = None):
             self.first_name = first_name
             self.last_name = last_name
             self.email = email
-            self.usuario = usuario
+            self.user = user
             self.password = password
             self.configuration_id = 1
-            self.activo = True
+            self.active = True
             self.created_at = dt.today()
 
 

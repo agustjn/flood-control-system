@@ -78,8 +78,8 @@ def create():
     return render_template("user/new.html", errors = errors)
 
 
-def validate_empty_fields(first_name,last_name,email,usuario,password):
-    if  email  and password and usuario  and first_name and last_name:
+def validate_empty_fields(first_name,last_name,email,user,password):
+    if  email  and password and user  and first_name and last_name:
         return True
     else:
         return False
@@ -107,7 +107,7 @@ def modify(user_id):
     else:
         obj = UserDAO.update(user_update,parameter)
         if obj:
-            msj = "Se modifico el usuario " + user_update.usuario + " exitosamente"
+            msj = "Se modifico el usuario " + user_update.user + " exitosamente"
         else:
             msj = "Se produjo un error al modificar, intente nuevamente "
         flash (msj)
@@ -120,9 +120,9 @@ def delete(user_id):
     Auth.verify_authentification()
     user_delete = UserDAO.search_by_id(user_id)
     if UserDAO.delete_by_id(user_id):
-        msj = "El usuario " + user_delete.usuario + " a sido eliminado con exito"
+        msj = "El usuario " + user_delete.user + " a sido eliminado con exito"
     else:
-        msj = "Error al quere borrar el usuario " + user_delete.usuario + " de la tabla"
+        msj = "Error al quere borrar el usuario " + user_delete.user + " de la tabla"
     flash (msj,"info")
     return redirect(url_for("user_index"))
 
