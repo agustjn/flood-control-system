@@ -18,4 +18,7 @@ def update_csv():
     #         print(row)
     print('--------------------------')
     print(file)
+
+def profile(id):
+    return render_template("flood_zones/profile.html")
     

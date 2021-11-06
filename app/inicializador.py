@@ -1,3 +1,4 @@
+from sqlalchemy.sql.expression import _True
 from app.models.permission import Role, Permission
 from app.models.user import User
 from app.db import db
@@ -5,6 +6,7 @@ from app.models.point import Point
 from app.models.configuration import Configuration
 from app.models.views_sort import View
 from app.models.issue import Issue
+from app.models.flood_zones import FloodZone
 #Creo y agregago la configuraicon
 
 config = Configuration("Amarillo",5)
@@ -169,4 +171,9 @@ db.session.add(puntos_encuentro10)
 db.session.add(puntos_encuentro11)
 db.session.add(puntos_encuentro12)
 db.session.add(puntos_encuentro13)
-db.session.commit()
+db.session.commit() 
+
+
+# Creo zonas inundables de prueba
+flood_zone1 = FloodZone('Zona de Prueba', 'abc123', True, color='#D24324' , coordinates=[ ["-34.79135898963996,-57.99674526817398"],["-34.794109949219944,-57.99940601951677"],["-34.79506218307646,-57.998633543320466"] ])
+

@@ -12,6 +12,7 @@ class RoutesConfig():
         # Zonas inundables
         app.add_url_rule("/flood_zones", "flood_zones_index", flood_zones.flood_zones_index)
         app.add_url_rule("/flood_zones/import_csv", "update_csv", flood_zones.update_csv, methods=["POST"])
+        app.add_url_rule("/flood_zones/profile/<int:id>", "flood_zone_profile", flood_zones.profile, methods=["GET"])
 
 
         
