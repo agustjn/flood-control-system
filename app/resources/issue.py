@@ -1,9 +1,14 @@
 from flask import redirect, render_template, request, url_for, flash
 from app.dao.issue import IssueDAO
+from app.helpers.auth import Auth
+from app.dao.configuration import ConfigurationDAO
+
 
 # Public resources
 def index():
-    issue = IssueDAO.recover_issues()
+    Auth.verify_authentification()
+    # Ver proximamente en usar un staticmethod para retornar items per page, asi no se instancia siempre el objeto
+    issue = IssueDAO.all_paginated_issues()
     return render_template("issue/index.html", issues=issue)
 
 

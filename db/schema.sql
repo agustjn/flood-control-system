@@ -44,6 +44,20 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (1, 'Bug'),
 (2, 'Question');
 
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `role`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
 -- --------------------------------------------------------
 
 --
@@ -52,19 +66,10 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 
 CREATE TABLE `configurations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `view_users_id` int(11) UNSIGNED NOT NULL,
-  `view_meeting_points_id` int(11) UNSIGNED NOT NULL,
-  `view_issues_id` int(11) UNSIGNED NOT NULL,
   `background` varchar(50) NOT NULL,
   `items_per_page` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `configurations`
---
-
-INSERT INTO `configurations` (`id`, `view_users_id`, `view_meeting_points_id`, `view_issues_id`, `background`, `items_per_page`) VALUES
-(1, 1, 1, 1, 'Amarillo', 15);
 
 -- --------------------------------------------------------
 
@@ -77,17 +82,12 @@ CREATE TABLE `issues` (
   `email` varchar(30) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `category_id` int(10) NOT NULL,
-  `status_id` int(10) NOT NULL
+  `status_id` int(10) NOT NULL,
+  `created_at` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `issues`
---
 
-INSERT INTO `issues` (`id`, `email`, `description`, `category_id`, `status_id`) VALUES
-(1, 'fede@mail.com', 'No puedo iniciar sesi?n correctamente', 1, 1),
-(2, 'jose@mail.com', 'El sistema de dice que hay un error', 1, 2),
-(4, 'maria@mail.com', 'No tengo acceso al sistema', 1, 1);
+
 
 -- --------------------------------------------------------
 
@@ -118,21 +118,17 @@ INSERT INTO `statuses` (`id`, `name`) VALUES
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(30) NOT NULL,
-  `usuario` varchar(30) NOT NULL,
+  `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(30) NOT NULL,
   `configuration_id` int(10) UNSIGNED NOT NULL,
-  `activo` tinyint(1) UNSIGNED NOT NULL,
+  `active` tinyint(1) UNSIGNED NOT NULL,
   `created_at` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `users`
---
 
-INSERT INTO `users` (`id`, `email`, `usuario`, `password`, `first_name`, `last_name`, `configuration_id`, `activo`, `created_at`) VALUES
-(1, 'admin', 'admin', '123123', 'Cosme', 'Fulanito', 1, 1, '2021-10-25 17:28:29.909529');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -142,11 +138,12 @@ INSERT INTO `users` (`id`, `email`, `usuario`, `password`, `first_name`, `last_n
 --
 CREATE TABLE `points` (
   `id` int(10) UNSIGNED NOT NULL,
-  `nombre` varchar(30) NOT NULL,
-  `direccion` varchar(30) NOT NULL,
-  `coordenadas` varchar(30) NOT NULL,
-  `estado` varchar(30) NOT NULL,
-  `telefono` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `address` varchar(30) NOT NULL,
+  `coordinates_latitude` varchar(50) NOT NULL,
+  `coordinates_longitude` varchar(50) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `phone` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -155,63 +152,56 @@ CREATE TABLE `points` (
 
 
 --
--- Estructura de tabla para la tabla `view_issues`
+-- Estructura de tabla para la tabla `view de usuarios`
 --
 
-CREATE TABLE `view_issues` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE `view` (
+  `id` varchar(100) NOT NULL,
   `sorted_by_column` varchar(30) NOT NULL,
   `sort_type` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `view_issues`
---
 
-INSERT INTO `view_issues` (`id`, `sorted_by_column`, `sort_type`) VALUES
-(1, 'fecha_creacion', 'desc');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `view_meeting_points`
+-- Estructura de tabla para la tabla `permission`
 --
 
-CREATE TABLE `view_meeting_points` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `sorted_by_column` varchar(30) NOT NULL,
-  `sort_type` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `view_meeting_points`
---
-
-INSERT INTO `view_meeting_points` (`id`, `sorted_by_column`, `sort_type`) VALUES
-(1, 'nombre', 'asc');
+CREATE TABLE `permissions` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+-- --------------------------------------------------------
+
+
 
 --
--- Estructura de tabla para la tabla `view_users`
+-- Estructura de tabla para la tabla `role_has_permission`
 --
 
-CREATE TABLE `view_users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `sort_type` varchar(30) NOT NULL,
-  `sorted_by_column` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `view_users`
---
-
-INSERT INTO `view_users` (`id`, `sort_type`, `sorted_by_column`) VALUES
-(1, 'asc', 'first_name');
-
+CREATE TABLE `role_has_permission` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
 -- Índices para tablas volcadas
 --
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_has_role`
+--
+
+CREATE TABLE `user_has_role` (
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Indices de la tabla `categories`
@@ -223,10 +213,7 @@ ALTER TABLE `categories`
 -- Indices de la tabla `configurations`
 --
 ALTER TABLE `configurations`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `view_meeting_points_id` (`view_meeting_points_id`) USING BTREE,
-  ADD KEY `view_users_id` (`view_users_id`) USING BTREE,
-  ADD KEY `view_issues_id` (`view_issues_id`) USING BTREE;
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `issues`
@@ -248,11 +235,11 @@ ALTER TABLE `statuses`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `last_name` (`last_name`),
-  ADD UNIQUE KEY `usuario` (`usuario`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `last_name` (`last_name`),
   ADD KEY `password` (`password`),
   ADD KEY `first_name` (`first_name`),
-  ADD KEY `activo` (`activo`),
+  ADD KEY `active` (`active`),
   ADD KEY `created_at` (`created_at`),
   ADD KEY `configuration_id` (`configuration_id`);
 
@@ -262,95 +249,84 @@ ALTER TABLE `users`
   --
   ALTER TABLE `points`
     ADD PRIMARY KEY (`id`),
-    ADD UNIQUE KEY `nombre` (`nombre`),
-    ADD UNIQUE KEY `direccion` (`direccion`),
-    ADD KEY `coordenadas` (`coordenadas`),
-    ADD KEY `estado` (`estado`),
-    ADD KEY `telefono` (`telefono`),
+    ADD UNIQUE KEY `name` (`name`),
+    ADD UNIQUE KEY `address` (`address`),
+    ADD KEY `coordinates_latitude` (`coordinates_latitude`),
+    ADD KEY `coordinates_longitude` (`coordinates_longitude`),
+    ADD KEY `status` (`status`),
+    ADD KEY `phone` (`phone`),
     ADD KEY `email` (`email`);
 
+--
+-- Indices de la tabla `role`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `permission`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`);
 
 
 --
 -- Indices de la tabla `view_issues`
 --
-ALTER TABLE `view_issues`
-  ADD PRIMARY KEY (`id`) USING ;
+ALTER TABLE `view`
+  ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `view_meeting_points`
---
-ALTER TABLE `view_meeting_points`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_by` (`sorted_by_column`),
-  ADD KEY `type` (`sort_type`);
-
---
--- Indices de la tabla `view_users`
---
-ALTER TABLE `view_users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_by` (`sort_type`),
-  ADD KEY `type` (`sorted_by_column`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `configurations`
 --
 ALTER TABLE `configurations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `issues`
 --
 ALTER TABLE `issues`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `points`
 --
 ALTER TABLE `points`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+  --
+  -- AUTO_INCREMENT de la tabla `roles`
+  --
+  ALTER TABLE `roles`
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 
 --
--- AUTO_INCREMENT de la tabla `view_issues`
+-- AUTO_INCREMENT de la tabla `permission`
 --
-ALTER TABLE `view_issues`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `permissions`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `view_meeting_points`
---
-ALTER TABLE `view_meeting_points`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `view_users`
---
-ALTER TABLE `view_users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

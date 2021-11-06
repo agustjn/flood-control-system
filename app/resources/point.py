@@ -4,6 +4,8 @@ from app.dao.configuration import ConfigurationDAO
 from app.models.configuration import Configuration
 from app.helpers.auth import Auth
 
+from app.helpers.permission import PermissionDAO
+
 
 from app.db import db
 from app.models.point import Point
@@ -13,47 +15,38 @@ from app.models.point import Point
 def get_values_filter_columns():
     return ["Publicado","Despublicado","Todos"]
 
-
-def index_filtro():
-    """Genero los puntos de encuentro filtrados por lo recibido de parametros"""
-    filtro = request.form["status_id"]
-    Auth.verify_authentification()
-
-    dao = ConfigurationDAO()
-
-
-    if request.form["texto_id"]:
-        filtered_points = PointDAO.filter_by_key(filtro,dao.items_per_page,request.form["texto_id"])
-        texto = request.form["texto_id"]
+def _obtener_valores(status,texto):
+    """ Obtengo los valores para mostrar los puntos de encuentro, ya sea con un filtro o no"""
+    if request.args.get('status_id') is None:
+        filtro = status
     else:
-        texto = None
-        filtered_points = PointDAO.filter_by_key(filtro,dao.items_per_page)
-
-    values = get_values_filter_columns()
-    values.remove(filtro)
-
-    return render_template("point/index.html", points=filtered_points,values=values, filtro = filtro,texto=texto)
+        filtro = request.args.get("status_id")
+    if request.args.get('texto_id') is None:
+        texto_a_filtrar = texto
+    else:
+        texto_a_filtrar = request.args.get("texto_id")
+    return (filtro,texto_a_filtrar)
 
 def index():
-    Auth.verify_authentification()
-    points = PointDAO.recover_points()
-    values = get_values_filter_columns()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_index")
 
+    filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
-    all_points = PointDAO.points_paginated(dao.items_per_page)
-    return render_template("point/index.html", points = all_points ,values = values,filtro = values[2])
-
+    filtered_points = PointDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
+    values = get_values_filter_columns()
+    values.remove(filtro)
+    return render_template("point/index.html", points=filtered_points,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 def new():
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_new")
     return render_template("point/new.html")
 
 
 def create():
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_new")
 
     parameter = request.form
-    validos = validate_empty_fields(parameter["name"], parameter["address"], parameter["coordinates"],parameter["phone"],parameter["email"],parameter["status"])
+    validos = _validate_empty_fields(parameter["name"], parameter["address"], parameter["coordinates_lat"],parameter["coordinates_long"],parameter["phone"],parameter["email"],parameter["status"])
     if validos:
         if PointDAO.exist_name(parameter["name"]):
             msj = "el Nombre "+ parameter["name"] + " ya existe, ingrese otro"
@@ -61,7 +54,7 @@ def create():
             msj = "La direccion " + parameter["address"] + " ya existe , ingrese otro "
         else:
 
-            if PointDAO.create_user(parameter["name"], parameter["address"], parameter["coordinates"],parameter["phone"],parameter["email"],parameter["status"]):
+            if PointDAO.create_user(parameter["name"], parameter["address"], parameter["coordinates_lat"],parameter["coordinates_long"],parameter["phone"],parameter["email"],parameter["status"]):
                 msj = "Se creo el punto de encuentro " + parameter["name"] + " exitosamente"
             else:
                 msj = "Ocurrio un error al crear el punto de encuentro, intente nuevamente"
@@ -74,20 +67,22 @@ def create():
 
 
 
-def validate_empty_fields(name, adress, coordinates,phone,email,status):
-    if  name  and adress and coordinates  and phone and email and status:
+def _validate_empty_fields(name, adress, coordinates_lat,coordinates_long,phone,email,status):
+    if  name  and adress and coordinates_lat and coordinates_long and phone and email and status:
         return True
     else:
         return False
 
 def edit(point_id):
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_update")
 
     modification_point = PointDAO.search_by_id(point_id)
     msj = "Los campos que desea dejar igual dejenlo sin rellenar"
     return render_template("point/edit.html", point = modification_point, msj= msj)
 
 def modify(point_id):
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_update")
+
     parameter = request.form
     point_update = PointDAO.search_by_id(point_id)
     a = parameter["address"]
@@ -97,9 +92,8 @@ def modify(point_id):
         msj = "La direccion " + parameter["address"] + " ya existe , ingrese otro "
 
     else:
-
-        if PointDAO.update(point_update,parameter):
-            msj = "Se modifico el punto de encuentro "+ point_update.nombre + " exitosamente"
+        if PointDAO.update(point_update,parameter["name"], parameter["address"], parameter["coordinates_lat"],parameter["coordinates_long"],parameter["phone"],parameter["email"],parameter["status"]) :
+            msj = "Se modifico el punto de encuentro "+ point_update.name + " exitosamente"
         else:
             msj = "Se produjo un error al modificar, intente nuevamente "
         flash (msj)
@@ -110,12 +104,14 @@ def modify(point_id):
 
 
 def delete(point_id):
-    Auth.verify_authentification()
+    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_destroy")
+
+
     point_delete = PointDAO.search_by_id(point_id)
     if PointDAO.delete(point_delete):
-         msj = "El punto de encuentro " + point_delete.nombre + " a sido eliminado con exito"
+         msj = "El punto de encuentro " + point_delete.name + " a sido eliminado con exito"
     else:
-        msj = "Error al querer borrar el punto de encuentro " + point_delete.nombre + " de la tabla, intene nuevamente"
+        msj = "Error al querer borrar el punto de encuentro " + point_delete.name + " de la tabla, intene nuevamente"
 
     flash (msj,"info")
     return redirect(url_for("point_index"))

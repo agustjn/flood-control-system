@@ -1,6 +1,7 @@
 from flask import request
 from app.models.point import Point
 from app.db import db
+from app.models.views_sort import View
 
 
 
@@ -8,7 +9,10 @@ from app.db import db
 class PointDAO():
     def points_paginated(items_per_page):
         page = request.args.get('page', 1, type=int)
-        points = Point.query.paginate(page=page, per_page=items_per_page)
+        # points = Point.query.order_by(Point.email.desc())
+        view_dict = View.query.filter_by(id = "point").first().formatted_values()
+        points = eval("Point.query.order_by(Point.{}.{}())".format(view_dict["column"], view_dict["type"]))
+        points = points.paginate(page=page, per_page=items_per_page)
         return points
 
     @staticmethod
@@ -16,9 +20,10 @@ class PointDAO():
         key_filtered = "%" + key + "%"
         page = request.args.get('page', 1, type=int)
         if status == "Todos":
-            return Point.query.filter(Point.nombre.like(key_filtered)).paginate(page=page, per_page=items_per_page)
+            points =  Point.query.filter(Point.name.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
-            return Point.query.filter(Point.nombre.like(key_filtered)).filter_by(estado = status).paginate(page=page, per_page=items_per_page)
+            points =  Point.query.filter(Point.name.like(key_filtered)).filter_by(status = status).paginate(page=page, per_page=items_per_page)
+        return points
 
 
     @staticmethod
@@ -26,17 +31,17 @@ class PointDAO():
          return Point.query.all()
 
     @staticmethod
-    def exist_name(nombre):
-        return bool((Point.query.filter_by(nombre=nombre).first()))
+    def exist_name(name):
+        return bool((Point.query.filter_by(name=name).first()))
 
     @staticmethod
-    def exist_adress(direccion):
-        return bool((Point.query.filter_by(direccion=direccion).first()))
+    def exist_adress(address):
+        return bool((Point.query.filter_by(address=address).first()))
 
 
     @staticmethod
-    def create_user(name, address, coordinates, phone, email, status):
-        new_point = Point(name,address,coordinates,phone,email,status)
+    def create_user(name, address, coordinates_lat,coordinates_long, phone, email, status):
+        new_point = Point(name,address,coordinates_lat,coordinates_long,phone,email,status)
         db.session.add(new_point)
         try:
             db.session.commit()
@@ -49,19 +54,21 @@ class PointDAO():
         return Point.query.filter_by(id=point_id).first()
 
     @staticmethod
-    def update(point_update,parameter):
-        if parameter["name"]:
-            point_update.nombre = parameter["name"]
-        if parameter["address"]:
-            point_update.direccion = parameter["address"]
-        if parameter["coordinates"]:
-            point_update.coordenadas = parameter["coordinates"]
-        if parameter["status"]:
-            point_update.estadp = parameter["status"]
-        if parameter["phone"]:
-            point_update.telefono = parameter["phone"]
-        if parameter["email"]:
-            point_update.email = parameter["email"]
+    def update(point_update,name, address, coordinates_lat,coordinates_long, phone, email, status):
+        if name:
+            point_update.name = name
+        if address:
+            point_update.address = address
+        if coordinates_lat:
+            point_update.coodinates_latitude = coordinates_lat
+        if coordinates_long:
+            point_update.coodinates_longitude = coordinates_long
+        if status:
+            point_update.status = status
+        if phone:
+            point_update.phone = phone
+        if email:
+            point_update.email = email
         try:
             db.session.commit()
             return True

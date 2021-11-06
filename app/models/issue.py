@@ -1,6 +1,7 @@
 from app.db import db
 from app.models.category import Category
 from app.models.status import Status
+import datetime as dt
 
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -11,6 +12,7 @@ class Issue(db.Model):
     email = Column(String(50), unique=True)
     description = Column(String(30),unique=True)
     #category_id = Column(String(30),unique =True)
+    created_at = Column(String(50))
 
     category_id = Column(Integer,ForeignKey("categories.id"))
     category = relationship(Category)
@@ -18,32 +20,10 @@ class Issue(db.Model):
     status_id = Column(Integer,ForeignKey("statuses.id"))
     status = relationship(Status)
 
-    def __init__ (self,email = None, description = None, category_id = None, status_id = None ):
+    def __init__ (self,email = None, description = None, category_id = None, status_id = None):
         self.email = email
         self.description = description
         self.category_id = category_id
         self.status_id = status_id
-
-"""class Issue(object):
-    @classmethod
-    def all(cls, conn):
-        sql = "SELECT * FROM issues"
-
-        cursor = conn.cursor()
-        cursor.execute(sql)
-
-        return cursor.fetchall()
-
-    @classmethod
-    def create(cls, conn, data):
-        sql =
-            INSERT INTO issues (email, description, category_id, status_id)
-            VALUES (%s, %s, %s, %s)
-
-
-        cursor = conn.cursor()
-        cursor.execute(sql, list(data.values()))
-        conn.commit()
-
-        return True
-"""
+        self.created_at = dt.date.today().strftime("%b %d %Y %H:%M:%S")
+        print(self.created_at)

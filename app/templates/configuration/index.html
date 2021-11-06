@@ -20,7 +20,7 @@ Configuration
     <h2 class="text-center"> Configuraciones </h2>
     <h3 class="text-center mt-5"> Vistas </h3>
     </br>
-    <form action="/configuraciones" method="POST">
+    <form action = "{{ url_for ('config_update') }}" method="POST">
     <div class="row">
         <h5>Paginado</h5>
         <p>Selecciona la cantidad de items que se presentaran en cada listado del sistema</p>
@@ -33,12 +33,12 @@ Configuration
     <h5 class="mt-2">Ordenacion</h5>
     <p>Seleccione para cada vista, el criterio de ordenacion</p>
     <div class="row">
-        <div class="col-6 bg-dark bg-opacity-10 border border-dark">
+        <div class="col-4 bg-dark bg-opacity-10 border border-dark">
             <h4 class="text-center"> Usuarios </h4>
             <div class="row">
                 <div class="col-8">
                     <select name="user-col-selected" class="form-select">
-                        <option selected value="usuario">Nombre de usuario</option>
+                        <option selected value="username">Nombre de usuario</option>
                         <option value="last_name">Apellido</option>
                         <option value="first_name">Nombre</option>
                     </select>
@@ -52,19 +52,37 @@ Configuration
                 </select>
             </div>
         </div>
-        <div class="col-6 bg-dark bg-opacity-10 border border-dark">
+        <div class="col-4 bg-dark bg-opacity-10 border border-dark">
             <h4 class="text-center"> Puntos de encuentro </h4>
             <div class="row">
                 <div class="col-8">
-                    <select name="user-col-selected" class="form-select">
-                        <option selected>Nombre</option>
-                        <option value="1">Email</option>
+                    <select name="point-col-selected" class="form-select">
+                        <option selected value="name">Nombre</option>
+                        <option value="email">Email</option>
                     </select>
                 </div>
                 <div class="col-4">
-                    <select name="order-of-column-users" class="form-select" id="">
-                        <option selected>Ascendente</option>
-                        <option value="1">Descendente</option>
+                    <select name="point-type-selected" class="form-select" id="">
+                        <option selected value="asc">Ascendente</option>
+                        <option value="desc">Descendente</option>
+                    </select>
+                </div>
+                </select>
+            </div>
+        </div>
+        <div class="col-4 bg-dark bg-opacity-10 border border-dark">
+            <h4 class="text-center"> Consultas </h4>
+            <div class="row">
+                <div class="col-8">
+                    <select name="issue-col-selected" class="form-select">
+                        <option selected value="email">Email</option>
+                        <option value="created_at">Fecha de creacion</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <select name="issue-type-selected" class="form-select" id="">
+                        <option selected value='asc'>Ascendente</option>
+                        <option value="desc">Descendente</option>
                     </select>
                 </div>
                 </select>
@@ -79,14 +97,14 @@ Configuration
         <select name="color-background-selected" id="">
         {% for bg in values["background"] %}
         <option value={{bg}}> {{bg}} </option>
-        {% endfor %}    
+        {% endfor %}
         </select>
     </div>
 
 
 
     <div class="text-center mt-5">
-        <button type="submit" class="btn btn-success"> Guardar </button>
+        <button type="submit" class="btn btn-success btn-lg"> Guardar </button>
     </div>
 </form>
 </div>

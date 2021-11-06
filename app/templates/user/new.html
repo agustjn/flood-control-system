@@ -4,6 +4,15 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
+
+{% if errors %}
+  {% for error in errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+  {% endfor %}
+{% endif %}
+
   <h1>Crear un usuario</h1>
   <form class="row g-3" action="{{ url_for('user_create') }}" method="POST">
     <div class="col-md-6">
@@ -26,12 +35,19 @@
       <label for="last_name" class="form-label">Ingrese su apellido </label>
       <input type="text" class="form-control" id= "last_name" name ="last_name" placeholder="Apellido completo" required>
     </div>
-    <div class="d-grid gap-1">
-      <button type="submit" class="btn btn-success" >Crear</button>
+    <div class="row mt-5">
+      <div class="col-4">
+        <button type="submit" class="btn btn-success btn-lg" >Crear</button>
+      </div>
+      <div class="col-4">
+        <a href="{{ url_for('user_index') }}" class="btn btn-danger btn-lg " >Volver</a>
+      </div>
+    <div class="col-4">
+       <button type="reset" class="btn btn-secondary btn-lg" >Limpiar</button>
     </div>
-    <button type="reset" class="btn btn-secondary" >Limpiar</button>
+   </div>
   </form>
-    <div>
-        <a href="{{ url_for('user_index') }}" class="btn btn-danger " >Volver</a>
-    </div>
+
+
+  </div>
 {% endblock %}

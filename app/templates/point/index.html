@@ -6,7 +6,7 @@
 
 {% block content %}
 <h1>Puntos de encuentros</h1>
-<form class="row g-2" action="{{url_for('index_filtro') }}" method="POST">
+<form class="row g-2" action="{{url_for('point_index') }}" method="GET">
   <div class="col-3 p-2 m-1 " >
     {% if texto %}
         <input  type="text" name="texto_id" placeholder={{texto}}>
@@ -22,7 +22,7 @@
           <option despublicado>{{values[1]}}</option>
       </select>
   </div>
-    <button class=" p-1 col-2 btn btn-outline-warning btn-lg " type="submit">Filtrar</button>
+    <button class=" p-1 col-2 btn btn-outline-danger btn-lg " type="submit">Filtrar</button>
 </form>
 <table class="table mt-4">
   <thead>
@@ -40,15 +40,17 @@
     {% for point in points.items %}
       <tr>
         <th scope="row">{{loop.index}}</th>
-        <td>{{ point.nombre }}</td>
-        <td>{{ point.direccion }}</td>
-        <td>{{ point.coordenadas }}</td>
-        <td>{{ point.estado }}</td>
-        <td>{{ point.telefono}}</td>
+        <td>{{ point.name }}</td>
+        <td>{{ point.address }}</td>
+        <td>{{ point.coordinates }}</td>
+        <td>{{ point.status }}</td>
+        <td>{{ point.phone}}</td>
         <td>{{ point.email}}</td>
-        <td>
-          <a href="{{ url_for('point_delete',point_id = point.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al punto de encuentro  {{point.nombre}}?');"> Eliminar </a>
-        </td>
+         {% if has_permission(session["id"],"puntos_encuentro_destroy") %}
+            <td>
+              <a href="{{ url_for('point_delete',point_id = point.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al punto de encuentro  {{point.name}}?');"> Eliminar </a>
+            </td>
+        {%endif%}
         <td>
           <a href="{{ url_for('point_edit',point_id = point.id) }}" class="btn btn-success btn-sm" > Modificar </a>
         </td>
