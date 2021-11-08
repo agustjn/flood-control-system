@@ -4,4 +4,5 @@ Flask-Session==0.4
 black==21.9b0
 SQLAlchemy==1.4.25
 Flask-SQLAlchemy==2.5.1
+marshmallow==3.14.0
 

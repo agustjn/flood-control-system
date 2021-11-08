@@ -5,6 +5,7 @@ from app.helpers.auth import Auth
 
 from app.helpers.permission import PermissionDAO
 
+
 # Protected resources
 
 
@@ -94,9 +95,9 @@ def modify(user_id):
         msj = "El usuario " + parameter["user"] + " ya existe, ingrese otro"
 
     else:
-        obj = UserDAO.update(user_update,parameter)
+        obj = UserDAO.update(user_update,parameter["user"],parameter["email"],parameter["password"],parameter["first_name"], parameter["last_name"])
         if obj:
-            msj = "Se modifico el usuario " + user_update.user + " exitosamente"
+            msj = "Se modifico el usuario " + parameter["user"] + " exitosamente"
         else:
             msj = "Se produjo un error al modificar, intente nuevamente "
         flash (msj)
@@ -107,8 +108,7 @@ def modify(user_id):
 
 def delete(user_id):
     PermissionDAO.assert_permission(session["id"],"usuario_destroy")
-    
-    Auth.verify_authentification()
+
     user_delete = UserDAO.search_by_id(user_id)
     if UserDAO.delete_by_id(user_id):
         msj = "El usuario " + user_delete.user + " a sido eliminado con exito"
