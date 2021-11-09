@@ -10,7 +10,7 @@ class FloodZone(db.Model):
   name = Column(String(50), unique=True)
   coordinates=Column(String(50))
   state = Column(Boolean)
-  color = Column(String(50))
+  colour = Column(String(50))
 
   def __init__ (self, name = None, cod_zone = None, state = None, color= None, coordinates= None):
       self.name = name

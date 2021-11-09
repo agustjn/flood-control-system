@@ -204,6 +204,28 @@ CREATE TABLE `user_has_role` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `flood_zones`
+--
+
+CREATE TABLE `flood_zones` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `cod_zone` int NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `coordinates` varchar(50) NOT NULL,
+  `state` tinyint(1) UNSIGNED NOT NULL,
+  `colour` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+
+--
+-- Indices de la tabla `flood_zones`
+--
+ALTER TABLE `flood_zones`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `categories`
 --
 ALTER TABLE `categories`
@@ -275,6 +297,14 @@ ALTER TABLE `permissions`
 --
 ALTER TABLE `view`
   ADD PRIMARY KEY (`id`);
+
+
+
+--
+-- AUTO_INCREMENT de la tabla `flood_zones`
+--
+ALTER TABLE `flood_zones`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 
 --
