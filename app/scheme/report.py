@@ -1,5 +1,10 @@
 from app.dao.report import ReportDAO
 from marshmallow import Schema , fields, post_load, validate, ValidationError
+
+def validate_coordinates(coordinates):
+    if   existe_coordinates(coordinates):
+        raise ValidationError(" La coordenada ingresada ya existe")
+
 class ReportScheme(Schema):
         title = fields.Str(required=True)
         category = fields.Str(required=True,validate=validate.OneOf([1, 2, 3]))
@@ -17,9 +22,7 @@ class ReportScheme(Schema):
 
 
 
-        def validate_coordinates(coordinates):
-            if   existe_coordinates(coordinates)
-                raise ValidationError(" La coordenada ingresada ya existe")
+
 
         def inicializar_report(data):
 

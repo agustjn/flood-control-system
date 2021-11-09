@@ -17,31 +17,52 @@
   <h1>Crear un reporte</h1>
   <form class="row g-3" action="{{ url_for('report_create') }}" method="POST">
     <div class="col-md-6">
-      <label for="user" class="form-label">Titulo</label>
-      <input type="text" class="form-control" id= "user" name ="user" placeholder="Ingrese el usuario" required>
+      <label for="<title>Home</title>" class="form-label">Titulo</label>
+      <input type="text" class="form-control" id= "title" name ="title" placeholder="Ingrese un titulo" required>
     </div>
     <div class="col-md-6">
-      <label for="password" class="form-label">Categoria</label>
-      <input type="password" class="form-control" id="password" name = "password" placeholder="*********" required>
+    <label for="category">Seleccione una categoria:</label>
+      <select class="form-control" id="category" name="category">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
     </div>
-    <div class="col-md-12">
-      <label for="email" class="form-label">Coordenadas</label>
-      <input type="email" class="form-control" id= "email" name ="email" placeholder="example@algo.com" required>
+    <div class="col-md-6">
+      <label for="coordenada_lat" class="form-label">Coordenadas Latitud</label>
+      <input type="text" class="form-control" id="coordenada_lat" name = "coordenada_lat" placeholder= "" required>
+    </div>
+    <div class="col-md-6">
+      <label for="coordenda_long" class="form-label">Coordenadas Longitud</label>
+      <input type="text" class="form-control" id= "coordenda_long" name ="coordenda_long" placeholder="" required>
     </div>
     <div class="col-12">
-      <label for="name" class="form-label">Ingrese su nombre </label>
+      <label for="name" class="form-label">Nombre</label>
       <input type="text" class="form-control" id= "name" name ="first_name" placeholder="Nombre completo" required>
     </div>
     <div class="col-12">
-      <label for="last_name" class="form-label">Ingrese su apellido </label>
+      <label for="last_name" class="form-label">Apellido</label>
       <input type="text" class="form-control" id= "last_name" name ="last_name" placeholder="Apellido completo" required>
+    </div>
+    <div class="col-12">
+      <label for="name" class="form-label">Telefono</label>
+      <input type="text" class="form-control" id= "name" name ="first_name" placeholder="Ingrese su telefono" required>
+    </div>
+    <div class="col-12">
+      <label for="last_name" class="form-label">email</label>
+      <input type="email" class="form-control" id= "last_name" name ="last_name" placeholder="Ingrese su email" required>
+    </div>
+    <div class="col-12">
+      <label for="last_name" class="form-label">Comentario</label>
+      <textarea class="form-control" rows="5" id="comment" placeholder="Ingrese un comentario describiendo la denuncia"></textarea>
     </div>
     <div class="row mt-5">
       <div class="col-4">
         <button type="submit" class="btn btn-success btn-lg" >Crear</button>
       </div>
       <div class="col-4">
-        <a href="{{ url_for('user_index') }}" class="btn btn-danger btn-lg " >Volver</a>
+        <a href="{{ url_for('report_index') }}" class="btn btn-danger btn-lg " >Volver</a>
       </div>
     <div class="col-4">
        <button type="reset" class="btn btn-secondary btn-lg" >Limpiar</button>

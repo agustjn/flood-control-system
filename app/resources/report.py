@@ -35,9 +35,12 @@ def index():
     return render_template("report/index.html", reportes=filtered_users,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 def new():
-    PermissionDAO.assert_permission(session["id"],"report_new")
-    return render_template("user/new.html")
+    #PermissionDAO.assert_permission(session["id"],"report_new")
+    return render_template("report/new.html")
 
+def create():
+
+    return render_template("report/new.html")
 
 def delete(report_id):
     #PermissionDAO.assert_permission(session["id"],"report_destroy")
