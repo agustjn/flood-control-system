@@ -29,7 +29,7 @@ def _obtener_valores(status, texto):
 
 def flood_zones_index():
     # Permisos de ver index: Operador/Administrador
-
+    
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
     filtered_zones = FloodZoneDao.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
