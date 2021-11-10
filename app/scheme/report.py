@@ -2,7 +2,7 @@ from app.dao.report import ReportDAO
 from marshmallow import Schema , fields, post_load, validate, ValidationError
 
 def validate_coordinates(coordinates):
-    if   existe_coordinates(coordinates):
+    if   ReportDAO.existe_coordinates(coordinates):
         raise ValidationError(" La coordenada ingresada ya existe")
 
 class ReportScheme(Schema):
