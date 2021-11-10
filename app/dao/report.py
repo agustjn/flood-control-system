@@ -25,10 +25,13 @@ class ReportDAO():
         #return (new_report)
 
     @staticmethod
-    def existe_coordinates(coordinates):
-        lis = coordinates.split(",")
-        if bool(Report.query.filter(or_(Report.coordinates_latitude == lis[0], Report.coordinates_longitude == lis[1])):
-            return False
+    def existe_coordinates(coordinates = None , coordinates_latitude = None , coordinates_longitude = None):
+        if coordinates:
+            lis = coordinates.split(",")
+            coordinates_latitude = lis[0]
+            coordinates_longitude = lis[1]
+        if (bool(Report.query.filter(or_(Report.coordinates_latitude == coordinates_latitude, Report.coordinates_longitude == coordinates_longitude)))):
+                return False
         return True
 
 
@@ -65,7 +68,7 @@ class ReportDAO():
 
 
     @staticmethod
-    def filter_by_key(items_per_page, key=""):
+    def filter_by_key(status,items_per_page, key=""):
         key_filtered = "%" + key + "%"
         page = request.args.get('page', 1, type=int)
         if status == "Todos":

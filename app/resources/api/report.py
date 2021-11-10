@@ -1,6 +1,6 @@
 from app.dao.report import ReportDAO
 from flask import jsonify, Blueprint, request
-from app.scheme.report import  reports_scheme,report_scheme, ReportScheme
+from app.scheme.report import  reports_scheme,report_scheme, ReportScheme, Report_show_id
 
 report_api = Blueprint("reportes",__name__, url_prefix = "/report")
 
@@ -17,3 +17,11 @@ def create():
     schema = ReportScheme()
     result = schema.load(user_data)
     return jsonify([]),201
+
+@report_api.get("/show")
+def show():
+    report_id = request.get_json()
+    #schema = Report_show_id()
+    #result = scheme.load(report_id)
+    dic = {"name": "nombre", "id": report_id}
+    return jsonify(dic),200
