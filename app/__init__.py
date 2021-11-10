@@ -6,6 +6,7 @@ from config import config
 from app import db
 from app.resources import issue,user,point,configuration,auth
 from app.resources.api.issue import issue_api
+from app.resources.api.flood_zone import flood_zones_api
 from app.helpers import handler
 from app.helpers.auth import Auth
 import logging
@@ -102,6 +103,7 @@ def create_app(environment="development"):
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
     api.register_blueprint(issue_api)
+    api.register_blueprint(flood_zones_api)
 
     app.register_blueprint(api)
 

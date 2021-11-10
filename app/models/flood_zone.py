@@ -25,6 +25,8 @@ class FloodZone(db.Model):
       self.state = state
       self.color = color
 
+
+
   
 
 
