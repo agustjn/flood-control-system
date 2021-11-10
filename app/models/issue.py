@@ -26,4 +26,3 @@ class Issue(db.Model):
         self.category_id = category_id
         self.status_id = status_id
         self.created_at = dt.date.today().strftime("%b %d %Y %H:%M:%S")
-        print(self.created_at)

@@ -4,8 +4,9 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
-from app.resources import issue,user,point,configuration,auth
+from app.resources import issue,user,point,configuration,auth,report
 from app.resources.api.issue import issue_api
+from app.resources.api.flood_zone import flood_zones_api
 from app.helpers import handler
 from app.helpers.auth import Auth
 import logging
@@ -13,6 +14,7 @@ from app.helpers.routes import RoutesConfig
 from app.helpers.configurations import format_background
 from app.helpers.permission import PermissionDAO
 
+from app.resources.api.report import report_api
 
 #Activo los loggins en la terminal de las query generadas
 logging.basicConfig()
@@ -84,7 +86,14 @@ def create_app(environment="development"):
     app.add_url_rule("/puntos/edit/<point_id>", "point_edit", point.edit)
     app.add_url_rule("/puntos/modification/<point_id>", "point_modification", point.modify,methods=["POST"])
 
-
+    #Rutas de los Reportes
+    app.add_url_rule("/report", "report_index", report.index, methods = ["GET"])
+    app.add_url_rule("/report/delete/<report_id>", "report_delete", report.delete )
+    app.add_url_rule("/reports/create", "report_create", report.create, methods=["POST"])
+    app.add_url_rule("/reports/nuevo", "report_new", report.new)
+    app.add_url_rule("/reports/edit/<report_id>", "report_edit", report.edit)
+    app.add_url_rule("/reports/modification/<report_id>", "report_modification", report.modify,methods=["POST"])
+    app.add_url_rule("/reports/show/<report_id>", "report_show", report.show)
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
@@ -102,8 +111,14 @@ def create_app(environment="development"):
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
     api.register_blueprint(issue_api)
+<<<<<<< HEAD
+    api.register_blueprint(flood_zones_api)
+=======
+    api.register_blueprint(report_api)
+>>>>>>> development
 
     app.register_blueprint(api)
+
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

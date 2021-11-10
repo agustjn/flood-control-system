@@ -163,6 +163,26 @@ CREATE TABLE `view` (
 
 
 
+------------------------------------------------------------
+CREATE TABLE `report` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `category` int(30) NOT NULL,
+  `creation_date` varchar(50) NOT NULL,
+  `closing_date` varchar(50),
+  `description` varchar(255) NOT NULL,
+  `coordinates_latitude` varchar(30) NOT NULL,
+  `coordinates_longitude` varchar(30) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `phone` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `user_assing_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
 -- --------------------------------------------------------
 
 --
@@ -308,6 +328,16 @@ ALTER TABLE `users`
     ADD KEY `phone` (`phone`),
     ADD KEY `email` (`email`);
 
+
+--
+-- Indice de la tabla de report_id
+--
+
+  ALTER TABLE `report`
+    ADD PRIMARY KEY (`id`),
+    ADD UNIQUE KEY `coordinates_latitude` (`coordinates_latitude`),
+    ADD UNIQUE KEY `coordinates_longitude` (`coordinates_longitude`),
+    ADD KEY `user_assing_id` (`user_assing_id`);
 --
 -- Indices de la tabla `role`
 --
@@ -326,6 +356,16 @@ ALTER TABLE `permissions`
 --
 ALTER TABLE `view`
   ADD PRIMARY KEY (`id`);
+
+
+
+
+  --
+  -- AUTO_INCREMENT de la tabla `report`
+  --
+  ALTER TABLE `report`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 
 --
@@ -394,8 +434,7 @@ ALTER TABLE `permissions`
 
 --
 -- Restricciones para tablas volcadas
---
-
+--s
 --
 -- Filtros para la tabla `issues`
 --
