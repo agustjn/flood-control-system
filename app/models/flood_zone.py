@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from app.db import db
 from app.models.coordinate import Coordinate , FloodZone_has_coordinate
+import random
 
 class FloodZone(db.Model):
   """Define el modelo de la tabla zonas_inundables"""
@@ -21,9 +22,21 @@ class FloodZone(db.Model):
   # por defectos se cargan con estos valores por el tema de que en el csv solo viene nombre y coordenadas
   def __init__ (self, name = None, cod_zone = None, state = None, color = None):
       self.name = name
-      self.cod_zone = cod_zone
-      self.state = state
-      self.color = color
+      if not cod_zone:
+          self.cod_zone = random.choice(['Cod 0', 'Cod 1', 'Cod 2', 'Cod 3', 'Cod 4', 'Cod 5', 'Cod 6', 'Cod 7'])
+      else:
+          self.cod_zone = cod_zone
+      if not state:
+          self.state = random.choice(['Publicado', 'Despublicado'])
+      else:
+          self.state = state
+      if not color:
+          self.color = random.choice(['Amarillo', 'Verde', 'Rojo', 'Azul', 'Celeste', 'Azul', 'Violeta'])
+      else:
+          self.color = color
+
+
+
 
   
 

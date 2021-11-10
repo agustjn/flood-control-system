@@ -1,10 +1,14 @@
 import re
+
+from werkzeug.utils import redirect, secure_filename
 from app.helpers.auth import Auth
-from flask import render_template, request
+from flask import render_template, request, url_for, flash
 from app.dao.configuration import ConfigurationDAO
 from app.dao.flood_zone import FloodZoneDao
+from app.models.coordinate import Coordinate
+from app.models.flood_zone import FloodZone
 import csv
-
+import os
 
 # def flood_zones_index():
 #     Auth.is_authenticated()
@@ -38,13 +42,35 @@ def flood_zones_index():
     return render_template("flood_zone/index.html", zones=filtered_zones,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'csv', 'xls', 'xlsx'}
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 def update_csv():
+    
     file = request.files['file']
-    # with open(file, 'r') as csv:
-    #     for row in csv:
-    #         print(row)
-    print('--------------------------')
-    print(file)
+    print(allowed_file(file.filename))
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        # NECESITO GUARDARLO PORQUE NO SE COMO ABRIRLO COMO CSV
+        # File es una instancia de FileStorage, y no se como obtener el csv solo para hacer un open
+        file_route = os.path.join('app/static/uploaded_files', filename)
+        file.save(file_route)
+        with open(file_route, 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                FloodZone(name=row[0])
+                print('--------------------------')
+                print("Nombre de zona: {}".format(row[0]))
+                print('--------------------------')
+
+
+    else:
+        flash("No ha subido ningun archivo.")
+        return redirect(url_for("flood_zone_index"))
+    return redirect(url_for("flood_zone_index"))
 
 def profile(id):
     return render_template("flood_zone/profile.html")
