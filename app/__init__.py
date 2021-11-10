@@ -90,9 +90,9 @@ def create_app(environment="development"):
     app.add_url_rule("/report/delete/<report_id>", "report_delete", report.delete )
     app.add_url_rule("/reports/create", "report_create", report.create, methods=["POST"])
     app.add_url_rule("/reports/nuevo", "report_new", report.new)
-    #app.add_url_rule("/reports/edit/<report_id>", "report_edit", report.edit)
-    #app.add_url_rule("/reports/modification/<report_id>", "report_modification", report.modify,methods=["POST"])
-
+    app.add_url_rule("/reports/edit/<report_id>", "report_edit", report.edit)
+    app.add_url_rule("/reports/modification/<report_id>", "report_modification", report.modify,methods=["POST"])
+    app.add_url_rule("/reports/show/<report_id>", "report_show", report.show)
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

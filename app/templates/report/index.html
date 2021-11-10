@@ -37,8 +37,6 @@
         <th scope="col">Fecha de creacion</th>
         <th scope="col">Usuario Asignado</th>
         <th scope="col">Estado</th>
-
-
       </tr>
     </thead>
     <tbody>
@@ -50,29 +48,72 @@
         <td>{{ report.user_assing.username}}</td>
         <td>{{ report.status}}</td>
 
+
         <td>
-          <a href="{{ url_for('report_delete',report_id = report.id) }}" class="btn btn-secondary btn-sm"
+          <a href="{{ url_for('report_edit',report_id = report.id) }}" class="btn btn-success btn-sm"> Modificar </a>
+        </td>
+        <td>
+          <a id="show" class="btn btn-secondary btn-sm" onclick= " funcion({{report.id}}) ;"> Mostrar </a>
+        </td>
+        <td>
+          <a href="{{ url_for('report_delete',report_id = report.id) }}" class="btn btn-danger btn-sm"
             onclick="return confirm('¿Estas seguro de eliminar al reporte {{report.title}}?');"> Eliminar </a>
         </td>
       </tr>
     {% endfor %}
-      </tbody>
   </table>
+      <p id = 'info'>  </p>
+      <div>
+        {{ render_paginate(reportes, index_route='report_index')}}
+      </div>
 
-     <div>
-       {# Funcion importada de "paginate.html" en el head #}
-
-       {{ render_paginate(reportes, index_route='report_index')}}
+     <div class="">
+       <a href="{{ url_for('report_new') }}" class="btn btn-success btn-lg"> Nuevo </a>
+       <a href="{{ url_for('home') }}" class="btn btn-secondary btn-lg"> Volver </a>
      </div>
 
+     <div id="card" class="card-header" >
+
+     </div>
+
+  </tbody>
+<script type="text/javascript">
 
 
 
+  async function funcion(report_id) {
+    try {
+      card.innerHTML = ''
 
-    <div class="">
-      <a href="{{ url_for('report_new') }}" class="btn btn-success btn-lg"> Nuevo </a>
-      <a href="{{ url_for('home') }}" class="btn btn-secondary btn-lg"> Volver </a>
+    //  x = document.getElementById("show").setAttribute("disabled", "true");
+      const resPost = await fetch(`http://localhost:5000/api/report/`);
+      console.log(resPost);
+      const post = await resPost.json()
+      show_card(post);
+      //document.getElementById('info').textContent = JSON.stringify(post)
+    }
+     catch (e) {
+      console.log(e);
+      }
+      return false;
+
+    }
+  
+
+  function show_card(post){
+    card.innerHTML += `
+      <div class="card-body">
+      <h5 class="card-title">${post[1]["title"]}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+      <p class="card-text">${post[1]["description"]}</p>
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
     </div>
 
+  `
+  }
 
+
+
+</script>
 {% endblock %}

@@ -77,8 +77,6 @@ def edit(user_id):
 
     PermissionDAO.assert_permission(session["id"],"usuario_update")
 
-    Auth.verify_authentification()
-    UserDAO.search_by_id(user_id)
     modification_user = UserDAO.search_by_id(user_id)
     msj = "Los campos que desea dejar igual dejenlo sin rellenar"
     return render_template("user/edit.html", user = modification_user, msj = msj)
@@ -109,7 +107,6 @@ def modify(user_id):
 def delete(user_id):
     PermissionDAO.assert_permission(session["id"],"usuario_destroy")
 
-    user_delete = UserDAO.search_by_id(user_id)
     if UserDAO.delete_by_id(user_id):
         msj = "El usuario " + user_delete.user + " a sido eliminado con exito"
     else:

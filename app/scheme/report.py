@@ -20,14 +20,15 @@ class ReportScheme(Schema):
         def make_report(self, data, **kwargs):
             return self.inicializar_report(**data)
 
-
-
-
-
         def inicializar_report(data):
-
             return ReportDAO.create_report_dict(**data)
 
+class Report_show_id(Schema):
+    id = fields.Int(required = True)
+
+    @post_load
+    def make_report(self, data, **kwargs):
+        return ReportDAO.show(data)
 
 reports_scheme = ReportScheme(many = True)
 report_scheme = ReportScheme()
