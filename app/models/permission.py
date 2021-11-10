@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from app.models.configuration import Configuration
-from datetime import datetime as dt
+import datetime as dt
 
 from app.db import db
 from sqlalchemy.orm import relationship

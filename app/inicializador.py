@@ -6,7 +6,9 @@ from app.models.point import Point
 from app.models.configuration import Configuration
 from app.models.views_sort import View
 from app.models.issue import Issue
-#from app.models.flood_zone import FloodZone
+
+from app.dao.report import ReportDAO
+
 #Creo y agregago la configuraicon
 
 config = Configuration("Amarillo",5)
@@ -171,9 +173,12 @@ db.session.add(puntos_encuentro10)
 db.session.add(puntos_encuentro11)
 db.session.add(puntos_encuentro12)
 db.session.add(puntos_encuentro13)
-db.session.commit() 
+db.session.commit()
 
 
-# Creo zonas inundables de prueba
-#flood_zone1 = FloodZone('Zona de Prueba', 'abc123', True, color='#D24324' , coordinates=[ ["-34.79135898963996,-57.99674526817398"],["-34.794109949219944,-57.99940601951677"],["-34.79506218307646,-57.998633543320466"] ])
+#Agrego los report de prueba
 
+ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no sabemos porque ', 45454, 555555, 2, 'Juan', 'De los palotes', 2213641585, 'juan@email.com')
+ReportDAO.create_report('Alcantarilla Sucia',1, 'La alcantarilla esta SUCIA no sabemos porque ', 11111, 22222, 2, 'Pedro', 'Primo', 22236548, 'Pedro@email.com')
+ReportDAO.create_report('Basural',1, 'Hay un basural en la puerta de mi casa ', 222222, 111111, 3, 'Santiago', 'De los palotes', 236568985, 'Santiago@email.com')
+ReportDAO.create_report('Sin desagora',2, 'No desagota la alcantarilla de la puerta de mi casa', 11111, 23323232, 1, 'Pedrito', 'Clavito', 222365263, 'Pedrito@email.com')
