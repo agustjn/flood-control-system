@@ -111,11 +111,8 @@ def create_app(environment="development"):
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
     api.register_blueprint(issue_api)
-<<<<<<< HEAD
     api.register_blueprint(flood_zones_api)
-=======
     api.register_blueprint(report_api)
->>>>>>> development
 
     app.register_blueprint(api)
 
