@@ -1,7 +1,8 @@
 import  { ZoneMap }  from "../../components/Map.js" ;
 
-console.log("IS NOT WORKING");
 
-window.onload = () => { 
+
+window.onload = () => {
     mp = new ZoneMap();
+    //console.log(flood_zone.coordinates.first());
 }

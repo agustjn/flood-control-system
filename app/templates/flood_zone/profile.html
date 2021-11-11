@@ -10,7 +10,7 @@
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
   <!--  -->
-  
+
 
   <!-- Import del leaflet draw -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js" integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -18,7 +18,7 @@
 {% endblock %}
 
 
-{% block content %} 
+{% block content %}
 
 
 <div class="row mt-5" >
@@ -27,7 +27,7 @@
          <span> <h4>Codigo: {{flood_zone.cod_zone}} </h4></span>
          <span> <h4>Estado: {{flood_zone.state}} </h4></span>
          <span> <h4>Color asignado: {{flood_zone.colour}} </h4></span>
-        
+         <span> <h4>Cooordenada: {{flood_zone.coordinates.all()}} </h4></span>
     </div>
     <div class="col-6">
         <div id="map" style="height: 360px;" ></div>
@@ -36,6 +36,6 @@
 
 <a href="{{url_for('flood_zone_index')}}" class="btn btn-secondary"> Volver </a>
 
-<script type="module" coords=flood_zone.coordinates src="{{url_for('static', filename='js/flood_zones/profile.js')}}"></script>
+<script type="module" src="{{url_for('static', filename='js/flood_zones/profile.js')}}" flood_zone = flood_zone ></script>
 
 {% endblock %}

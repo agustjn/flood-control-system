@@ -85,8 +85,8 @@
     try {
       card.innerHTML = ''
 
-    //  x = document.getElementById("show").setAttribute("disabled", "true");
-      const resPost = await fetch(`http://localhost:5000/api/report/`);
+      x = document.getElementById("show").setAttribute("disabled", "true");
+      const resPost = await fetch(`http://localhost:5000/api/report/show/${report_id}`);
       console.log(resPost);
       const post = await resPost.json()
       show_card(post);
@@ -98,14 +98,14 @@
       return false;
 
     }
-  
+
 
   function show_card(post){
     card.innerHTML += `
       <div class="card-body">
-      <h5 class="card-title">${post[1]["title"]}</h5>
+      <h5 class="card-title">${post["name"]}</h5>
       <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-      <p class="card-text">${post[1]["description"]}</p>
+      <p class="card-text">${post["id"]}</p>
       <a href="#" class="card-link">Card link</a>
       <a href="#" class="card-link">Another link</a>
     </div>
