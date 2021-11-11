@@ -42,18 +42,21 @@
       <td>{{ zone.cod_zone }}</td>
       <td>{{ zone.name }}</td>
       <td>{{ zone.state }}</td>
-
+      <td>
+        <a href="{{ url_for('flood_zone_profile',id = zone.id) }}" class="btn btn-secondary btn-sm"> Ver detalle  </a>
+      </td>
       {% if zone.state %}
         <td>
-          <a href="#" class="btn btn-success btn-sm"> Publicar </a>
+          <a href="#" class="btn btn-success btn-sm"> Despublicar </a>
         </td>
       {% else %}
         <td>
-          <a href="#" class="btn btn-success btn-sm"> Despublicar </a>
+          <a href="#" class="btn btn-success btn-sm"> Publicar </a>
         </td>
       {% endif %}
     </tr>
     {% endfor %}
+   
   </tbody>
 </table>
 
