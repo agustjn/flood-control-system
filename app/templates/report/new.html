@@ -15,7 +15,7 @@
 
 
   <h1>Crear un reporte</h1>
-  <form class="row g-3" action="{{ url_for('report_create'), report.id }}" method="POST">
+  <form class="row g-3" action="{{ url_for('report_create')}}" method="POST">
     <div class="col-md-6">
       <label for="<title>Home</title>" class="form-label">Titulo</label>
       <input type="text" class="form-control" id= "title" name ="title" placeholder="Ingrese un titulo" required>
@@ -31,11 +31,11 @@
     </div>
     <div class="col-md-6">
       <label for="coordenada_lat" class="form-label">Coordenadas Latitud</label>
-      <input type="text" class="form-control" id="coordenada_lat" name = "coordenada_lat" placeholder= {{report.coordenada_lat}} required>
+      <input type="text" class="form-control" id="coordenada_lat" name = "coordenada_lat" placeholder= "Ingrese coordenada latitud" required>
     </div>
     <div class="col-md-6">
       <label for="coordenda_long" class="form-label">Coordenadas Longitud</label>
-      <input type="text" class="form-control" id= "coordenda_long" name ="coordenda_long" placeholder="" required>
+      <input type="text" class="form-control" id= "coordenda_long" name ="coordenda_long" placeholder=Ingrese coordenada Longitud" required>
     </div>
     <div class="col-12">
       <label for="name" class="form-label">Nombre</label>

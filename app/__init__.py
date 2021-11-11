@@ -113,7 +113,6 @@ def create_app(environment="development"):
     api.register_blueprint(issue_api)
     api.register_blueprint(flood_zones_api)
     api.register_blueprint(report_api)
-
     app.register_blueprint(api)
 
 
