@@ -113,7 +113,10 @@ def create_app(environment="development"):
     api.register_blueprint(issue_api)
     api.register_blueprint(flood_zones_api)
     api.register_blueprint(report_api)
+<<<<<<< HEAD
 
+=======
+>>>>>>> f5d67c694d4b8f7575408b0f400f1a1eb6dbd84f
     app.register_blueprint(api)
 
 

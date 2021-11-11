@@ -1,12 +1,26 @@
-from flask import jsonify, Blueprint
-from app.models.flood_zone import FloodZone 
+from flask import jsonify, Blueprint, request
+from app.dao.flood_zone import FloodZoneDao
+from app.scheme.flood_zone import flood_zones_scheme,flood_zone_scheme, flood_zone_pagination_scheme
+from app.dao.configuration import ConfigurationDAO
 
 flood_zones_api = Blueprint("zonas_inundables", __name__, url_prefix="/zonas_inundables")
 
 
 @flood_zones_api.get("/")
 def index():
-    flood_zones_rows  = FloodZone.query.all()
-    flood_zones = [flood_zone.as_dict() for flood_zone in flood_zones_rows]
+    dao = ConfigurationDAO()
+    page = int(request.args.get("page", 1))
+    per_page = int(request.args.get("per_page", dao.items_per_page))
+    flood_zones_page = FloodZoneDao.recover_flood_zones_paginated(page, per_page)
+
+    flood_zones = flood_zone_pagination_scheme.dump(flood_zones_page)
+
+    return jsonify(flood_zones)
     
-    return jsonify(zonas=flood_zones)
+@flood_zones_api.get("/show/<int:id>")
+def show(id):
+    flood_zone_instance = FloodZoneDao.recover_flood_zone(id)
+    flood_zone = flood_zone_scheme.dump(flood_zone_instance)
+
+    return jsonify(attributes=flood_zone)
+

@@ -39,7 +39,7 @@ def new():
     return render_template("report/new.html")
 
 def create():
-
+    
     return render_template("report/new.html")
 
 def delete(report_id):
