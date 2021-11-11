@@ -27,7 +27,8 @@
          <span> <h4>Codigo: {{flood_zone.cod_zone}} </h4></span>
          <span> <h4>Estado: {{flood_zone.state}} </h4></span>
          <span> <h4>Color asignado: {{flood_zone.colour}} </h4></span>
-         <span> <h4>Cooordenada: {{flood_zone.coordinates.all()}} </h4></span>
+
+        <span> <h4>Color : {{flood_zone.coordinates.all()}} </h4></span>
     </div>
     <div class="col-6">
         <div id="map" style="height: 360px;" ></div>
@@ -35,7 +36,10 @@
 </div>
 
 <a href="{{url_for('flood_zone_index')}}" class="btn btn-secondary"> Volver </a>
-
-<script type="module" src="{{url_for('static', filename='js/flood_zones/profile.js')}}" flood_zone = flood_zone ></script>
+<script>
+    coordenadas = {{flood_zone.get_as_json() | safe }}
+    console.log(coordenadas);
+</script>
+<!-- <script type="module" src="{{url_for('static', filename='js/flood_zones/profile.js')}}" ></script> -->
 
 {% endblock %}

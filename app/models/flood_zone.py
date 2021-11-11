@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean
 from app.db import db
 from app.models.coordinate import Coordinate , FloodZone_has_coordinate
 import random
+import json
 
 class FloodZone(db.Model):
   """Define el modelo de la tabla zonas_inundables"""
@@ -18,7 +19,7 @@ class FloodZone(db.Model):
             backref= db.backref("coordinates_floodZone", lazy="dynamic"),
             lazy = "dynamic",
         )
- 
+
   # por defectos se cargan con estos valores por el tema de que en el csv solo viene nombre y coordenadas
   def __init__ (self, name = None, cod_zone = None, state = None, color = None):
       self.name = name
@@ -36,11 +37,12 @@ class FloodZone(db.Model):
           self.colour = color
 
 
+  def get_as_json(self):
+       return json.dumps([{"latitud": 2323, "longitud": 2344}])
 
 
 
 
-  
 
 
 
@@ -50,4 +52,3 @@ class FloodZone(db.Model):
   #   self.coordinates = coordinates
   #   self.state = state
   #   self.color = color
-    
