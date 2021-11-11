@@ -17,12 +17,10 @@ def index():
 
     return jsonify(flood_zones)
     
+@flood_zones_api.get("/show/<int:id>")
+def show(id):
+    flood_zone_instance = FloodZoneDao.recover_flood_zone(id)
+    flood_zone = flood_zone_scheme.dump(flood_zone_instance)
 
+    return jsonify(attributes=flood_zone)
 
-# @flood_zones_api.get("/show")
-# def show():
-#     report_id = request.get_json()
-#     #schema = Report_show_id()
-#     #result = scheme.load(report_id)
-#     dic = {"name": "nombre", "id": report_id}
-#     return jsonify(dic),200

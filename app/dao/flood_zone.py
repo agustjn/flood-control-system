@@ -25,3 +25,7 @@ class FloodZoneDao():
     @staticmethod
     def recover_flood_zones_paginated(page,per_page):
         return FloodZone.query.paginate(page = page, per_page = per_page)
+
+    @staticmethod
+    def recover_flood_zone(id):
+        return FloodZone.query.filter_by(id=id).first()
