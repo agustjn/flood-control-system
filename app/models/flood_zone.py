@@ -7,7 +7,7 @@ class FloodZone(db.Model):
   """Define el modelo de la tabla zonas_inundables"""
   __tablename__ = "flood_zones"
   id = Column(Integer,primary_key=True)
-  cod_zone = Column (Integer)
+  cod_zone = Column (String(50))
   name = Column(String(50), unique=True)
   state = Column(Boolean)
   colour = Column(String(50))
@@ -27,13 +27,13 @@ class FloodZone(db.Model):
       else:
           self.cod_zone = cod_zone
       if not state:
-          self.state = random.choice(['Publicado', 'Despublicado'])
+          self.state = random.choice([True, False])
       else:
           self.state = state
       if not color:
-          self.color = random.choice(['Amarillo', 'Verde', 'Rojo', 'Azul', 'Celeste', 'Azul', 'Violeta'])
+          self.colour = random.choice(['Amarillo', 'Verde', 'Rojo', 'Azul', 'Celeste', 'Azul', 'Violeta'])
       else:
-          self.color = color
+          self.colour = color
 
 
 

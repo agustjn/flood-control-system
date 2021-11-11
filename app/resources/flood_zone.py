@@ -7,8 +7,12 @@ from app.dao.configuration import ConfigurationDAO
 from app.dao.flood_zone import FloodZoneDao
 from app.models.coordinate import Coordinate
 from app.models.flood_zone import FloodZone
+from app.models.coordinate import FloodZone_has_coordinate
 import csv
 import os
+from app.db import db
+import json
+
 
 # def flood_zones_index():
 #     Auth.is_authenticated()
@@ -51,7 +55,6 @@ def allowed_file(filename):
 def update_csv():
     
     file = request.files['file']
-    print(allowed_file(file.filename))
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         # NECESITO GUARDARLO PORQUE NO SE COMO ABRIRLO COMO CSV
@@ -61,10 +64,23 @@ def update_csv():
         with open(file_route, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
-                FloodZone(name=row[0])
-                print('--------------------------')
-                print("Nombre de zona: {}".format(row[0]))
-                print('--------------------------')
+                if row[1] == 'name' or row[1] == 'area':
+                    pass
+                else:
+                    flood_zone = FloodZone(name=row[0])
+                    db.session.add(flood_zone)
+                    print('--------------------------')
+                    print(row[1])
+                    coords = json.loads(row[1])
+                    for coor in coords:
+
+                        coordinate = Coordinate(latitude=float(coor[0]), longitude=float(coor[1]))
+                        db.session.add(coordinate)
+                        flood_zone.coordinates.append(coordinate)
+                        # table = FloodZone_has_coordinate(flood_zone.id, coordinate.id)
+                        # db.session.add(table)                                 
+                    db.session.commit()          
+                
 
 
     else:

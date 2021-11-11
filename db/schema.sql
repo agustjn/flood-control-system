@@ -229,7 +229,7 @@ CREATE TABLE `user_has_role` (
 
 CREATE TABLE `flood_zones` (
   `id` int(10) UNSIGNED NOT NULL,
-  `cod_zone` int NOT NULL,
+  `cod_zone` varchar(50) NOT NULL,
   `name` varchar(30) NOT NULL,
   `state` tinyint(1) UNSIGNED NOT NULL,
   `colour` varchar(50) NOT NULL
@@ -243,8 +243,8 @@ CREATE TABLE `flood_zones` (
 
 CREATE TABLE `coordinates` (
   `id` int(10) UNSIGNED NOT NULL,
-  `latitude` varchar(50) NOT NULL,
-  `longitude` varchar(50) NOT NULL
+  `latitude` float(50) NOT NULL,
+  `longitude` float(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
