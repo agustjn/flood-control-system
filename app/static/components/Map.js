@@ -1,4 +1,4 @@
-export function Map() {
+export function ZoneMap() {
     var mymap = L.map('map').setView([-34.9187, -57.956], 13);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

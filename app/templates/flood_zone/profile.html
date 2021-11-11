@@ -2,16 +2,31 @@
 
 {% block head %}
 {{ super() }}
+  <!-- Import del leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <!--  -->
+  
 
+  <!-- Import del leaflet draw -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js" integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css" integrity="sha512-vJfMKRRm4c4UupyPwGUZI8U651mSzbmmPgR3sdE3LcwBPsdGeARvUM5EcSTg34DK8YIRiIo+oJwNfZPMKEQyug==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 {% endblock %}
 
 
 {% block content %} 
-<a href="{{url_for('flood_zone_index')}}" class="btn btn-secondary"> Volver </a>
+
 
 <div class="row mt-5" >
-    <div class="col-6">
-        {# <span><h2> {{ flood_zone.name}}</h2></span> #}
+    <div class="col-6 justify-content-center">
+         <span><h2> Nombre de la zona: {{ flood_zone.name}}</h2></span>
+         <span> <h4>Codigo: {{flood_zone.cod_zone}} </h4></span>
+         <span> <h4>Estado: {{flood_zone.state}} </h4></span>
+         <span> <h4>Color asignado: {{flood_zone.colour}} </h4></span>
         
     </div>
     <div class="col-6">
@@ -19,8 +34,8 @@
     </div>
 </div>
 
+<a href="{{url_for('flood_zone_index')}}" class="btn btn-secondary"> Volver </a>
 
-</div>
 <script type="module" src="{{url_for('static', filename='js/flood_zones/profile.js')}}"></script>
 
 {% endblock %}

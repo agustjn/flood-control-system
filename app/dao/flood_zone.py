@@ -4,6 +4,11 @@ from app.db import db
 
 class FloodZoneDao():
     
+
+    @staticmethod
+    def search_object_by_id(id):
+        return  FloodZone.query.filter_by(id=id).first()
+
     @staticmethod
     def filter_by_key(status,items_per_page, key=""):
         key_filtered = "%" + key + "%"

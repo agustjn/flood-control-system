@@ -89,5 +89,7 @@ def update_csv():
     return redirect(url_for("flood_zone_index"))
 
 def profile(id):
-    return render_template("flood_zone/profile.html")
+    flood_zone = FloodZoneDao.search_object_by_id(id)
+
+    return render_template("flood_zone/profile.html", flood_zone=flood_zone)
     
