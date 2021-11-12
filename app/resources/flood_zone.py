@@ -93,4 +93,17 @@ def profile(id):
     flood_zone = FloodZoneDao.search_object_by_id(id)
 
     return render_template("flood_zone/profile.html", flood_zone=flood_zone)
+
+
+def delete(flood_zone_id):
+    #colocar permiso de borrado
+
+    flood_zone_delete = FloodZoneDao.search_object_by_id(flood_zone_id)
+    if FloodZoneDao.delete(flood_zone_delete):
+         msj = "La zona inundable " + flood_zone_delete.name + " ha sido eliminado con exito"
+    else:
+        msj = "Error al querer borrar la zona inundable " + flood_zone_delete.name + " de la tabla, intente nuevamente"
+
+    flash (msj,"info")
+    return redirect(url_for("flood_zone_index"))
     

@@ -18,8 +18,8 @@ class Coordinate(db.Model):
 class FloodZone_has_coordinate():
     table = db.Table(
         "floodZone_has_coordinate",
-        Column("floodZone_id",Integer, ForeignKey("flood_zones.id")),
-        Column("coordinate_id",Integer, ForeignKey("coordinates.id")),
+        Column("floodZone_id",Integer, ForeignKey("flood_zones.id", ondelete="CASCADE")),
+        Column("coordinate_id",Integer, ForeignKey("coordinates.id", ondelete="CASCADE")),
         )
 
     @classmethod

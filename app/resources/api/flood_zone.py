@@ -28,8 +28,5 @@ def show(id):
     flood_zone = flood_zone_scheme.dump(flood_zone_instance)
 
     return jsonify(attributes=flood_zone)
-<<<<<<< HEAD
 
 
-=======
->>>>>>> b236598ad9461681e33d6662d446dd1e7c1715a1

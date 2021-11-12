@@ -48,6 +48,9 @@ db.session.commit()
 
 
 
+zonas_inundables_index = Permission("zonas_inundables_index")
+zona_inundable_show = Permission("zona_inundable_show")
+
 usuario_index = Permission("usuario_index")
 
 usuario_new = Permission("usuario_new")
@@ -99,6 +102,9 @@ denuncia_show = Permission("denuncia_show")
 
 
 #Agrego los permisos a la base de datos
+db.session.add(zonas_inundables_index)
+db.session.add(zona_inundable_show)
+
 db.session.add(usuario_index)
 db.session.add(configuracion_index)
 db.session.add(puntos_encuentro_update)
@@ -127,6 +133,9 @@ db.session.commit()
 rol_administrador = Role("administrador")
 
 #Relacion del rol administrador con sus permisos
+rol_administrador.permission.append(zonas_inundables_index)
+rol_administrador.permission.append(zona_inundable_show)
+
 rol_administrador.permission.append(usuario_index)
 rol_administrador.permission.append(configuracion_index)
 rol_administrador.permission.append(punto_encuentro_index)
@@ -158,6 +167,9 @@ db.session.commit()
 rol_operador = Role("operador")
 
 #Relacion del rol operador con sus permisos
+rol_administrador.permission.append(zonas_inundables_index)
+rol_administrador.permission.append(zona_inundable_show)
+
 rol_operador.permission.append(usuario_index)
 rol_operador.permission.append(usuario_update)
 rol_operador.permission.append(configuracion_index)
