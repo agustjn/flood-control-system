@@ -2,14 +2,14 @@
 {% block title %}Crear punto de encuentro{% endblock %}
 {% block head %}
   {{ super() }}
-  <!-- Leaflet files-->
+  <!-- Leaflet files -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
-
+  
    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
    <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
@@ -58,6 +58,9 @@
     <div class="map-container">
       <div id="mapid"></div>
     </div>
+    <script>
+      var map = L.map('map').setView([-34.9187, -57.956], 13);
+    </script>
 
     <div class="d-grid gap-1">
       <button type="submit" class="btn btn-success" type="button" >Crear</button>
