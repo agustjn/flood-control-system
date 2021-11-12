@@ -71,6 +71,33 @@ puntos_encuentro_destroy = Permission("puntos_encuentro_destroy")
 #puntos_encuentro_new: Permite cargar una sona inundable:
 puntos_encuentro_new = Permission("puntos_encuentro_new")
 
+
+
+
+
+#Punto_encuentro_index: Permite acceder al index (listado) del modulo
+denuncia_index = Permission("denuncia_index")
+
+#puntos_encuentro_update: Permite actualizar una zona inundable-
+denuncia_update = Permission("denuncia_update")
+
+
+#puntos_encuentro_destroy: Permite borrar una zona inundable
+denuncia_destroy = Permission("denuncia_destroy")
+
+#puntos_encuentro_new: Permite cargar una sona inundable:
+denuncia_new = Permission("denuncia_new")
+
+
+denuncia_open = Permission("denuncia_open")
+denuncia_resolved = Permission("denuncia_resolved")
+denuncia_close = Permission("denuncia_close")
+denuncia_add_monitoring = Permission("denuncia_add_monitoring")
+denuncia_show = Permission("denuncia_show")
+
+
+
+
 #Agrego los permisos a la base de datos
 db.session.add(usuario_index)
 db.session.add(configuracion_index)
@@ -83,6 +110,15 @@ db.session.add(usuario_new)
 db.session.add(usuario_update)
 db.session.add(usuario_destroy)
 
+db.session.add(denuncia_index)
+db.session.add(denuncia_update)
+db.session.add(denuncia_destroy)
+db.session.add(denuncia_new)
+db.session.add(denuncia_open)
+db.session.add(denuncia_resolved)
+db.session.add(denuncia_close)
+db.session.add(denuncia_add_monitoring)
+db.session.add(denuncia_show)
 db.session.commit()
 
 #Creo roles
@@ -102,6 +138,18 @@ rol_administrador.permission.append(usuario_new)
 rol_administrador.permission.append(usuario_update)
 rol_administrador.permission.append(usuario_destroy)
 
+
+rol_administrador.permission.append(denuncia_index)
+rol_administrador.permission.append(denuncia_new)
+rol_administrador.permission.append(denuncia_update)
+rol_administrador.permission.append(denuncia_destroy)
+
+rol_administrador.permission.append(denuncia_open)
+rol_administrador.permission.append(denuncia_resolved)
+rol_administrador.permission.append(denuncia_close)
+rol_administrador.permission.append(denuncia_add_monitoring)
+rol_administrador.permission.append(denuncia_show)
+
 db.session.commit()
 
 
@@ -111,10 +159,21 @@ rol_operador = Role("operador")
 
 #Relacion del rol operador con sus permisos
 rol_operador.permission.append(usuario_index)
+rol_operador.permission.append(usuario_update)
 rol_operador.permission.append(configuracion_index)
 rol_operador.permission.append(punto_encuentro_index)
 rol_operador.permission.append(puntos_encuentro_new)
 rol_operador.permission.append(puntos_encuentro_update)
+
+rol_operador.permission.append(denuncia_index)
+rol_operador.permission.append(denuncia_new)
+rol_operador.permission.append(denuncia_update)
+
+rol_operador.permission.append(denuncia_open)
+rol_operador.permission.append(denuncia_resolved)
+rol_operador.permission.append(denuncia_close)
+rol_operador.permission.append(denuncia_add_monitoring)
+rol_operador.permission.append(denuncia_show)
 db.session.commit()
 
 
