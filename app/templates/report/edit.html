@@ -34,7 +34,10 @@
     <div class="col-md-6">
     <label for="user_assing">Asigne un usuario del sistema:</label>
       <select class="form-control" id="user_assing" name="user_assing">
-        <option value = "-1">Sin asignar</option>
+        {%if user_assing %}
+          <option value = {{user_assing.id}}>{{user_assing.first_name}} {{user_assing.last_name}}</option>
+        {%endif%}
+          <option value = "-1">NO ASIGNADO</option>
         {% for user in users %}
             <option value = "{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
         {%endfor%}
@@ -66,8 +69,8 @@
       <input type="email" class="form-control" id= "email" name ="email" placeholder="{{report.email}}" >
     </div>
     <div class="col-12">
-      <label for="descript" class="form-label">Comentario</label>
-      <textarea class="form-control" rows="5" id="descript" name ="descript" placeholder="{{report.description}}"></textarea>
+      <label for="description" class="form-label">Comentario</label>
+      <textarea class="form-control" rows="5" id="description" name ="description" placeholder="{{report.description}}"></textarea>
     </div>
     <div class="row mt-5">
       <div class="col-4">

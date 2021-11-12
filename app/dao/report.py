@@ -3,6 +3,7 @@ from app.db import db
 from app.models.report import Report,Monitoring
 from flask import request,session
 from datetime import datetime as dt
+from sqlalchemy import or_
 class ReportDAO():
     """Genera las consultas necesarios para consultar la informacion del denuncias en la base de datos en el resource"""
 
@@ -31,9 +32,9 @@ class ReportDAO():
             lis = coordinates.split(",")
             coordinates_latitude = lis[0]
             coordinates_longitude = lis[1]
-        if (bool(Report.query.filter(or_(Report.coordinates_latitude == coordinates_latitude, Report.coordinates_longitude == coordinates_longitude)))):
-                return False
-        return True
+        if (db.session.query(Report).filter(or_(Report.coordinates_latitude == coordinates_latitude, Report.coordinates_longitude == coordinates_longitude)).first()):
+                return True
+        return False
 
 
 
@@ -52,15 +53,42 @@ class ReportDAO():
         except:
             return False
 
-    def update_report(title,category, description, coordinates_latitude, coordinates_longitude,  first_name, last_name, phone, email):
-        #Controlar todo
-        db.session.add(new_user)
+    @classmethod
+    def update_report(cls,update_report,title,category, description, coordinates_latitude, coordinates_longitude,  first_name, last_name, phone, email,usser_id):
+        report_update_parameter = cls._update_report(update_report,title,category, description, coordinates_latitude, coordinates_longitude,  first_name, last_name, phone, email,usser_id)
         try:
+            print ("entro al truwe")
             db.session.commit()
+            print ("comitio bien ")
             return True
         except:
             return False
 
+    @staticmethod
+    def _update_report(update_report,title,category, description, coordinates_latitude, coordinates_longitude,  first_name, last_name, phone, email,usser_id):
+        if title:
+            update_report.title = title
+        if category:
+            update_report.category = category
+        if description:
+            update_report.description = description
+        if coordinates_latitude:
+            update_report.coordinates_latitude= coordinates_latitude
+        if coordinates_longitude:
+            update_report.coordinates_longitude =  coordinates_longitude
+        if first_name:
+            update_report.first_name = first_name
+        if last_name:
+            update_report.last_name = last_name
+        if phone:
+            update_report.phone = phone
+        if email:
+            update_report.email = email
+        if usser_id == -1:
+            update_report.user_assing_id = None
+        else:
+            update_report.user_assing_id = usser_id
+        return update_report
 
     @staticmethod
     def recover_reports():

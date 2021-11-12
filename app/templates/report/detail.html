@@ -65,7 +65,7 @@
 
           <td>{{ monitoring.description }}</td>
           <td>{{ monitoring.creation_date }}</td>
-          <td>{{ monitoring.author.first_name }}</td>
+          <td>{{ monitoring.author.first_name }} {{monitoring.author.last_name }}</td>
           {% endfor %}
   {%else%}
       <div class="alert alert-danger m-2 text-center" role="alert">

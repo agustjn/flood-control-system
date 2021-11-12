@@ -57,24 +57,36 @@ def edit(report_id):
     modification_report = ReportDAO.search_by_id(report_id)
     users_assign = UserDAO.recover_users()
     msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-    return render_template("report/edit.html", report = modification_report, msj = msj, users = users_assign)
+    user_asignado = modification_report.user_assing
+    try:
+        users_assign.remove(user_asignado)
+    except:
+        user_asignado = ""
+
+    return render_template("report/edit.html", report = modification_report, msj = msj, users = users_assign,user_assing = user_asignado)
 
 def modify(report_id):
     #PermissionDAO.assert_permission(session["id"],"usuario_update")
-
     parameter = request.form
-    report_update = ReportDAO.search_by_id(report_id)
-    if ReportDAO.existe_coordinates(coordenadas_latitude = parameter["coordinates_latitude"],coordinates_longitude = parameter["coordinates_longitude"]):
-        msj = "Las coordenadas ya existen, se esta trabajando para arreglar el problema"
-    else:
-        if ReportDAO.update_report(parameter["title"],parameter["category"],parameter["description"],parameter["coordenada_lat"],parameter["coordenda_long"],parameter["first_name"],parameter["last_name"],parameter["phone"],parameter["email"]):
-            msj = "se creo con exito el reporte " + parameter["title"] + " con exito"
+    user_id = int(parameter["user_assing"])
+    if (bool(UserDAO.search_by_id(user_id)) or (user_id == -1)):
+        report_update = ReportDAO.search_by_id(report_id)
+        if ReportDAO.existe_coordinates(coordinates_latitude = parameter["coordenada_lat"],coordinates_longitude = parameter["coordenda_long"]):
+            msj = "Las coordenadas ya existen, se esta trabajando para arreglar el problema"
         else:
-            msj = "Se produjo un error al modificar, intente nuevamente "
-        return redirect(url_for("report_index"))
+            if ReportDAO.update_report(report_update,parameter["title"],parameter["category"],parameter["description"],parameter["coordenada_lat"],parameter["coordenda_long"],
+                parameter["first_name"],parameter["last_name"],parameter["phone"],parameter["email"],user_id):
+                msj = "se modifico con exito el reporte " + parameter["title"]
+            else:
+                msj = "Se produjo un error al modificar, intente nuevamente "
+                flash(msj)
+                return redirect(url_for("report_edit",report_id = report_id))
+    else:
+        msj = "Ingrese un usuario valido "
 
-    flash(msj)
-    return render_template("report/edit.html" , report = report_update)
+    flash (msj)
+    return redirect(url_for("report_index"))
+
 
 def show(report_id):
     report = ReportDAO.search_by_id(report_id)
