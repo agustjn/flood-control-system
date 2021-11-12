@@ -117,13 +117,10 @@ def close(report_id):
 
 def resolved(report_id):
     if request.form["description"] != " ":
-        if ReportDAO.satisfy_three_monitoring(report_id):
-            if ReportDAO.resolved(report_id,request.form["description"],session["id"]):
-                flash ("Se cerro la denuncia con exito")
-            else:
-                flash ("La denuncia ya estaba cerrada")
+        if ReportDAO.resolved(report_id,request.form["description"],session["id"]):
+            flash ("Se cerro la denuncia con exito")
         else:
-            flash ("Usted tien que generar 3 descripciones para cerrar el seguimiento")
+            flash ("La denuncia ya estaba cerrada")
     else:
         flash("Ingrese una descripcion ")
     return redirect(url_for("report_show",report_id = report_id))

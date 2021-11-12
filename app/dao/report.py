@@ -61,9 +61,7 @@ class ReportDAO():
     def update_report(cls,update_report,title,category, description, coordinates_latitude, coordinates_longitude,  first_name, last_name, phone, email,usser_id):
         report_update_parameter = cls._update_report(update_report,title,category, description, coordinates_latitude, coordinates_longitude,  first_name, last_name, phone, email,usser_id)
         try:
-            print ("entro al truwe")
             db.session.commit()
-            print ("comitio bien ")
             return True
         except:
             return False
@@ -146,7 +144,6 @@ class ReportDAO():
         report = cls.search_by_id(report_id)
         if report.status in ["Cerrada","Resuelta"]:
             return False
-        print (f"--------------------------estado ---{status}----------")
         report.status = status
         report.closing_date = dt.now().strftime("%b %d %Y %H:%M:%S")
         try:
@@ -158,7 +155,7 @@ class ReportDAO():
     @classmethod
     def _add_monitoring(cls,report_id,description,author_id):
         description_create = cls.create_monitoring(description,author_id)
-        cls.add_monitoring(report_id, description_create)
+        return cls.add_monitoring(report_id, description_create)
 
     @classmethod
     def resolved(cls,report_id,description,author_id):

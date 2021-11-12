@@ -182,3 +182,8 @@ ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no
 ReportDAO.create_report('Alcantarilla Sucia',1, 'La alcantarilla esta SUCIA no sabemos porque ', 11111, 22222, 'Pedro', 'Primo', 22236548, 'Pedro@email.com' )
 ReportDAO.create_report('Basural',1, 'Hay un basural en la puerta de mi casa ', 222222, 111111, 'Santiago', 'De los palotes', 236568985, 'Santiago@email.com' )
 ReportDAO.create_report('Sin desagotar',2, 'No desagota la alcantarilla de la puerta de mi casa', 1112311, 2332233232, 'Pedrito', 'Clavito', 222365263, 'Pedrito@email.com',1)
+
+ReportDAO.create_report('Alcantarillas rotas',2, 'Las alcantarillas de la cuadra estas todas rotas y se mete la basura ', 4522454, 52255555,  'Nacho', 'Marti', 222123232323, 'nacho@email.com',2)
+ReportDAO.create_report('Inundacion de caño',1, 'Hay una inundacion de un caño en la puerta de mi casa y se inunda todo ', 2222, 1111, 'Camila', 'Pini', 22222222, 'Cami@email.com' )
+ReportDAO.create_report('Zanja tapada',1, ' Zanja tapada y no desagora bien nada ', 11111, 55555, 'El santi', 'Pelis', 2232322, 'Santi@email.com' )
+ReportDAO.create_report('Cloaca se inunda ',2, 'Hay una cloaca tapada y se inunda mi casa', 233232, 232323, 'Juanita', 'Clavito', 2232323, 'Juanita@email.com',1)

@@ -31,7 +31,6 @@ class ReportScheme(Schema):
 
         @post_load
         def make_report(self, data, **kwargs):
-            print (kwargs)
             return self.inicializar_report(data)
 
         def inicializar_report(self,data):
