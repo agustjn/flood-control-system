@@ -126,6 +126,8 @@ def create_app(environment="development"):
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
     app.register_error_handler(403, handler.Forbidden_error)
+    app.register_error_handler(400, handler.Bad_request)
+    app.register_error_handler(500, handler.Internal_Server_Error)
     # Implementar lo mismo para el error 500
 
     # Retornar la instancia de app configurada
