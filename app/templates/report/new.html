@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Reportes{% endblock %}
+{% block title %}Nueva denuncia{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -14,7 +14,7 @@
 {% endif %}
 
 
-  <h1>Crear un reporte</h1>
+  <h1>Crear una denuncia</h1>
   <form class="row g-3" action="{{ url_for('report_create')}}" method="POST">
     <div class="col-md-6">
       <label for="<title>Home</title>" class="form-label">Titulo</label>
@@ -55,7 +55,7 @@
     </div>
     <div class="col-12">
       <label for="descript" class="form-label">Descripcion </label>
-      <textarea class="form-control" rows="5" id="descript" placeholder="Ingrese un comentario describiendo la denuncia"></textarea>
+      <textarea class="form-control" rows="5" id="descript" placeholder="Ingrese un comentario describiendo la denuncia" required oninvalid="this.setCustomValidity('Se necesita una descripcion')"></textarea>
     </div>
     <div class="row mt-5">
       <div class="col-4">

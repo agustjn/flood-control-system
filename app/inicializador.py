@@ -178,7 +178,7 @@ db.session.commit()
 
 #Agrego los report de prueba
 
-ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no sabemos porque ', 45454, 555555, 2, 'Juan', 'De los palotes', 2213641585, 'juan@email.com')
-ReportDAO.create_report('Alcantarilla Sucia',1, 'La alcantarilla esta SUCIA no sabemos porque ', 11111, 22222, 2, 'Pedro', 'Primo', 22236548, 'Pedro@email.com')
-ReportDAO.create_report('Basural',1, 'Hay un basural en la puerta de mi casa ', 222222, 111111, 3, 'Santiago', 'De los palotes', 236568985, 'Santiago@email.com')
-ReportDAO.create_report('Sin desagora',2, 'No desagota la alcantarilla de la puerta de mi casa', 11111, 23323232, 1, 'Pedrito', 'Clavito', 222365263, 'Pedrito@email.com')
+ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no sabemos porque ', 45454, 555555,  'Juan', 'De los palotes', 2213641585, 'juan@email.com',2)
+ReportDAO.create_report('Alcantarilla Sucia',1, 'La alcantarilla esta SUCIA no sabemos porque ', 11111, 22222, 'Pedro', 'Primo', 22236548, 'Pedro@email.com' )
+ReportDAO.create_report('Basural',1, 'Hay un basural en la puerta de mi casa ', 222222, 111111, 'Santiago', 'De los palotes', 236568985, 'Santiago@email.com' )
+ReportDAO.create_report('Sin desagotar',2, 'No desagota la alcantarilla de la puerta de mi casa', 1112311, 2332233232, 'Pedrito', 'Clavito', 222365263, 'Pedrito@email.com',1)

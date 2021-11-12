@@ -39,6 +39,8 @@ class UserDAO():
     def recover_users():
          return User.query.all()
 
+    
+
     @staticmethod
     def create_user(first_name,last_name,email,user,password):
         new_user = User(first_name,last_name,email,user,password)
