@@ -2,12 +2,13 @@ import re
 
 from werkzeug.utils import redirect, secure_filename
 from app.helpers.auth import Auth
-from flask import render_template, request, url_for, flash
+from flask import render_template, request, url_for, flash, session
 from app.dao.configuration import ConfigurationDAO
 from app.dao.flood_zone import FloodZoneDao
 from app.models.coordinate import Coordinate
 from app.models.flood_zone import FloodZone
 from app.models.coordinate import FloodZone_has_coordinate
+from app.helpers.permission import PermissionDAO
 import csv
 import os
 from app.db import db
@@ -36,6 +37,8 @@ def _obtener_valores(status, texto):
     return (filtro,texto_a_filtrar)
 
 def flood_zones_index():
+    PermissionDAO.assert_permission(session["id"],"zonas_inundables_index")
+
     # Permisos de ver index: Operador/Administrador
     
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
@@ -64,21 +67,17 @@ def update_csv():
         with open(file_route, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
-                if row[1] == 'name' or row[1] == 'area':
+                if row[1] == 'name' or row[1] == 'area' or FloodZoneDao.name_exists(row[0]):
                     pass
                 else:
                     flood_zone = FloodZone(name=row[0])
                     db.session.add(flood_zone)
-                    print('--------------------------')
-                    print(row[1])
                     coords = json.loads(row[1])
                     for coor in coords:
 
                         coordinate = Coordinate(latitude=float(coor[0]), longitude=float(coor[1]))
                         db.session.add(coordinate)
-                        flood_zone.coordinates.append(coordinate)
-                        # table = FloodZone_has_coordinate(flood_zone.id, coordinate.id)
-                        # db.session.add(table)                                 
+                        flood_zone.coordinates.append(coordinate)                             
                     db.session.commit()          
                 
 
@@ -89,6 +88,8 @@ def update_csv():
     return redirect(url_for("flood_zone_index"))
 
 def profile(id):
+    PermissionDAO.assert_permission(session["id"],"zonas_inundables_index")
+
     flood_zone = FloodZoneDao.search_object_by_id(id)
 
     return render_template("flood_zone/profile.html", flood_zone=flood_zone)
