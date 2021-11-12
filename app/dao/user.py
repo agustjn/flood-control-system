@@ -62,7 +62,6 @@ class UserDAO():
 
     @staticmethod
     def exist_email(email):
-        # return User.query.filter_by(email=email).exists()
         return bool(User.query.filter_by(email=email).first())
 
     @staticmethod
@@ -74,17 +73,17 @@ class UserDAO():
         return  User.query.filter_by(id=user_id).first()
 
     @staticmethod
-    def update (user_update,parameter):
-        if parameter["user"]:
-            user_update.username = parameter["user"]
-        if parameter["email"]:
-            user_update.email = parameter["email"]
-        if parameter["password"]:
-            user_update.password = parameter["password"]
-        if parameter["first_name"]:
-            user_update.first_name = parameter["first_name"]
-        if parameter["last_name"]:
-            user_update.last_name = parameter["last_name"]
+    def update (user_update,user,email,password,first_name, last_name):
+        if user:
+            user_update.username = user
+        if email:
+            user_update.email = email
+        if password:
+            user_update.password = password
+        if first_name:
+            user_update.first_name = first_name
+        if last_name:
+            user_update.last_name = last_name
         try:
             db.session.commit()
             return True
@@ -93,8 +92,8 @@ class UserDAO():
 
     @classmethod
     def delete_by_id(cls,user_id):
-        user_delete = cls.search_by_id(user_id)
-        db.session.delete(user_delete)
+        report_delete = cls.search_by_id(user_id)
+        db.session.delete(report_delete)
         try:
             db.session.commit()
             return True

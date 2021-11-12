@@ -1,3 +1,4 @@
+from sqlalchemy.sql.expression import _True
 from app.models.permission import Role, Permission
 from app.models.user import User
 from app.db import db
@@ -5,6 +6,9 @@ from app.models.point import Point
 from app.models.configuration import Configuration
 from app.models.views_sort import View
 from app.models.issue import Issue
+
+from app.dao.report import ReportDAO
+
 #Creo y agregago la configuraicon
 
 config = Configuration("Amarillo",5)
@@ -170,3 +174,11 @@ db.session.add(puntos_encuentro11)
 db.session.add(puntos_encuentro12)
 db.session.add(puntos_encuentro13)
 db.session.commit()
+
+
+#Agrego los report de prueba
+
+ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no sabemos porque ', 45454, 555555, 2, 'Juan', 'De los palotes', 2213641585, 'juan@email.com')
+ReportDAO.create_report('Alcantarilla Sucia',1, 'La alcantarilla esta SUCIA no sabemos porque ', 11111, 22222, 2, 'Pedro', 'Primo', 22236548, 'Pedro@email.com')
+ReportDAO.create_report('Basural',1, 'Hay un basural en la puerta de mi casa ', 222222, 111111, 3, 'Santiago', 'De los palotes', 236568985, 'Santiago@email.com')
+ReportDAO.create_report('Sin desagora',2, 'No desagota la alcantarilla de la puerta de mi casa', 11111, 23323232, 1, 'Pedrito', 'Clavito', 222365263, 'Pedrito@email.com')
