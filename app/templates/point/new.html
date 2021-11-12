@@ -2,10 +2,27 @@
 {% block title %}Puntos de encuentro{% endblock %}
 {% block head %}
   {{ super() }}
+  <!-- Leaflet files-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+   <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+   <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+
+
+   <!-- Custom files-->
+   <link rel="stylesheet" href="{{ url_for('static', filename='new.css') }}" />
+   <!-- <script type="module" src="{{ url_for('static', filename='js/points/new/index.js') }}"/> -->
 {% endblock %}
+
 {% block content %}
   <h1>Crear un punto de encuentro</h1>
-  <form class="row g-3" action="{{ url_for('point_create')}}" method="POST">
+  <form class="row g-3" action="{{ url_for('point_create')}}" method="POST" id="create-point-form">
 
     <div class="col-md-6">
       <label for="name" class="form-label">Nombre</label>
@@ -21,7 +38,7 @@
     </div>
     <div class="col-md-12">
       <label for="coordinates_long" class="form-label">Coordenadas longitud</label>
-      <input type="text" class="form-control" id= "coordinates_long" name ="coordinates_long" placeholder="Ingrese Logitud">
+      <input type="text" class="form-control" id= "coordinates_long" name ="coordinates_long" placeholder="Ingrese Longitud">
     </div>
     <div class="col-12">
       <label for="name" class="form-label">Seleccione un estado</label>
@@ -37,6 +54,9 @@
     <div class="col-12">
       <label for="email" class="form-label">email</label>
       <input type="email" class="form-control" id= "email" name ="email" placeholder= "Ingrese el email de contacto">
+    </div>
+    <div class="map-container">
+      <div id="mapid"></div>
     </div>
 
     <div class="d-grid gap-1">
