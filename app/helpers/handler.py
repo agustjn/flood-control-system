@@ -14,7 +14,7 @@ def unauthorized_error(e):
         "error_name": "401 Unauthorized Error",
         "error_description": "No está autorizado para acceder a la url",
     }
-    return make_report(kwarg,401)
+    return make_report(kwargs,401)
 
 
 def Forbidden_error(e):

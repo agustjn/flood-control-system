@@ -5,7 +5,7 @@ from app.dao.configuration import ConfigurationDAO
 from app.helpers.permission import PermissionDAO
 
 
-flood_zones_api = Blueprint("zonas_inundables", __name__, url_prefix="/zonas_inundables")
+flood_zones_api = Blueprint("flood_zones", __name__, url_prefix="/flood_zones")
 
 
 @flood_zones_api.get("/")
