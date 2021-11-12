@@ -161,7 +161,7 @@ CREATE TABLE `route_of_evacuation` (
   `description` varchar(50) NOT NULL,
   `coordinates_latitude` varchar(50) NOT NULL,
   `coordinates_longitude` varchar(50) NOT NULL,
-  `status` varchar(30) NOT NULL,
+  `publicado` tinyint(1) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
