@@ -51,10 +51,11 @@
       <td>
         <a href="{{ url_for('flood_zone_profile',id = zone.id) }}" class="btn btn-secondary btn-sm"> Ver detalle  </a>
       </td>
-      
-      <td>
-        <a href="{{ url_for('flood_zone_delete', flood_zone_id = zone.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estas seguro de eliminar la zona inundable  {{zone.name}}?');"> Eliminar </a>
-      </td>
+      {% if has_permission(session["id"],"zona_inundable_destroy") %}
+        <td>
+          <a href="{{ url_for('flood_zone_delete', flood_zone_id = zone.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estas seguro de eliminar la zona inundable  {{zone.name}}?');"> Eliminar </a>
+        </td>
+      {% endif %}
     </tr>
     {% endfor %}
    
