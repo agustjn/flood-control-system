@@ -102,7 +102,10 @@ def create_app(environment="development"):
 
     #Rutas de recorridos de evacuacion
     app.add_url_rule("/route_of_evacuation", "route_index", route_of_evacuation.index, methods = ["GET"])
-    # Ruta para el Home (usando decorator)
+    app.add_url_rule("/route_of_evacuation/create", "route_create", route_of_evacuation.create, methods=["POST"])
+    app.add_url_rule("/route_of_evacuation/nuevo", "route_new", route_of_evacuation.new)
+    
+# Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
         return render_template("home.html")

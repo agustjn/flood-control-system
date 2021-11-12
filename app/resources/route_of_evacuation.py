@@ -33,3 +33,10 @@ def index():
     values = get_values_filter_columns()
     values.remove(filtro)
     return render_template("route_of_evacuation/index.html", routes=filtered_route,values=values, filtro = filtro,texto=texto_a_filtrar)
+
+def new():
+    return render_template("route_of_evacuation/new.html")
+
+def create():
+    # falta hacer
+    return "algo"
