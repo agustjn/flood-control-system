@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "paginate.html" import render_paginate with context %}
 {% block title %}Usuarios{% endblock %}
 {% block head %}
 {{ super() }}
@@ -74,31 +75,9 @@
   </tbody>
 </table>
 
-<div class="text-right">
-  <a href="{{ url_for('user_index', page=users.prev_num) }}" class="btn btn-outline-dark {% if users.page == 1 %}disabled{% endif %}">
-    &laquo;
-  </a>
-
-  {% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-     {% if page_num %}
-        {% if users.page == page_num %}
-            <a href="{{ url_for('user_index', page=page_num) }}" class="btn btn-dark">
-             {{ page_num }}
-            </a>
-        {% else %}
-            <a href="{{ url_for('user_index', page=page_num) }}" class="btn btn-outline-dark">
-             {{ page_num }}
-            </a>
-        {% endif %}
-     {% endif %}
-  {% endfor %}
-
-  <a href="{{ url_for('user_index', page=users.next_num) }}" class="btn btn-outline-dark {% if users.page == users.pages %}disabled{% endif %}">
-    &raquo; </a>
+<div>
+  {{ render_paginate(users, index_route='user_index')}}
 </div>
-<p class="text-right mt-3">
-  Pagina {{ users.page }} de {{ users.pages }}
-</p>
 
 <div class="mt-5">
   <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg">Volver</a>
