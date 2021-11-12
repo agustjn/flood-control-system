@@ -106,7 +106,6 @@ def modify(user_id):
 
 def delete(user_id):
     PermissionDAO.assert_permission(session["id"],"usuario_destroy")
-
     if UserDAO.delete_by_id(user_id):
         msj = "El usuario " + user_delete.user + " a sido eliminado con exito"
     else:

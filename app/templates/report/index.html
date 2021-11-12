@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 {% from "paginate.html" import render_paginate with context %}
-{% block title %}Consultas{% endblock %}
+{% block title %}Denuncias{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
 {% block content %}
 
-  <h1>Reportes </h1>
+  <h1>Denuncias </h1>
 
 
 <form class="row g-2" action="{{url_for('report_index') }}" method="GET">
@@ -45,7 +45,11 @@
         <th scope="row">{{loop.index}}</th>
         <td>{{ report.title }}</td>
         <td>{{ report.creation_date }}</td>
-        <td>{{ report.user_assing.username}}</td>
+        {% if report.user_assing.username %}
+          <td>{{ report.user_assing.username}}</td>
+        {% else %}
+          <td>Sin asignar</td>
+        {% endif %}
         <td>{{ report.status}}</td>
 
 
@@ -53,7 +57,7 @@
           <a href="{{ url_for('report_edit',report_id = report.id) }}" class="btn btn-success btn-sm"> Modificar </a>
         </td>
         <td>
-          <a id="show" class="btn btn-secondary btn-sm" onclick= " funcion({{report.id}}) ;"> Mostrar </a>
+          <a href = "{{url_for('report_show',report_id = report.id)}}" id="show" class="btn btn-secondary btn-sm"  ;"> Mostrar </a>
         </td>
         <td>
           <a href="{{ url_for('report_delete',report_id = report.id) }}" class="btn btn-danger btn-sm"
@@ -72,9 +76,6 @@
        <a href="{{ url_for('home') }}" class="btn btn-secondary btn-lg"> Volver </a>
      </div>
 
-     <div id="card" class="card-header" >
-
-     </div>
 
   </tbody>
 <script type="text/javascript">

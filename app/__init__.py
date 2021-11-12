@@ -94,6 +94,11 @@ def create_app(environment="development"):
     app.add_url_rule("/reports/edit/<report_id>", "report_edit", report.edit)
     app.add_url_rule("/reports/modification/<report_id>", "report_modification", report.modify,methods=["POST"])
     app.add_url_rule("/reports/show/<report_id>", "report_show", report.show)
+    app.add_url_rule("/reports/add_monitoring/<report_id>", "report_add_monitoring", report.add_monitoring,methods=["POST"])
+    app.add_url_rule("/reports/close/<report_id>", "report_close", report.close,methods=["POST"])
+    app.add_url_rule("/reports/open/<report_id>", "report_open", report.open,methods=["POST"])
+    app.add_url_rule("/reports/resolved/<report_id>", "report_resolved", report.resolved,methods=["POST"])
+
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
@@ -121,6 +126,8 @@ def create_app(environment="development"):
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
     app.register_error_handler(403, handler.Forbidden_error)
+    app.register_error_handler(400, handler.Bad_request)
+    app.register_error_handler(500, handler.Internal_Server_Error)
     # Implementar lo mismo para el error 500
 
     # Retornar la instancia de app configurada

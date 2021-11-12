@@ -71,6 +71,33 @@ puntos_encuentro_destroy = Permission("puntos_encuentro_destroy")
 #puntos_encuentro_new: Permite cargar una sona inundable:
 puntos_encuentro_new = Permission("puntos_encuentro_new")
 
+
+
+
+
+#Punto_encuentro_index: Permite acceder al index (listado) del modulo
+denuncia_index = Permission("denuncia_index")
+
+#puntos_encuentro_update: Permite actualizar una zona inundable-
+denuncia_update = Permission("denuncia_update")
+
+
+#puntos_encuentro_destroy: Permite borrar una zona inundable
+denuncia_destroy = Permission("denuncia_destroy")
+
+#puntos_encuentro_new: Permite cargar una sona inundable:
+denuncia_new = Permission("denuncia_new")
+
+
+denuncia_open = Permission("denuncia_open")
+denuncia_resolved = Permission("denuncia_resolved")
+denuncia_close = Permission("denuncia_close")
+denuncia_add_monitoring = Permission("denuncia_add_monitoring")
+denuncia_show = Permission("denuncia_show")
+
+
+
+
 #Agrego los permisos a la base de datos
 db.session.add(usuario_index)
 db.session.add(configuracion_index)
@@ -83,6 +110,15 @@ db.session.add(usuario_new)
 db.session.add(usuario_update)
 db.session.add(usuario_destroy)
 
+db.session.add(denuncia_index)
+db.session.add(denuncia_update)
+db.session.add(denuncia_destroy)
+db.session.add(denuncia_new)
+db.session.add(denuncia_open)
+db.session.add(denuncia_resolved)
+db.session.add(denuncia_close)
+db.session.add(denuncia_add_monitoring)
+db.session.add(denuncia_show)
 db.session.commit()
 
 #Creo roles
@@ -102,6 +138,18 @@ rol_administrador.permission.append(usuario_new)
 rol_administrador.permission.append(usuario_update)
 rol_administrador.permission.append(usuario_destroy)
 
+
+rol_administrador.permission.append(denuncia_index)
+rol_administrador.permission.append(denuncia_new)
+rol_administrador.permission.append(denuncia_update)
+rol_administrador.permission.append(denuncia_destroy)
+
+rol_administrador.permission.append(denuncia_open)
+rol_administrador.permission.append(denuncia_resolved)
+rol_administrador.permission.append(denuncia_close)
+rol_administrador.permission.append(denuncia_add_monitoring)
+rol_administrador.permission.append(denuncia_show)
+
 db.session.commit()
 
 
@@ -111,10 +159,21 @@ rol_operador = Role("operador")
 
 #Relacion del rol operador con sus permisos
 rol_operador.permission.append(usuario_index)
+rol_operador.permission.append(usuario_update)
 rol_operador.permission.append(configuracion_index)
 rol_operador.permission.append(punto_encuentro_index)
 rol_operador.permission.append(puntos_encuentro_new)
 rol_operador.permission.append(puntos_encuentro_update)
+
+rol_operador.permission.append(denuncia_index)
+rol_operador.permission.append(denuncia_new)
+rol_operador.permission.append(denuncia_update)
+
+rol_operador.permission.append(denuncia_open)
+rol_operador.permission.append(denuncia_resolved)
+rol_operador.permission.append(denuncia_close)
+rol_operador.permission.append(denuncia_add_monitoring)
+rol_operador.permission.append(denuncia_show)
 db.session.commit()
 
 
@@ -178,7 +237,12 @@ db.session.commit()
 
 #Agrego los report de prueba
 
-ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no sabemos porque ', 45454, 555555, 2, 'Juan', 'De los palotes', 2213641585, 'juan@email.com')
-ReportDAO.create_report('Alcantarilla Sucia',1, 'La alcantarilla esta SUCIA no sabemos porque ', 11111, 22222, 2, 'Pedro', 'Primo', 22236548, 'Pedro@email.com')
-ReportDAO.create_report('Basural',1, 'Hay un basural en la puerta de mi casa ', 222222, 111111, 3, 'Santiago', 'De los palotes', 236568985, 'Santiago@email.com')
-ReportDAO.create_report('Sin desagora',2, 'No desagota la alcantarilla de la puerta de mi casa', 11111, 23323232, 1, 'Pedrito', 'Clavito', 222365263, 'Pedrito@email.com')
+ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no sabemos porque ', 45454, 555555,  'Juan', 'De los palotes', 2213641585, 'juan@email.com',2)
+ReportDAO.create_report('Alcantarilla Sucia',1, 'La alcantarilla esta SUCIA no sabemos porque ', 11111, 22222, 'Pedro', 'Primo', 22236548, 'Pedro@email.com' )
+ReportDAO.create_report('Basural',1, 'Hay un basural en la puerta de mi casa ', 222222, 111111, 'Santiago', 'De los palotes', 236568985, 'Santiago@email.com' )
+ReportDAO.create_report('Sin desagotar',2, 'No desagota la alcantarilla de la puerta de mi casa', 1112311, 2332233232, 'Pedrito', 'Clavito', 222365263, 'Pedrito@email.com',1)
+
+ReportDAO.create_report('Alcantarillas rotas',2, 'Las alcantarillas de la cuadra estas todas rotas y se mete la basura ', 4522454, 52255555,  'Nacho', 'Marti', 222123232323, 'nacho@email.com',2)
+ReportDAO.create_report('Inundacion de caño',1, 'Hay una inundacion de un caño en la puerta de mi casa y se inunda todo ', 2222, 1111, 'Camila', 'Pini', 22222222, 'Cami@email.com' )
+ReportDAO.create_report('Zanja tapada',1, ' Zanja tapada y no desagora bien nada ', 11111, 55555, 'El santi', 'Pelis', 2232322, 'Santi@email.com' )
+ReportDAO.create_report('Cloaca se inunda ',2, 'Hay una cloaca tapada y se inunda mi casa', 233232, 232323, 'Juanita', 'Clavito', 2232323, 'Juanita@email.com',1)
