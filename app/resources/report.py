@@ -25,7 +25,7 @@ def _obtener_valores(status, texto):
 
 
 def index():
-    PermissionDAO.assert_permission(session["id"],"denuncia_index")
+    PermissionDAO.assert_permission("denuncia_index")
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
     filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
@@ -34,16 +34,16 @@ def index():
     return render_template("report/index.html", reportes=filtered_reports,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 def new():
-    PermissionDAO.assert_permission(session["id"],"denuncia_new")
-    #PermissionDAO.assert_permission(session["id"],"report_new")
+    PermissionDAO.assert_permission("denuncia_new")
+    #PermissionDAO.assert_permission("report_new")
     return render_template("report/new.html")
 
 def create():
-    PermissionDAO.assert_permission(session["id"],"denuncia_new")
+    PermissionDAO.assert_permission("denuncia_new")
     return render_template("report/new.html")
 
 def delete(report_id):
-    PermissionDAO.assert_permission(session["id"],"denuncia_destroy")
+    PermissionDAO.assert_permission("denuncia_destroy")
     report_delete = ReportDAO.search_by_id(report_id)
     if ReportDAO.delete_by_id(report_id):
         msj = "El reporte " + report_delete.title + " a sido eliminado con exito"
@@ -54,7 +54,7 @@ def delete(report_id):
 
 
 def edit(report_id):
-    PermissionDAO.assert_permission(session["id"],"denuncia_update")
+    PermissionDAO.assert_permission("denuncia_update")
     modification_report = ReportDAO.search_by_id(report_id)
     users_assign = UserDAO.recover_users()
     msj = "Los campos que desea dejar igual dejenlo sin rellenar"
@@ -67,7 +67,7 @@ def edit(report_id):
     return render_template("report/edit.html", report = modification_report, msj = msj, users = users_assign,user_assing = user_asignado)
 
 def modify(report_id):
-    PermissionDAO.assert_permission(session["id"],"denuncia_update")
+    PermissionDAO.assert_permission("denuncia_update")
     parameter = request.form
     user_id = int(parameter["user_assing"])
     if (bool(UserDAO.search_by_id(user_id)) or (user_id == -1)):
@@ -90,7 +90,7 @@ def modify(report_id):
 
 
 def show(report_id):
-    PermissionDAO.assert_permission(session["id"],"denuncia_show")
+    PermissionDAO.assert_permission("denuncia_show")
     report = ReportDAO.search_by_id(report_id)
     if report.status in ["Cerrada","Resuelta"]:
         cerrada = True
@@ -99,7 +99,7 @@ def show(report_id):
     return render_template("/report/detail.html",report = report,cerrada = cerrada)
 
 def add_monitoring(report_id):
-    PermissionDAO.assert_permission(session["id"],"denuncia_add_monitoring")
+    PermissionDAO.assert_permission("denuncia_add_monitoring")
     if request.form["description"] != " ":
         description_create = ReportDAO.create_monitoring(request.form["description"],session["id"])
         ReportDAO.add_monitoring(report_id, description_create)
@@ -109,7 +109,7 @@ def add_monitoring(report_id):
     return redirect(url_for("report_show",report_id = report_id))
 
 def close(report_id):
-    PermissionDAO.assert_permission(session["id"],"denuncia_close")
+    PermissionDAO.assert_permission("denuncia_close")
     if ReportDAO.satisfy_three_monitoring(report_id):
         if ReportDAO.closing(report_id,request.form["description"],session["id"]):
             flash ("Se cerro la denuncia con exito")
@@ -120,7 +120,7 @@ def close(report_id):
     return redirect(url_for("report_show",report_id = report_id))
 
 def resolved(report_id):
-    PermissionDAO.assert_permission(session["id"],"denuncia_resolved")
+    PermissionDAO.assert_permission("denuncia_resolved")
     if request.form["description"] != " ":
         if ReportDAO.resolved(report_id,request.form["description"],session["id"]):
             flash ("Se cerro la denuncia con exito")
@@ -131,7 +131,7 @@ def resolved(report_id):
     return redirect(url_for("report_show",report_id = report_id))
 
 def open(report_id):
-    PermissionDAO.assert_permission(session["id"],"denuncia_open")
+    PermissionDAO.assert_permission("denuncia_open")
     report = ReportDAO.search_by_id(report_id)
     if  report.status in ["Cerrada","Resuelta"]:
         ReportDAO.open(report_id)

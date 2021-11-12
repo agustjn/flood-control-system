@@ -26,7 +26,7 @@ def _obtener_valores(status, texto):
     return (filtro,texto_a_filtrar)
 
 def index():
-    #PermissionDAO.assert_permission(session["id"],"route_of_evacuation_index")
+    #PermissionDAO.assert_permission("route_of_evacuation_index")
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
     filtered_route = Route_of_evacuationDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)

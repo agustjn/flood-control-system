@@ -37,7 +37,7 @@ def _obtener_valores(status, texto):
     return (filtro,texto_a_filtrar)
 
 def flood_zones_index():
-    PermissionDAO.assert_permission(session["id"],"zonas_inundables_index")
+    PermissionDAO.assert_permission("zonas_inundables_index")
 
     # Permisos de ver index: Operador/Administrador
     
@@ -56,7 +56,7 @@ def allowed_file(filename):
 
 
 def update_csv():
-    
+
     file = request.files['file']
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
@@ -88,7 +88,7 @@ def update_csv():
     return redirect(url_for("flood_zone_index"))
 
 def profile(id):
-    PermissionDAO.assert_permission(session["id"],"zonas_inundables_index")
+    PermissionDAO.assert_permission("zonas_inundables_index")
 
     flood_zone = FloodZoneDao.search_object_by_id(id)
 
@@ -97,7 +97,7 @@ def profile(id):
 
 def delete(flood_zone_id):
     #colocar permiso de borrado
-
+    PermissionDAO.assert_permission("zona_inundable_destroy")
     flood_zone_delete = FloodZoneDao.search_object_by_id(flood_zone_id)
     if FloodZoneDao.delete(flood_zone_delete):
          msj = "La zona inundable " + flood_zone_delete.name + " ha sido eliminado con exito"

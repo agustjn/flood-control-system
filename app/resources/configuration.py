@@ -7,7 +7,7 @@ from app.helpers.form_validator import FormConfigValidator
 from app.helpers.permission import PermissionDAO
 
 def index():
-    PermissionDAO.assert_permission(session["id"],"configuracion_index")
+    PermissionDAO.assert_permission("configuracion_index")
 
     dao = ConfigurationDAO()
     config_values = dao.values_to_render()
@@ -15,7 +15,7 @@ def index():
 
 
 def update():
-    PermissionDAO.assert_permission(session["id"],"configuracion_index")
+    PermissionDAO.assert_permission("configuracion_index")
 
     errors = []
     configDao = ConfigurationDAO()

@@ -54,7 +54,7 @@
           <td>Despublicado </td>
       {%endif%}
 
-      <!-- {% if has_permission(session["id"],"usuario_destroy") %} -->
+      <!-- {% if assert_permission("usuario_destroy") %} -->
       <td>
         <a href="#" class="btn btn-secondary btn-sm"
           onclick="return confirm('¿Estas seguro de eliminar al usuario {{route.name}}?');"> Eliminar </a>
