@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for,flash,session
 from app.dao.configuration import ConfigurationDAO
-
+from app.dao.user import UserDAO
 from app.helpers.auth import Auth
 
 from app.helpers.permission import PermissionDAO
