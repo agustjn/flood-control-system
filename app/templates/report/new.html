@@ -1,4 +1,5 @@
-{% extends "layout.html" %}
+
+    {% extends "layout.html" %}
 {% block title %}Nueva denuncia{% endblock %}
 {% block head %}
   {{ super() }}
@@ -39,7 +40,7 @@
     </div>
     <div class="col-12">
       <label for="name" class="form-label">Nombre</label>
-      <input type="text" class="form-control" id= "name" name ="first_name" placeholder="Nombre completo" required>
+      <input type="text" class="form-control" id= "first_name" name ="first_name" placeholder="Nombre completo" required>
     </div>
     <div class="col-12">
       <label for="last_name" class="form-label">Apellido</label>
@@ -55,8 +56,16 @@
     </div>
     <div class="col-12">
       <label for="descript" class="form-label">Descripcion </label>
-      <textarea class="form-control" rows="5" id="descript" placeholder="Ingrese un comentario describiendo la denuncia" required oninvalid="this.setCustomValidity('Se necesita una descripcion')"></textarea>
+      <textarea class="form-control" rows="5" name = "descript" id="descript" placeholder="Ingrese un comentario describiendo la denuncia" required oninvalid="this.setCustomValidity('Se necesita una descripcion')"></textarea>
     </div>
+    <div class="col-md-6">
+    <label for="user_assing">Asigne un usuario del sistema:</label>
+      <select class="form-control" id="user_assing" name="user_assing">
+        <option value = -1 >SIN ASIGNAR</option>
+        {% for user in users %}
+            <option value = "{{user.id}}">{{user.username }} -- {{user.first_name}} {{user.last_name}}</option>
+        {%endfor%}
+      </select>
     <div class="row mt-5">
       <div class="col-4">
         <button type="submit" class="btn btn-success btn-lg" >Crear</button>

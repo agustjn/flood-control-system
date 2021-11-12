@@ -35,12 +35,29 @@ def index():
 
 def new():
     PermissionDAO.assert_permission(session["id"],"denuncia_new")
-    #PermissionDAO.assert_permission(session["id"],"report_new")
-    return render_template("report/new.html")
+    users = UserDAO.recover_users()
+    return render_template("report/new.html",users= users)
+
 
 def create():
     PermissionDAO.assert_permission(session["id"],"denuncia_new")
-    return render_template("report/new.html")
+    parameter = request.form
+    if ReportDAO.existe_coordinates(coordinates_latitude = parameter["coordenada_lat"],coordinates_longitude = parameter["coordenda_long"]):
+        msj = "Las coordenadas ya existen, se esta trabajando para arreglar el problema"
+    else:
+        usser_id = int(parameter["user_assing"])
+        print (usser_id)
+        if usser_id  == -1:
+            usser_id = None
+        if ReportDAO.create_report(parameter["title"],parameter["category"],parameter["descript"],parameter["coordenada_lat"],parameter["coordenda_long"],parameter["first_name"],parameter["last_name"],parameter["phone"],parameter["email"],usser_id):
+            msj = "Se creo la denuncia " + parameter["title"] + " con exito"
+        else:
+            flash (" hubo uno error al crear la denuncia, intene nuevamente")
+            return redirect(url_for('report_new'))
+    flash (msj)
+    return redirect(url_for('report_index'))
+
+
 
 def delete(report_id):
     PermissionDAO.assert_permission(session["id"],"denuncia_destroy")
