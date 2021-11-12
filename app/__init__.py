@@ -4,7 +4,7 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
-from app.resources import issue,user,point,configuration,auth,report
+from app.resources import issue,user,point,configuration,auth,report,route_of_evacuation
 from app.resources.api.issue import issue_api
 from app.resources.api.flood_zone import flood_zones_api
 from app.helpers import handler
@@ -100,7 +100,12 @@ def create_app(environment="development"):
     app.add_url_rule("/reports/resolved/<report_id>", "report_resolved", report.resolved,methods=["POST"])
 
 
-    # Ruta para el Home (usando decorator)
+    #Rutas de recorridos de evacuacion
+    app.add_url_rule("/route_of_evacuation", "route_index", route_of_evacuation.index, methods = ["GET"])
+    app.add_url_rule("/route_of_evacuation/create", "route_create", route_of_evacuation.create, methods=["POST"])
+    app.add_url_rule("/route_of_evacuation/nuevo", "route_new", route_of_evacuation.new)
+    
+# Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
         return render_template("home.html")

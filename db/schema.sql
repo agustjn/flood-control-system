@@ -150,6 +150,19 @@ CREATE TABLE `points` (
 
 
 -- --------------------------------------------------------
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `points`
+--
+CREATE TABLE `route_of_evacuation` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `description` varchar(50) NOT NULL,
+  `coordinates_latitude` varchar(50) NOT NULL,
+  `coordinates_longitude` varchar(50) NOT NULL,
+  `publicado` tinyint(1) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 --
@@ -178,7 +191,7 @@ CREATE TABLE `report` (
   `last_name` varchar(30) NOT NULL,
   `phone` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `user_assing_id` int(10) UNSIGNED 
+  `user_assing_id` int(10) UNSIGNED
 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -309,6 +322,14 @@ ALTER TABLE `configurations`
   ADD PRIMARY KEY (`id`);
 
 --
+--
+-- Indices de la tabla `route_of_evacuation`
+--
+ALTER TABLE `route_of_evacuation`
+  ADD PRIMARY KEY (`id`);
+
+--
+
 -- Indices de la tabla `issues`
 --
 ALTER TABLE `issues`
@@ -393,6 +414,13 @@ ALTER TABLE `view`
   --
   ALTER TABLE `report`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+  --
+  -- AUTO_INCREMENT de la tabla `route_of_evacuation`
+  --
+  ALTER TABLE `route_of_evacuation`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 
 
