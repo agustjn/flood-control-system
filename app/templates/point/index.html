@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
-{% block title %}Usuarios{% endblock %}
+{% from "paginate.html" import render_paginate with context %}
+{% block title %}Puntos encuentro{% endblock %}
 {% block head %}
 {{ super() }}
 {% endblock %}
@@ -62,31 +63,9 @@
 </table>
 
 
-<div class="text-right">
-  <a href="{{ url_for('point_index', page=points.prev_num) }}" class="btn btn-outline-dark {% if points.page == 1 %}disabled{% endif %}">
-    &laquo;
-  </a>
-
-  {% for page_num in points.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-     {% if page_num %}
-        {% if points.page == page_num %}
-            <a href="{{ url_for('point_index', page=page_num) }}" class="btn btn-dark">
-             {{ page_num }}
-            </a>
-        {% else %}
-            <a href="{{ url_for('point_index', page=page_num) }}" class="btn btn-outline-dark">
-             {{ page_num }}
-            </a>
-        {% endif %}
-     {% endif %}
-  {% endfor %}
-
-  <a href="{{ url_for('point_index', page=points.next_num) }}" class="btn btn-outline-dark {% if points.page == points.pages %}disabled{% endif %}">
-    &raquo; </a>
+<div>
+  {{ render_paginate(points, index_route='point_index')}}
 </div>
-<p class="text-right mt-3">
-  Pagina {{ points.page }} de {{ points.pages }}
-</p>
 
 <div class="mt-5">
   <a href="{{ url_for('home') }}" class="btn btn-danger btn-lg mt-5" >Volver</a>

@@ -1,3 +1,4 @@
+
 -- phpMyAdmin SQL Dump
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
@@ -163,7 +164,6 @@ CREATE TABLE `view` (
 
 
 
-------------------------------------------------------------
 CREATE TABLE `report` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(50) NOT NULL,
@@ -178,7 +178,8 @@ CREATE TABLE `report` (
   `last_name` varchar(30) NOT NULL,
   `phone` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `user_assing_id` int(10) UNSIGNED NOT NULL
+  `user_assing_id` int(10) UNSIGNED 
+
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -196,6 +197,16 @@ CREATE TABLE `permissions` (
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `seguimiento`
+--
+
+CREATE TABLE `monitoring` (
+  `id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `creation_date` varchar(255) NOT NULL,
+  `author_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -207,7 +218,18 @@ CREATE TABLE `role_has_permission` (
   `role_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
+-- Estructura de tabla para la tabla `role_has_permission`
+--
+
+CREATE TABLE `report_has_monitoring` (
+  `report_id` int(11) NOT NULL,
+  `monitoring_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+
+
 -- Índices para tablas volcadas
 --
 -- --------------------------------------------------------
@@ -344,11 +366,17 @@ ALTER TABLE `users`
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
+
+  -- Indices de la tabla `seguimiento`
+  --
+  ALTER TABLE `monitoring`
+    ADD PRIMARY KEY (`id`);
 --
 -- Indices de la tabla `permission`
 --
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`id`);
+
 
 
 --
@@ -425,6 +453,14 @@ ALTER TABLE `points`
     MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 
+
+--
+-- AUTO_INCREMENT de la tabla `monitoring`
+--
+ALTER TABLE `monitoring`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+
 --
 -- AUTO_INCREMENT de la tabla `permission`
 --
@@ -432,16 +468,14 @@ ALTER TABLE `permissions`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 
---
--- Restricciones para tablas volcadas
---s
---
--- Filtros para la tabla `issues`
---
-ALTER TABLE `issues`
-  ADD CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`);
-COMMIT;
+
+-- ALTER TABLE `issues`
+--   ADD CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `catego>
+--   ADD CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses>
+-- COMMIT;
+
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for,flash,session
 from app.dao.configuration import ConfigurationDAO
-
+from app.dao.user import UserDAO
 from app.helpers.auth import Auth
 
 from app.helpers.permission import PermissionDAO
@@ -25,8 +25,7 @@ def _obtener_valores(status, texto):
 
 
 def index():
-    #PermissionDAO.assert_permission(session["id"],"usuario_index")
-
+    PermissionDAO.assert_permission(session["id"],"denuncia_index")
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
     filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
@@ -35,15 +34,16 @@ def index():
     return render_template("report/index.html", reportes=filtered_reports,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 def new():
+    PermissionDAO.assert_permission(session["id"],"denuncia_new")
     #PermissionDAO.assert_permission(session["id"],"report_new")
     return render_template("report/new.html")
 
 def create():
-    
+    PermissionDAO.assert_permission(session["id"],"denuncia_new")
     return render_template("report/new.html")
 
 def delete(report_id):
-    #PermissionDAO.assert_permission(session["id"],"report_destroy")
+    PermissionDAO.assert_permission(session["id"],"denuncia_destroy")
     report_delete = ReportDAO.search_by_id(report_id)
     if ReportDAO.delete_by_id(report_id):
         msj = "El reporte " + report_delete.title + " a sido eliminado con exito"
@@ -54,44 +54,88 @@ def delete(report_id):
 
 
 def edit(report_id):
-
-    #PermissionDAO.assert_permission(session["id"],"usuario_update")
+    PermissionDAO.assert_permission(session["id"],"denuncia_update")
     modification_report = ReportDAO.search_by_id(report_id)
+    users_assign = UserDAO.recover_users()
     msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-    return render_template("report/edit.html", report = modification_report, msj = msj)
+    user_asignado = modification_report.user_assing
+    try:
+        users_assign.remove(user_asignado)
+    except:
+        user_asignado = ""
+
+    return render_template("report/edit.html", report = modification_report, msj = msj, users = users_assign,user_assing = user_asignado)
 
 def modify(report_id):
-    #PermissionDAO.assert_permission(session["id"],"usuario_update")
-
+    PermissionDAO.assert_permission(session["id"],"denuncia_update")
     parameter = request.form
-    report_update = ReportDAO.search_by_id(report_id)
-    if ReportDAO.existe_coordinates(coordenadas_latitude = parameter["coordinates_latitude"],coordinates_longitude = parameter["coordinates_longitude"]):
-        msj = "Las coordenadas ya existen, se esta trabajando para arreglar el problema"
-    else:
-        if ReportDAO.create_report(parameter["title"],parameter["category"],parameter["coordenada_lat"],parameter["coordenda_long"],parameter["first_name"],parameter["last_name"],parameter["phone"],parameter["email"],parameter["descript"]):
-            msj = "se creo con exito el reporte " + parameter["title"] + " con exito"
+    user_id = int(parameter["user_assing"])
+    if (bool(UserDAO.search_by_id(user_id)) or (user_id == -1)):
+        report_update = ReportDAO.search_by_id(report_id)
+        if ReportDAO.existe_coordinates(coordinates_latitude = parameter["coordenada_lat"],coordinates_longitude = parameter["coordenda_long"]):
+            msj = "Las coordenadas ya existen, se esta trabajando para arreglar el problema"
         else:
-            msj = "Se produjo un error al modificar, intente nuevamente "
-        return redirect(url_for("report_index"))
+            if ReportDAO.update_report(report_update,parameter["title"],parameter["category"],parameter["description"],parameter["coordenada_lat"],parameter["coordenda_long"],
+                parameter["first_name"],parameter["last_name"],parameter["phone"],parameter["email"],user_id):
+                msj = "se modifico con exito el reporte " + parameter["title"]
+            else:
+                msj = "Se produjo un error al modificar, intente nuevamente "
+                flash(msj)
+                return redirect(url_for("report_edit",report_id = report_id))
+    else:
+        msj = "Ingrese un usuario valido "
 
-    flash(msj)
-    return render_template("report/edit.html" , report = report_update)
+    flash (msj)
+    return redirect(url_for("report_index"))
+
 
 def show(report_id):
-    report_update = ReportDAO.search_by_id(report_id)
-    report = {"title": report_update.title,
-            "status": report_update.status,
-            "category": report_update.category,
-            "creation_date": report_update.creation_date,
-            "closing_date": report_update.closing_date,
-            "description": report_update.description,
-            "coordinates_latitude": report_update.coordinates_latitude,
-            "coordinates_longitude": report_update.coordinates_longitude,
-            "first_name": report_update.first_name,
-            "last_name": report_update.last_name,
-            "phone": report_update.phone,
-            "email": report_update.email,
-            "user_assing": report_update.user_assing.name
-            }
-    report_json = json.dumps(user)
-    return report_json
+    PermissionDAO.assert_permission(session["id"],"denuncia_show")
+    report = ReportDAO.search_by_id(report_id)
+    if report.status in ["Cerrada","Resuelta"]:
+        cerrada = True
+    else:
+        cerrada = False
+    return render_template("/report/detail.html",report = report,cerrada = cerrada)
+
+def add_monitoring(report_id):
+    PermissionDAO.assert_permission(session["id"],"denuncia_add_monitoring")
+    if request.form["description"] != " ":
+        description_create = ReportDAO.create_monitoring(request.form["description"],session["id"])
+        ReportDAO.add_monitoring(report_id, description_create)
+        flash ("Se agrego el seguimiento correctamente")
+    else:
+        flash("Ingrese una descripcion ")
+    return redirect(url_for("report_show",report_id = report_id))
+
+def close(report_id):
+    PermissionDAO.assert_permission(session["id"],"denuncia_close")
+    if ReportDAO.satisfy_three_monitoring(report_id):
+        if ReportDAO.closing(report_id,request.form["description"],session["id"]):
+            flash ("Se cerro la denuncia con exito")
+        else:
+            flash ("La denuncia ya estaba cerrada")
+    else:
+        flash ("Usted tien que generar 3 descripciones para cerrar el seguimiento")
+    return redirect(url_for("report_show",report_id = report_id))
+
+def resolved(report_id):
+    PermissionDAO.assert_permission(session["id"],"denuncia_resolved")
+    if request.form["description"] != " ":
+        if ReportDAO.resolved(report_id,request.form["description"],session["id"]):
+            flash ("Se cerro la denuncia con exito")
+        else:
+            flash ("La denuncia ya estaba cerrada")
+    else:
+        flash("Ingrese una descripcion ")
+    return redirect(url_for("report_show",report_id = report_id))
+
+def open(report_id):
+    PermissionDAO.assert_permission(session["id"],"denuncia_open")
+    report = ReportDAO.search_by_id(report_id)
+    if  report.status in ["Cerrada","Resuelta"]:
+        ReportDAO.open(report_id)
+        flash("Se abrio nuevamente la denuncia")
+    else:
+        flash ("La denuncia ya estaba abierta")
+    return redirect(url_for("report_show",report_id = report_id))

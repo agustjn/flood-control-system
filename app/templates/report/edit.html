@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Reportes{% endblock %}
+{% block title %}Editar denuncia{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -16,7 +16,7 @@
 <div class="alert alert-info" role="alert">
     "Los campos que no desea cambiar dejelo sin completar"
 </div>
-  <h1>Crear un reporte</h1>
+  <h1>Crear una denuncia</h1>
   <form class="row g-3" action="{{ url_for('report_modification',report_id = report.id) }}" method="POST">
     <div class="col-md-6">
       <label for="<title>Home</title>" class="form-label">Titulo</label>
@@ -31,6 +31,7 @@
         <option>4</option>
       </select>
     </div>
+
     <div class="col-md-6">
       <label for="coordenada_lat" class="form-label">Coordenadas Latitud</label>
       <input type="text" class="form-control" id="coordenada_lat" name = "coordenada_lat" placeholder= "{{report.coordinates_latitude}}" >
@@ -38,6 +39,18 @@
     <div class="col-md-6">
       <label for="coordenda_long" class="form-label">Coordenadas Longitud</label>
       <input type="text" class="form-control" id= "coordenda_long" name ="coordenda_long" placeholder="{{report.coordinates_longitude}}" >
+    </div>
+    <div class="col-md-6">
+    <label for="user_assing">Asigne un usuario del sistema:</label>
+      <select class="form-control" id="user_assing" name="user_assing">
+        {%if user_assing %}
+          <option value = {{user_assing.id}}>usuario: {{user_assing.username }} -- {{user_assing.first_name}} {{user_assing.last_name}}</option>
+        {%endif%}
+          <option value = "-1">NO ASIGNADO</option>
+        {% for user in users %}
+            <option value = "{{user.id}}">{{user.username }} -- {{user.first_name}} {{user.last_name}}</option>
+        {%endfor%}
+      </select>
     </div>
     <div class="col-12">
       <label for="name" class="form-label">Nombre</label>
@@ -56,8 +69,8 @@
       <input type="email" class="form-control" id= "email" name ="email" placeholder="{{report.email}}" >
     </div>
     <div class="col-12">
-      <label for="descript" class="form-label">Comentario</label>
-      <textarea class="form-control" rows="5" id="descript" name ="descript" placeholder="{{report.description}}"></textarea>
+      <label for="description" class="form-label">Comentario</label>
+      <textarea class="form-control" rows="5" id="description" name ="description" placeholder="{{report.description}}"></textarea>
     </div>
     <div class="row mt-5">
       <div class="col-4">

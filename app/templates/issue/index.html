@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% from "paginate.html" import render_paginate with context %}
-{% block title %}Consultas{% endblock %}
+{% block title %}Issue{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -32,7 +32,7 @@
 
      <div>
        {# Funcion importada de "paginate.html" en el head #}
-       
+
        {{ render_paginate(issues, index_route='issue_index')}}
      </div>
 
@@ -44,6 +44,6 @@
       <a href="{{ url_for('issue_new') }}" class="btn btn-success btn-lg"> Nuevo </a>
       <a href="{{ url_for('home') }}" class="btn btn-secondary btn-lg"> Volver </a>
     </div>
-    
+
 
 {% endblock %}

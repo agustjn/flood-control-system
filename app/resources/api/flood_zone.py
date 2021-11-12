@@ -16,11 +16,10 @@ def index():
     flood_zones = flood_zone_pagination_scheme.dump(flood_zones_page)
 
     return jsonify(flood_zones)
-    
+
 @flood_zones_api.get("/show/<int:id>")
 def show(id):
     flood_zone_instance = FloodZoneDao.recover_flood_zone(id)
     flood_zone = flood_zone_scheme.dump(flood_zone_instance)
 
     return jsonify(attributes=flood_zone)
-
