@@ -4,8 +4,9 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
-from app.resources import issue,user,point,configuration,auth
+from app.resources import issue,user,point,configuration,auth,report,route_of_evacuation
 from app.resources.api.issue import issue_api
+from app.resources.api.flood_zone import flood_zones_api
 from app.helpers import handler
 from app.helpers.auth import Auth
 import logging
@@ -13,6 +14,7 @@ from app.helpers.routes import RoutesConfig
 from app.helpers.configurations import format_background
 from app.helpers.permission import PermissionDAO
 
+from app.resources.api.report import report_api
 
 #Activo los loggins en la terminal de las query generadas
 logging.basicConfig()
@@ -84,9 +86,26 @@ def create_app(environment="development"):
     app.add_url_rule("/puntos/edit/<point_id>", "point_edit", point.edit)
     app.add_url_rule("/puntos/modification/<point_id>", "point_modification", point.modify,methods=["POST"])
 
+    #Rutas de los Reportes
+    app.add_url_rule("/report", "report_index", report.index, methods = ["GET"])
+    app.add_url_rule("/report/delete/<report_id>", "report_delete", report.delete )
+    app.add_url_rule("/reports/create", "report_create", report.create, methods=["POST"])
+    app.add_url_rule("/reports/nuevo", "report_new", report.new)
+    app.add_url_rule("/reports/edit/<report_id>", "report_edit", report.edit)
+    app.add_url_rule("/reports/modification/<report_id>", "report_modification", report.modify,methods=["POST"])
+    app.add_url_rule("/reports/show/<report_id>", "report_show", report.show)
+    app.add_url_rule("/reports/add_monitoring/<report_id>", "report_add_monitoring", report.add_monitoring,methods=["POST"])
+    app.add_url_rule("/reports/close/<report_id>", "report_close", report.close,methods=["POST"])
+    app.add_url_rule("/reports/open/<report_id>", "report_open", report.open,methods=["POST"])
+    app.add_url_rule("/reports/resolved/<report_id>", "report_resolved", report.resolved,methods=["POST"])
 
 
-    # Ruta para el Home (usando decorator)
+    #Rutas de recorridos de evacuacion
+    app.add_url_rule("/route_of_evacuation", "route_index", route_of_evacuation.index, methods = ["GET"])
+    app.add_url_rule("/route_of_evacuation/create", "route_create", route_of_evacuation.create, methods=["POST"])
+    app.add_url_rule("/route_of_evacuation/nuevo", "route_new", route_of_evacuation.new)
+    
+# Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
         return render_template("home.html")
@@ -102,13 +121,18 @@ def create_app(environment="development"):
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
     api.register_blueprint(issue_api)
+    api.register_blueprint(flood_zones_api)
+    api.register_blueprint(report_api)
 
     app.register_blueprint(api)
+
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
     app.register_error_handler(403, handler.Forbidden_error)
+    app.register_error_handler(400, handler.Bad_request)
+    app.register_error_handler(500, handler.Internal_Server_Error)
     # Implementar lo mismo para el error 500
 
     # Retornar la instancia de app configurada
