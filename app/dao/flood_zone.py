@@ -18,9 +18,9 @@ class FloodZoneDao():
             zones =  FloodZone.query.filter(FloodZone.name.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
             if status == "Publicado":
-                zones =  FloodZone.query.filter(FloodZone.name.like(key_filtered)).filter_by(active = True).paginate(page=page, per_page=items_per_page)
+                zones =  FloodZone.query.filter(FloodZone.name.like(key_filtered)).filter_by(state = True).paginate(page=page, per_page=items_per_page)
             else:
-                zones =  FloodZone.query.filter(FloodZone.name.like(key_filtered)).filter_by(active = False).paginate(page=page, per_page=items_per_page)
+                zones =  FloodZone.query.filter(FloodZone.name.like(key_filtered)).filter_by(state = False).paginate(page=page, per_page=items_per_page)
         return zones
 
     @staticmethod
