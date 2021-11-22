@@ -14,19 +14,25 @@ class Coordinate(db.Model):
             self.longitude = longitude
 
 
+
 class FloodZone_has_coordinate():
     table = db.Table(
         "floodZone_has_coordinate",
-        Column("floodZone_id",Integer, ForeignKey("flood_zones.id")),
-        Column("coordinate_id",Integer, ForeignKey("coordinates.id")),
+        Column("floodZone_id",Integer, ForeignKey("flood_zones.id", ondelete="CASCADE")),
+        Column("coordinate_id",Integer, ForeignKey("coordinates.id", ondelete="CASCADE")),
         )
 
     @classmethod
     def get_table_floodZone_has_coordinate(cls):
         return (cls.table)
 
-    def __init__(self, flood_zone_id = None, coordinate_id = None):
-        self.floodZone_id = flood_zone_id
-        self.coordinate_id = coordinate_id
+    # def __init__(self, flood_zone_id = None, coordinate_id = None):
+    #     self.floodZone_id = flood_zone_id
+    #     self.coordinate_id = coordinate_id
+
+    @classmethod
+    def get_points_sorted(cls):
+       return cls.query.order_by(cls.coordinates_id).all()
+    
 
     

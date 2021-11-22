@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Creacion de recorrido{% endblock %}
+{% block title %}Modificar de recorrido{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -12,29 +12,38 @@
     </div>
   {% endfor %}
 {% endif %}
+  <div class = "alert alert-info" role="alert">
+    Los campos que no desea cambiar dejelo sin completar
+  </div>
+
   <h1>Crear un nuevo Recorrido de evacuacion</h1>
-  <form class="row g-3" action="{{ url_for('route_create')}}" method="POST">
+  <form class="row g-3" action="{{ url_for('route_modify')}}" method="PUT">
     <div class="col-md-6">
       <label for="name" class="form-label">Nombre del recorrido</label>
-      <input type="text" class="form-control" id= "name" name ="name" placeholder="Ingrese el nombre" required>
+      <input type="text" class="form-control" id= "name" name ="name" placeholder={{route.name}} required>
     </div>
     <div class="col-md-6">
     <label for="publicado">Seleccione un estado:</label>
       <select class="form-control" id="publicado" name="publicado">
-        <option value = 1>Publicado</option>
-        <option value = 0>Despublicado </option>
+          {{if route.publicado }}
+            <option value = 1>Publicado</option>
+            <option value = 0>Despublicado </option>
+          {{else}}
+            <option value = 0>Despublicado </option>
+            <option value = 1>Publicado</option>
+          {{endif}}
       </select>
     </div>
     <div class="col-md-12">
       <label for="coordinates_lat" class="form-label">Latitud</label>
-      <input type="text" class="form-control" id= "coordinates_lat" name ="coordinates_lat" placeholder="Ingrese la coordenada latitud" required>
+      <input type="text" class="form-control" id= "coordinates_lat" name ="coordinates_lat" placeholder={{route.coordinates_latitude}} required>
     </div>
     <div class="col-md-12">
       <label for="coordinates_long" class="form-label">Longitud</label>
-      <input type="text" class="form-control" id= "coordinates_long" name ="coordinates_long" placeholder="Ingrese la coordenada Longitud" required>
+      <input type="text" class="form-control" id= "coordinates_long" name ="coordinates_long" placeholder={{route.coordinates_longitude}} required>
     </div>
     <div class="form-outline mb-4">
-      <textarea class="form-control" rows="5" id="description" name= "description" placeholder="Ingrese una descripcion" required oninvalid="this.setCustomValidity('Se necesita una descripcion')" ></textarea>
+      <textarea class="form-control" rows="5" id="description" name= "description" placeholder={{route.description}} required oninvalid="this.setCustomValidity('Se necesita una descripcion')" ></textarea>
       <label id = "description" class="form-label" for="description"></label>
     </div>
     <div class="row mt-5">

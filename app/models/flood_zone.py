@@ -21,34 +21,34 @@ class FloodZone(db.Model):
         )
 
   # por defectos se cargan con estos valores por el tema de que en el csv solo viene nombre y coordenadas
-  def __init__ (self, name = None, cod_zone = None, state = None, color = None):
+  def __init__ (self, name = None, cod_zone = "Codigo default", state = True, color = "Rojo"):
       self.name = name
-      if not cod_zone:
-          self.cod_zone = random.choice(['Cod 0', 'Cod 1', 'Cod 2', 'Cod 3', 'Cod 4', 'Cod 5', 'Cod 6', 'Cod 7'])
-      else:
-          self.cod_zone = cod_zone
-      if not state:
-          self.state = random.choice([True, False])
-      else:
-          self.state = state
-      if not color:
-          self.colour = random.choice(['Amarillo', 'Verde', 'Rojo', 'Azul', 'Celeste', 'Azul', 'Violeta'])
-      else:
-          self.colour = color
+      self.cod_zone = cod_zone
+      self.state = state
+      self.colour = color
+
+  def get_ordered_coords(self):
+      coords = self.coordinates.all()
+      coords_sort = coords.sort(key=lambda obj: obj.id)
+      print(coords_sort)
 
 
   def get_as_json(self):
-       return json.dumps([{"latitud": 2323, "longitud": 2344}])
+      coords = self.coordinates.all()
+      coords.sort(key=lambda x: x.id)
+      arr = []
+      for coor in coords:
+          arr.append([coor.latitude, coor.longitude])
+      return arr
 
+  def get_color_traduced(self):
+       dic = { "Rojo" : "red",
+                "Violeta" : "violet",
+                "Amarillo": "yellow",
+                "Azul": "blue",
+                "Verde": "green"
+                }
+       return dic[self.colour]
 
-
-
-
-
-
-  # def __init__ (self, cod_zone = None, name = None, coordinates= None, state=None, color=None):
-  #   self.cod_zone = cod_zone
-  #   self.name = name
-  #   self.coordinates = coordinates
-  #   self.state = state
-  #   self.color = color
+  
+  

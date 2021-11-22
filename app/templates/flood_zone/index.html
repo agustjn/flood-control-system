@@ -48,11 +48,14 @@
       {% else %}
         <td>✖</td>
       {% endif %}
-
-
       <td>
         <a href="{{ url_for('flood_zone_profile',id = zone.id) }}" class="btn btn-secondary btn-sm"> Ver detalle  </a>
       </td>
+      {% if assert_permission("zonas_inundables_index") %}
+        <td>
+          <a href="{{ url_for('flood_zone_delete', flood_zone_id = zone.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estas seguro de eliminar la zona inundable  {{zone.name}}?');"> Eliminar </a>
+        </td>
+      {% endif %}
     </tr>
     {% endfor %}
    

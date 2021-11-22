@@ -34,3 +34,20 @@ class FloodZoneDao():
     @staticmethod
     def recover_flood_zone(id):
         return FloodZone.query.filter_by(id=id).first()
+
+    @staticmethod
+    def name_exists(floodzone_name):
+        return bool(FloodZone.query.filter_by(name=floodzone_name).first())
+
+    @staticmethod
+    def delete(flood_zone_delete):
+        db.session.delete(flood_zone_delete)
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False
+
+
+
+
