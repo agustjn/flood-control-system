@@ -17,38 +17,38 @@
   </div>
 
   <h1>Crear un nuevo Recorrido de evacuacion</h1>
-  <form class="row g-3" action="{{ url_for('route_modify')}}" method="PUT">
+  <form class="row g-3" action="{{url_for('route_modification', route_id = route.id)}}"  method="POST">
     <div class="col-md-6">
       <label for="name" class="form-label">Nombre del recorrido</label>
-      <input type="text" class="form-control" id= "name" name ="name" placeholder={{route.name}} required>
+      <input type="text" class="form-control" id= "name" name ="name" placeholder={{route.name}} >
     </div>
     <div class="col-md-6">
     <label for="publicado">Seleccione un estado:</label>
       <select class="form-control" id="publicado" name="publicado">
-          {{if route.publicado }}
+          {%if route.publicado  %}
             <option value = 1>Publicado</option>
             <option value = 0>Despublicado </option>
-          {{else}}
+          {%else%}
             <option value = 0>Despublicado </option>
             <option value = 1>Publicado</option>
-          {{endif}}
+          {%endif%}
       </select>
     </div>
     <div class="col-md-12">
       <label for="coordinates_lat" class="form-label">Latitud</label>
-      <input type="text" class="form-control" id= "coordinates_lat" name ="coordinates_lat" placeholder={{route.coordinates_latitude}} required>
+      <input type="text" class="form-control" id= "coordinates_lat" name ="coordinates_lat" placeholder={{route.coordinates_latitude}} >
     </div>
     <div class="col-md-12">
       <label for="coordinates_long" class="form-label">Longitud</label>
-      <input type="text" class="form-control" id= "coordinates_long" name ="coordinates_long" placeholder={{route.coordinates_longitude}} required>
+      <input type="text" class="form-control" id= "coordinates_long" name ="coordinates_long" placeholder={{route.coordinates_longitude}} >
     </div>
     <div class="form-outline mb-4">
-      <textarea class="form-control" rows="5" id="description" name= "description" placeholder={{route.description}} required oninvalid="this.setCustomValidity('Se necesita una descripcion')" ></textarea>
+      <textarea class="form-control" rows="5" id="description" name= "description" placeholder={{route.description}}  oninvalid="this.setCustomValidity('Se necesita una descripcion')" ></textarea>
       <label id = "description" class="form-label" for="description"></label>
     </div>
     <div class="row mt-5">
       <div class="col-4">
-        <button type="submit" class="btn btn-success btn-lg" >Crear</button>
+        <button type="submit" class="btn btn-success btn-lg" >Editar</button>
       </div>
       <div class="col-4">
         <a href="{{ url_for('route_index') }}" class="btn btn-danger btn-lg " >Volver</a>

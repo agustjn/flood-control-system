@@ -77,9 +77,12 @@ def edit(point_id):
     PermissionDAO.assert_permission("puntos_encuentro_update")
 
     modification_point = PointDAO.search_by_id(point_id)
-    msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-    return render_template("point/edit.html", point = modification_point, msj= msj)
+    if modification_point:
+        msj = "Los campos que desea dejar igual dejenlo sin rellenar"
+        return render_template("point/edit.html", point = modification_point, msj= msj)
+    return redirect(url_for("point_index"))
 
+    
 def modify(point_id):
     PermissionDAO.assert_permission("puntos_encuentro_update")
 

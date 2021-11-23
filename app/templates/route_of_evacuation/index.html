@@ -56,12 +56,12 @@
 
       <!-- {% if assert_permission("usuario_destroy") %} -->
       <td>
-        <a href="#" class="btn btn-secondary btn-sm"
+        <a href="{{url_for('route_delete', route_id = route.id)}}"  class="btn btn-secondary btn-sm"
           onclick="return confirm('¿Estas seguro de eliminar al usuario {{route.name}}?');"> Eliminar </a>
       </td>
       <!-- {% endif %} -->
       <td>
-        <a href="#" class="btn btn-success btn-sm"  > Modificar </a>
+        <a href="{{url_for('route_edit', route_id = route.id)}}"  class="btn btn-success btn-sm"  > Modificar </a>
       </td>
       {% if route.publicado %}
         <td>

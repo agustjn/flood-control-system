@@ -41,3 +41,36 @@ class Route_of_evacuationDAO ():
             return True
         except:
             return False
+
+    @staticmethod
+    def search_by_id(route_id):
+        return  Route.query.filter_by(id = route_id).first()
+
+    @staticmethod
+    def delete(route_delete):
+        db.session.delete(route_delete)
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False
+
+    @staticmethod
+    def update(route,name,publicado,coordinates_lat,coordinates_long,description):
+        if name:
+            route.name = name
+        if publicado:
+            route.publicado = True
+        else:
+            route.publicado = False
+        if coordinates_lat:
+            route.coordinates_latitude = coordinates_lat
+        if coordinates_long:
+            route.coordinates_longitud = coordinates_long
+        if description:
+            route.description = description
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False

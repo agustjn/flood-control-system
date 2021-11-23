@@ -100,6 +100,13 @@ denuncia_add_monitoring = Permission("denuncia_add_monitoring")
 denuncia_show = Permission("denuncia_show")
 
 
+route_of_evacuation_index = Permission("route_of_evacuation_index")
+route_of_evacuation_new = Permission("route_of_evacuation_new")
+route_of_evacuation_update = Permission("route_of_evacuation_update")
+route_of_evacuation_destroy = Permission("route_of_evacuation_destroy")
+
+
+
 
 
 #Agrego los permisos a la base de datos
@@ -127,6 +134,12 @@ db.session.add(denuncia_resolved)
 db.session.add(denuncia_close)
 db.session.add(denuncia_add_monitoring)
 db.session.add(denuncia_show)
+
+db.session.add(route_of_evacuation_destroy)
+db.session.add(route_of_evacuation_new)
+db.session.add(route_of_evacuation_update)
+db.session.add(route_of_evacuation_index)
+
 db.session.commit()
 
 #Creo roles
@@ -162,6 +175,11 @@ rol_administrador.permission.append(denuncia_close)
 rol_administrador.permission.append(denuncia_add_monitoring)
 rol_administrador.permission.append(denuncia_show)
 
+
+rol_administrador.permission.append(route_of_evacuation_destroy)
+rol_administrador.permission.append(route_of_evacuation_update)
+rol_administrador.permission.append(route_of_evacuation_new)
+rol_administrador.permission.append(route_of_evacuation_index)
 db.session.commit()
 
 
@@ -189,6 +207,10 @@ rol_operador.permission.append(denuncia_resolved)
 rol_operador.permission.append(denuncia_close)
 rol_operador.permission.append(denuncia_add_monitoring)
 rol_operador.permission.append(denuncia_show)
+
+rol_operador.permission.append(route_of_evacuation_update)
+rol_operador.permission.append(route_of_evacuation_new)
+rol_operador.permission.append(route_of_evacuation_index)
 db.session.commit()
 
 

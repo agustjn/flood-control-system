@@ -23,12 +23,21 @@ def _obtener_valores(status, texto):
         texto_a_filtrar = request.args.get('texto_id')
     return (filtro,texto_a_filtrar)
 
+def _analizar_fecha(inicio,fin):
+    print (f"----------------------------------{inicio}---------------{fin}--------------------------")
+    return True
 
 def index():
     PermissionDAO.assert_permission("denuncia_index")
-    filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
-    filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
+    filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
+    if request.args.get("fecha_inicio") is None:
+        filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
+    else:
+        if (_analizar_fecha(request.args.get("fecha_inicio"),request.args.get("fecha_fin"))):
+            filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar,request.args.get("fecha_inicio"),request.args.get("fecha_fin"))
+        else:
+            flash("Ingrese una fecha correcta")
     values = get_values_filter_columns()
     values.remove(filtro)
     return render_template("report/index.html", reportes=filtered_reports,values=values, filtro = filtro,texto=texto_a_filtrar)
@@ -77,15 +86,16 @@ def delete(report_id):
 def edit(report_id):
     PermissionDAO.assert_permission("denuncia_update")
     modification_report = ReportDAO.search_by_id(report_id)
-    users_assign = UserDAO.recover_users()
-    msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-    user_asignado = modification_report.user_assing
-    try:
-        users_assign.remove(user_asignado)
-    except:
-        user_asignado = ""
-
-    return render_template("report/edit.html", report = modification_report, msj = msj, users = users_assign,user_assing = user_asignado)
+    if modification_report:
+        users_assign = UserDAO.recover_users()
+        msj = "Los campos que desea dejar igual dejenlo sin rellenar"
+        user_asignado = modification_report.user_assing
+        try:
+            users_assign.remove(user_asignado)
+        except:
+            user_asignado = ""
+        return render_template("report/edit.html", report = modification_report, msj = msj, users = users_assign,user_assing = user_asignado)
+    return redirect(url_for("report_index"))
 
 def modify(report_id):
     PermissionDAO.assert_permission("denuncia_update")
