@@ -106,3 +106,9 @@ def delete(flood_zone_id):
 
     flash (msj,"info")
     return redirect(url_for("flood_zone_index"))
+
+def publicate_despublicate(flood_zone_id):
+    #ver temas permisos
+    Auth.verify_authentification()
+    FloodZoneDao.publicate_despublicate(flood_zone_id)
+    return redirect(url_for("flood_zone_index"))

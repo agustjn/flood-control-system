@@ -26,7 +26,7 @@ def _obtener_valores(status, texto):
     return (filtro,texto_a_filtrar)
 
 def index():
-    #PermissionDAO.assert_permission("route_of_evacuation_index")
+    PermissionDAO.assert_permission("route_of_evacuation_index")
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
     filtered_route = Route_of_evacuationDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
@@ -35,11 +35,11 @@ def index():
     return render_template("route_of_evacuation/index.html", routes=filtered_route,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 def new():
-    #PermissionDAO.assert_permission("route_of_evacuation_new")
+    PermissionDAO.assert_permission("route_of_evacuation_new")
     return render_template("route_of_evacuation/new.html")
 
 def create():
-    #PermissionDAO.assert_permission("route_of_evacuation_new")
+    PermissionDAO.assert_permission("route_of_evacuation_new")
     parameter = request.form
     if (_validate_empty_fields(parameter["name"],parameter["publicado"],parameter["coordinates_lat"],parameter["coordinates_long"],parameter["description"])):
             if not Route_of_evacuationDAO.exist_coordinates(coordinates_latitude = parameter["coordinates_lat"], coordinates_longitude = parameter["coordinates_long"]):
@@ -61,7 +61,7 @@ def _validate_empty_fields(name,publicado,coordinates_lat,coordinates_long,descr
 
 
 def delete(route_id):
-    #PermissionDAO.assert_permission("route_of_evacuation_destroy")
+    PermissionDAO.assert_permission("route_of_evacuation_destroy")
     route_delete = Route_of_evacuationDAO.search_by_id(route_id)
     if Route_of_evacuationDAO.delete(route_delete):
         msj = "El recorrido de evacuacion " + route_delete.name + " se elimino con exito"
@@ -73,7 +73,7 @@ def delete(route_id):
 
 
 def edit(route_id):
-    #PermissionDAO.assert_permission("route_of_evacuation_update")
+    PermissionDAO.assert_permission("route_of_evacuation_update")
     modification_route = Route_of_evacuationDAO.search_by_id(route_id)
     if modification_route:
         return render_template("route_of_evacuation/edit.html",route = modification_route)
@@ -82,7 +82,7 @@ def edit(route_id):
 
 
 def modify(route_id):
-    #PermissionDAO.assert_permission("route_of_evacuation_update")
+    PermissionDAO.assert_permission("route_of_evacuation_update")
     parameter = request.form
     route_modification = Route_of_evacuationDAO.search_by_id(route_id)
     if route_modification:
@@ -98,4 +98,10 @@ def modify(route_id):
     else:
         msj = "El id seleccionado no existe, intente nuevamente"
     flash (msj)
+    return redirect(url_for("route_index"))
+
+def publicate_despublicate(route_id):
+    #ver temas permisos
+    Auth.verify_authentification()
+    Route_of_evacuationDAO.publicate_despublicate(route_id)
     return redirect(url_for("route_index"))

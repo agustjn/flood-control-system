@@ -50,7 +50,11 @@
       <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>
       <td>{{ user.password }}</td>
-      <td>{{ user.active }}</td>
+      {% if user.active %}
+        <td>✔</td>
+      {% else %}
+        <td>✖</td>
+      {% endif %}
 
       {% if assert_permission("usuario_destroy") %}
       <td>

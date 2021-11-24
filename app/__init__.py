@@ -109,7 +109,7 @@ def create_app(environment="development"):
     app.add_url_rule("/route_of_evacuation/edit/<route_id>", "route_edit", route_of_evacuation.edit)
     app.add_url_rule("/route_of_evacuation/modification/<route_id>", "route_modification", route_of_evacuation.modify, methods=["POST"])
     app.add_url_rule("/route_of_evacuation/delete/<route_id>", "route_delete", route_of_evacuation.delete )
-
+    app.add_url_rule("/route_of_evacuation/publicate_despublicate/<route_id>", "route_publicate_despublicate", route_of_evacuation.publicate_despublicate )
 
 # Ruta para el Home (usando decorator)
     @app.route("/")

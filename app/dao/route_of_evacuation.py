@@ -74,3 +74,13 @@ class Route_of_evacuationDAO ():
             return True
         except:
             return False
+            
+    @classmethod
+    def publicate_despublicate(cls,route_id):
+        route = cls.search_by_id(route_id)
+        route.publicado = not (route.publicado)
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False

@@ -60,7 +60,10 @@ class Report(db.Model):
         self.last_name = last_name
         self.phone = phone
         self.email = email
-        self.status = "Sin confirmar"
+        if user_assing_id:
+            self.status = "En Curso"
+        else:
+            self.status = "Sin confirmar"
 
 
 
