@@ -2,7 +2,7 @@ from flask import redirect, render_template, request, url_for,flash,session
 from app.dao.configuration import ConfigurationDAO
 from app.dao.user import UserDAO
 from app.helpers.auth import Auth
-
+from datetime import datetime as dt
 from app.helpers.permission import PermissionDAO
 
 from app.dao.report import ReportDAO
@@ -24,20 +24,32 @@ def _obtener_valores(status, texto):
     return (filtro,texto_a_filtrar)
 
 def _analizar_fecha(inicio,fin):
-    print (f"----------------------------------{inicio}---------------{fin}--------------------------")
-    return True
+    año_in,mes_in,dia_in = inicio.split("-")
+    año_in = int(año_in)
+    mes_in = int(mes_in)
+    dia_in = int(dia_in)
+    fecha_inicio = dt(año_in,mes_in,dia_in).strftime("%b %d %Y %H:%M:%S")
+    if fin:
+        año_fin,mes_fin,dia_fin = fin.split("-")
+        año_fin = int(año_fin)
+        mes_fin = int(mes_fin)
+        dia_fin = int(dia_fin)
+        fecha_fin = dt(año_fin,mes_fin,dia_fin).strftime("%b %d %Y %H:%M:%S")
+
+    else:
+        fecha_fin = dt.now().strftime("%b %d %Y %H:%M:%S")
+    return (fecha_inicio,fecha_fin)
 
 def index():
     PermissionDAO.assert_permission("denuncia_index")
     dao = ConfigurationDAO()
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
-    if request.args.get("fecha_inicio") is None:
-        filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
+    fecha_in = request.args.get("fecha_inicio")
+    if fecha_in and  (len(fecha_in) < 4):
+        fecha_inicio,fecha_fin = _analizar_fecha(request.args.get("fecha_inicio"),request.args.get("fecha_fin"))
+        filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar,fecha_inicio,fecha_fin)
     else:
-        if (_analizar_fecha(request.args.get("fecha_inicio"),request.args.get("fecha_fin"))):
-            filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar,request.args.get("fecha_inicio"),request.args.get("fecha_fin"))
-        else:
-            flash("Ingrese una fecha correcta")
+        filtered_reports = ReportDAO.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
     values = get_values_filter_columns()
     values.remove(filtro)
     return render_template("report/index.html", reportes=filtered_reports,values=values, filtro = filtro,texto=texto_a_filtrar)

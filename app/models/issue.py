@@ -1,7 +1,7 @@
 from app.db import db
 from app.models.category import Category
 from app.models.status import Status
-import datetime as dt
+from datetime import datetime as dt
 
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -25,4 +25,4 @@ class Issue(db.Model):
         self.description = description
         self.category_id = category_id
         self.status_id = status_id
-        self.created_at = dt.date.today().strftime("%b %d %Y %H:%M:%S")
+        self.created_at = dt.now().strftime("%b %d %Y %H:%M:%S")
