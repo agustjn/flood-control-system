@@ -1,22 +1,23 @@
 <template>
-  <Navbar/>
-  <View/>
-  <ReportsView/>
-  <!-- <Footer/> -->
+  <div id="app">
+     <Navbar/>    
+     <View/>
+      
+         
+  </div>
+
 </template>
 
 <script>
 import Navbar from "./components/Navbar";
 import View from "./components/View"
-import ReportsView from "./components/reports/ReportsView.vue"
 
 export default {
-  name: "App",
+  name: "app",
   components: {
     Navbar,
-    View,
-    ReportsView
-  },
+    View
+  }
 };
 </script>
 
