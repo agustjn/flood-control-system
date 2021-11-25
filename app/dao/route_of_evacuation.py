@@ -21,20 +21,21 @@ class Route_of_evacuationDAO ():
                 routes =  Route.query.filter(Route.name.like(key_filtered)).filter_by(publicado = False).paginate(page=page, per_page=items_per_page)
         return routes
 
-    @staticmethod
-    def exist_coordinates(coordinates = None , coordinates_latitude = None , coordinates_longitude = None):
-        "Si ingresa las coordenadas todas juntas usa 'coordinates', sino por nombre las referencia por separadas"
-        if coordinates:
-            lis = coordinates.split(",")
-            coordinates_latitude = lis[0]
-            coordinates_longitude = lis[1]
-        if (db.session.query(Route).filter(or_(Route.coordinates_latitude == coordinates_latitude, Route.coordinates_longitude == coordinates_longitude)).first()):
-                return True
-        return False
+    # esta comentado porque las coordenadas ahora es una relacion con otra tabla
+    # @staticmethod
+    # def exist_coordinates(coordinates = None , coordinates_latitude = None , coordinates_longitude = None):
+    #     "Si ingresa las coordenadas todas juntas usa 'coordinates', sino por nombre las referencia por separadas"
+    #     if coordinates:
+    #         lis = coordinates.split(",")
+    #         coordinates_latitude = lis[0]
+    #         coordinates_longitude = lis[1]
+    #     if (db.session.query(Route).filter(or_(Route.coordinates_latitude == coordinates_latitude, Route.coordinates_longitude == coordinates_longitude)).first()):
+    #             return True
+    #     return False
 
     @staticmethod
-    def create_route(name,publicado,coordinates_lat,coordinates_long,description):
-        new_route = Route(name,publicado,coordinates_lat,coordinates_long,description)
+    def create_route(name,publicado,description):
+        new_route = Route(name,publicado,description)
         db.session.add(new_route)
         try:
             db.session.commit()
@@ -55,25 +56,26 @@ class Route_of_evacuationDAO ():
         except:
             return False
 
-    @staticmethod
-    def update(route,name,publicado,coordinates_lat,coordinates_long,description):
-        if name:
-            route.name = name
-        if publicado:
-            route.publicado = True
-        else:
-            route.publicado = False
-        if coordinates_lat:
-            route.coordinates_latitude = coordinates_lat
-        if coordinates_long:
-            route.coordinates_longitud = coordinates_long
-        if description:
-            route.description = description
-        try:
-            db.session.commit()
-            return True
-        except:
-            return False
+    # esta comentado porque las coordenadas ahora es una relacion con otra tabla
+    # @staticmethod
+    # def update(route,name,publicado,coordinates_lat,coordinates_long,description):
+    #     if name:
+    #         route.name = name
+    #     if publicado:
+    #         route.publicado = True
+    #     else:
+    #         route.publicado = False
+    #     if coordinates_lat:
+    #         route.coordinates_latitude = coordinates_lat
+    #     if coordinates_long:
+    #         route.coordinates_longitud = coordinates_long
+    #     if description:
+    #         route.description = description
+    #     try:
+    #         db.session.commit()
+    #         return True
+    #     except:
+    #         return False
             
     @classmethod
     def publicate_despublicate(cls,route_id):
@@ -84,3 +86,7 @@ class Route_of_evacuationDAO ():
             return True
         except:
             return False
+
+    @staticmethod
+    def recover_route_of_evacuation_paginated(page,per_page):
+        return Route.query.paginate(page = page, per_page = per_page)

@@ -1,6 +1,6 @@
-from flask import jsonify, Blueprint, request, session
+from flask import jsonify, Blueprint, request
 from app.dao.flood_zone import FloodZoneDao
-from app.scheme.flood_zone import flood_zones_scheme,flood_zone_scheme, flood_zone_pagination_scheme
+from app.scheme.flood_zone import flood_zone_scheme, flood_zone_pagination_scheme
 from app.dao.configuration import ConfigurationDAO
 from app.helpers.permission import PermissionDAO
 

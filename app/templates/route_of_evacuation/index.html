@@ -33,9 +33,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Nombre de ruta </th>
-      <th scope="col">Descricpion</th>
-      <th scope="col">Latitud</th>
-      <th scope="col">Longitud</th>
+      <th scope="col">Descripción</th>
       <th scope="col">Publicado</th>
       <th  colspan="3" scope="col" > Operaciones</th>
     </tr>
@@ -46,8 +44,6 @@
       <th scope="row">{{loop.index}}</th>
       <td>{{ route.name }}</td>
       <td>{{ route.description }}</td>
-      <td>{{ route.coordinates_latitude }}</td>
-      <td>{{ route.coordinates_longitude }}</td>
       {% if route.publicado %}
         <td>✔</td>
       {% else %}

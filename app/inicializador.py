@@ -1,4 +1,5 @@
 from sqlalchemy.sql.expression import _True
+from app.models.coordinate import Coordinate
 from app.models.permission import Role, Permission
 from app.models.user import User
 from app.db import db
@@ -300,9 +301,38 @@ ReportDAO.create_report('Zanja tapada',1, ' Zanja tapada y no desagora bien nada
 ReportDAO.create_report('Cloaca se inunda ',2, 'Hay una cloaca tapada y se inunda mi casa', 233232, 232323, 'Juanita', 'Clavito', 2232323, 'Juanita@email.com',1)
 
 
-Route_of_evacuationDAO.create_route('Ruta1',True,2222222,333333,'Es una ruta larga')
-Route_of_evacuationDAO.create_route('Ruta3',True,3333,5555,'Es una ruta de salida')
-Route_of_evacuationDAO.create_route('Ruta4',True,44444,555555,'Es la ruta de evacuacion')
-Route_of_evacuationDAO.create_route('Ruta5',True,6666,7777,'La ruta para salir')
-Route_of_evacuationDAO.create_route('Rutaaa1',False,22226666222,777,'Es una ruta de prueba')
-Route_of_evacuationDAO.create_route('Rutaaa1',False,6676,333354545433,'Esa es la ruta para salir')
+# ruta1 = Route_of_evacuationDAO.create_route('Ruta1',True,'Es una ruta larga')
+# ruta2 = Route_of_evacuationDAO.create_route('Ruta3',True,'Es una ruta de salida')
+
+
+# db.session.add(ruta1)
+# db.session.add(ruta2)
+
+
+# coordenada1 = Coordinate(-34.55551212, -58.12323912)
+# coordenada2 = Coordinate(-36.12332123, -55.21312313)
+# coordenada3 = Coordinate(-37.12332123, -56.21312313)
+# coordenada4 = Coordinate(-38.12332123, -57.21312313)
+# coordenada5 = Coordinate(-39.12332123, -58.21312313)
+# coordenada6 = Coordinate(-40.12332123, -60.21312313)
+# coordenada7 = Coordinate(-41.12332123, -61.21312313)
+# coordenada8 = Coordinate(-42.12332123, -62.21312313)
+
+# db.session.add(coordenada1)
+# db.session.add(coordenada2)
+# db.session.add(coordenada3)
+# db.session.add(coordenada4)
+# db.session.add(coordenada5)
+# db.session.add(coordenada6)
+# db.session.add(coordenada7)
+# db.session.add(coordenada8)
+
+# ruta1.coordinates.append(coordenada1)
+# ruta1.coordinates.append(coordenada2)
+# ruta1.coordinates.append(coordenada3)
+# ruta1.coordinates.append(coordenada4)
+# ruta1.coordinates.append(coordenada5)
+
+# ruta2.coordinates.append(coordenada6)
+# ruta2.coordinates.append(coordenada7)
+# ruta2.coordinates.append(coordenada8)

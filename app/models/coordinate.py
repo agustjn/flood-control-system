@@ -14,6 +14,17 @@ class Coordinate(db.Model):
             self.longitude = longitude
 
 
+class Route_of_evacuation_has_coordinate():
+    table = db.Table(
+        "route_of_evacuation_has_coordinate",
+        Column("route_of_evacuation_id",Integer, ForeignKey("route_of_evacuation.id", ondelete="CASCADE")),
+        Column("coordinate_id",Integer, ForeignKey("coordinates.id", ondelete="CASCADE")),
+    )
+
+    @classmethod
+    def get_table_route_of_evacuation_has_coordinate(cls):
+        return (cls.table)
+
 
 class FloodZone_has_coordinate():
     table = db.Table(
