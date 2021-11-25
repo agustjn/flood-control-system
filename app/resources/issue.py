@@ -20,9 +20,9 @@ def create():
     #conn = connection()
     #Issue.create(conn, request.form)
 
-    #validar ()       -faltaria metodo validar
+    # validar ()       -faltaria metodo validar
     if IssueDAO.create_issue(request.form):
-            flash("se creo flama")
+        flash("se creo flama")
     else:
         flash("No se cre")
     return redirect(url_for("issue_index"))
