@@ -83,3 +83,8 @@ class PointDAO():
             return True
         except:
             return False
+
+
+    @staticmethod
+    def recover_points_paginated(page,per_page):
+        return Point.query.paginate(page = page, per_page = per_page)
