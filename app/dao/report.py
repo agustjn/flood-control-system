@@ -106,11 +106,15 @@ class ReportDAO():
         #Nose porque se hace esto!
         page = request.args.get('page', 1, type=int)
         # if fecha_inicio and fecha_fin:
-        #     reports =    Report.query.filter_by(id = 1).all()
+        # reports = Report.query.filter(and_(Report.creation_date >= fecha_inicio, Report.creation_date <= fecha_fin ) )
+            # reports =    Report.query.filter_by(id = 1).all()
         if status == "Todos":
             reports = Report.query.filter(Report.title.like(key_filtered)).paginate(page=page, per_page=items_per_page)
         else:
-                reports =  Report.query.filter(Report.title.like(key_filtered)).filter_by(status = status).paginate(page=page, per_page=items_per_page)
+            if status =='Publicado':
+                reports =  Report.query.filter(Report.title.like(key_filtered)).filter_by(status = True).paginate(page=page, per_page=items_per_page)
+            else:
+                reports =  Report.query.filter(Report.title.like(key_filtered)).filter_by(status = False).paginate(page=page, per_page=items_per_page)
 
         return reports
 
