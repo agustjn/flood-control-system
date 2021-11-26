@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory} from 'vue-router'
-import Home from './components/Home'
+import Home from './components/home/Home'
 import FloodZone from './components/flood_zones/FloodZone'
 import MeetingPoint from './components/meeting_points/MeetingPoint'
 import Report from './components/reports/Report'

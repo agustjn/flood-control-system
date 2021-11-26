@@ -2,10 +2,15 @@
   <div id="app">
      <Navbar/>    
      <View/>
-      
-         
+      <footer> 
+        <div id="footer" class="container-fluid justify-content-center bg-dark" style="position:absolute; bottom:0">
+          
+          <span class="text-muted">
+            @All rights reserved
+          </span>
+        </div>
+    </footer>
   </div>
-
 </template>
 
 <script>
