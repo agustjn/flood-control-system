@@ -159,8 +159,6 @@ CREATE TABLE `route_of_evacuation` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
-  `coordinates_latitude` varchar(50) NOT NULL,
-  `coordinates_longitude` varchar(50) NOT NULL,
   `publicado` tinyint(1) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -291,6 +289,17 @@ CREATE TABLE `coordinates` (
 
 CREATE TABLE `floodZone_has_coordinate` (
   `floodZone_id` int(10) NOT NULL,
+  `coordinate_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `route_of_evacuation_has_coordinate`
+--
+
+CREATE TABLE `route_of_evacuation_has_coordinate` (
+  `route_of_evacuation_id` int(10) NOT NULL,
   `coordinate_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
