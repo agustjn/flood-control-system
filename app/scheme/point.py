@@ -16,6 +16,6 @@ class PointPaginationScheme(Schema):
     items = fields.Nested(PointScheme, many=True, data_key="zonas")
 
 
-point_scheme = PointScheme(many = True)
+points_scheme = PointScheme(many = True)
 point_scheme = PointScheme()
 point_pagination_scheme = PointPaginationScheme()
