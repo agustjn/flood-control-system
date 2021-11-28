@@ -1,6 +1,6 @@
 <template>
 
-    <div class="row p-4" style="background-color:#E8E8E8">
+    <div class="row p-5" style="background-color:#E8E8E8; height:300px">
         <h1 class="text-center mt-2" style="font-family:Times New Roman">Que se puede realizar en esta pagina web?</h1>
 
         <div class="col-md-2">
@@ -15,20 +15,47 @@
             </p>
         </div>
     </div>
-    <div class="container mt-5">
-        <Card 
-            image_name="meeting-point"
-            text="Conozca los puntos de encuentros mas cercanos a usted"
-            link="/meeting-points"/>
-        <!-- <Card 
-        image_route="../../assets/images/logo.png" 
-        text="Conozca los puntos de encuentros mas cercanos a usted"/>
-        <Card 
-        image_route="../../assets/images/logo.png" 
-        text="Conozca los puntos de encuentros mas cercanos a usted"/>
-        <Card 
-        image_route="../../assets/images/logo.png" 
-        text="Conozca los puntos de encuentros mas cercanos a usted"/> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 mt-3">
+                    <Card 
+                    image_name="meeting-point"
+                    text="Conozca los puntos de encuentros mas cercanos a usted"
+                    link="/meeting-points"/>
+            </div>
+            <div class="col-md-4 col-sm-12 mt-3" style="font-size:15px">
+                    <Card 
+                    image_name="recorrido-evacuacion" 
+                    text="Sepa que recorrido le es mas conveniente y cercano en caso de tener que evacuar"
+                    link="/routes-of-evacuation"/>
+            </div>
+            <div class="col-md-4 col-sm-12 mt-3">
+                <Card 
+                image_name="zonas_riesgo" 
+                text="Conoza las zonas con mas alta posibilidad de inundacion"
+                link="/flood-zones"/>
+            </div>
+
+            <div class="col-md-4 col-sm-12 mt-3" style="font-size:15px">
+                <Card 
+                image_name="report" 
+                text="Denuncie alcantarillas tapadas,basurales,u otras indoles que empeoren una inundacion"
+                link="/reports"/>
+            </div>
+            <div class="col-md-4 col-sm-12 mt-3">
+                <Card 
+                image_name="mapa" 
+                text="Visualize en un mapa las denuncias actuales con su respectivo estado"
+                link="/meeting-points"/>
+            </div>
+            <div class="col-md-4 col-sm-12 mt-3" style="font-size:15px">
+                <Card 
+                image_name="stadistics" 
+                text="Conozca estadisticas respecto a informacion relacionada a las inundaciones"
+                link="/stadistics"/>
+        </div>
+
+        </div>
     </div>
 </template>
 

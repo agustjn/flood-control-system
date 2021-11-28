@@ -1,8 +1,8 @@
 <template>
-<div class="card" style="width: 18rem;">
-  <img width="100" height="200" class="card-img-top" :src="getImage" alt="Card image cap">
+<div class="card" style="width: 255px; height:320px">
+  <img width="100" height="165" class="card-img-top" :src="getImage" alt="Card image cap">
   <div class="card-body">
-    <p class="card-text">{{text}}</p>
+    <p class="card-text" style="font-weight:bold">{{text}}</p>
   </div>
   <router-link :to="link" class="btn btn-primary"> Ir </router-link>
 </div>
@@ -21,6 +21,7 @@ export default {
 
     
 }
+
 
 
 </script>
