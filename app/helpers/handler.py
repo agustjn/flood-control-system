@@ -6,7 +6,7 @@ def not_found_error(e):
         "error_name": "404 Not Found Error",
         "error_description": "La url a la que quiere acceder no existe",
     }
-    return make_report("error.html", **kwargs), 404
+    return make_report(kwargs,404)
 
 
 def unauthorized_error(e):

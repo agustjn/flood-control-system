@@ -51,9 +51,9 @@ class UserDAO():
         except:
             return False
 
-    @staticmethod
-    def activate_desactivate(user_id):
-        user = User.query.get(user_id)
+    @classmethod
+    def activate_desactivate(cls,user_id):
+        user = cls.search_by_id(user_id)
         user.active = not (user.active)
         try:
             db.session.commit()

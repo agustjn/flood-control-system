@@ -1,5 +1,5 @@
 
-from marshmallow import Schema , fields, post_load, validate, ValidationError
+from marshmallow import Schema , fields
 
 
 class CoordinateScheme(Schema):

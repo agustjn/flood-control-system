@@ -3,12 +3,10 @@ from app.helpers.auth import Auth
 from app.dao.user import UserDAO
 
 class PermissionDAO ():
-
-
-
     @classmethod
-    def assert_permission(cls,user_id,permission_name):
+    def assert_permission(cls,permission_name):
         Auth.verify_authentification()
+        user_id = session["id"]
         if cls.has_permission(user_id,permission_name):
             return True
         abort(403)

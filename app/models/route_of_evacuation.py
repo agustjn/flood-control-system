@@ -1,7 +1,7 @@
 # Se estan reescribiendo las clases para utilizar la libreria SQLAlchemy
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from app.models.configuration import Configuration
-
+from app.models.coordinate import Route_of_evacuation_has_coordinate
 
 from app.db import db
 from sqlalchemy.orm import relationship
@@ -12,15 +12,18 @@ class Route_of_evacuation(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
     description = Column(String(50))
-    coordinates_latitude = Column(String(50))
-    coordinates_longitude = Column(String(50))
     publicado = Column(Boolean)
 
-    def __init__(self, nombre=None, descripcion=None, coordenadas_latitud=None,coordenadas_longitud = None,  estado=None):
+    coordinates = db.relationship(
+            "Coordinate",
+            secondary = Route_of_evacuation_has_coordinate.get_table_route_of_evacuation_has_coordinate(),
+            backref= db.backref("coordinates_route_of_evacuation", lazy="dynamic"),
+            lazy = "dynamic",
+        )
+
+    def __init__(self, nombre=None, estado=None, descripcion=None):
         self.name = nombre
         self.description = descripcion
-        self.coordinates_latitude = coordenadas_latitud
-        self.coordinates_longitude = coordenadas_longitud
         self.publicado = estado
 
 

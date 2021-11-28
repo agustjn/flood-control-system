@@ -14,8 +14,9 @@
 {% endif %}
 
 <div class="alert alert-info" role="alert">
-    "Los campos que no desea cambiar dejelo sin completar"
+    Los campos que no desea cambiar dejelo sin completar
 </div>
+
   <h1>Crear una denuncia</h1>
   <form class="row g-3" action="{{ url_for('report_modification',report_id = report.id) }}" method="POST">
     <div class="col-md-6">

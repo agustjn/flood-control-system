@@ -28,7 +28,7 @@ def _obtener_valores(status,texto):
     return (filtro,texto_a_filtrar)
 
 def index():
-    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_index")
+    PermissionDAO.assert_permission("puntos_encuentro_index")
 
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
@@ -38,12 +38,12 @@ def index():
     return render_template("point/index.html", points=filtered_points,values=values, filtro = filtro,texto=texto_a_filtrar)
 
 def new():
-    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_new")
+    PermissionDAO.assert_permission("puntos_encuentro_new")
     return render_template("point/new.html")
 
 
 def create():
-    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_new")
+    PermissionDAO.assert_permission("puntos_encuentro_new")
 
     parameter = request.form
     validos = _validate_empty_fields(parameter["name"], parameter["address"], parameter["coordinates_lat"],parameter["coordinates_long"],parameter["phone"],parameter["email"],parameter["status"])
@@ -74,14 +74,17 @@ def _validate_empty_fields(name, adress, coordinates_lat,coordinates_long,phone,
         return False
 
 def edit(point_id):
-    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_update")
+    PermissionDAO.assert_permission("puntos_encuentro_update")
 
     modification_point = PointDAO.search_by_id(point_id)
-    msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-    return render_template("point/edit.html", point = modification_point, msj= msj)
+    if modification_point:
+        msj = "Los campos que desea dejar igual dejenlo sin rellenar"
+        return render_template("point/edit.html", point = modification_point, msj= msj)
+    return redirect(url_for("point_index"))
 
+    
 def modify(point_id):
-    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_update")
+    PermissionDAO.assert_permission("puntos_encuentro_update")
 
     parameter = request.form
     point_update = PointDAO.search_by_id(point_id)
@@ -104,7 +107,7 @@ def modify(point_id):
 
 
 def delete(point_id):
-    PermissionDAO.assert_permission(session["id"],"puntos_encuentro_destroy")
+    PermissionDAO.assert_permission("puntos_encuentro_destroy")
 
 
     point_delete = PointDAO.search_by_id(point_id)

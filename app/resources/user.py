@@ -26,7 +26,7 @@ def _obtener_valores(status, texto):
     return (filtro,texto_a_filtrar)
 
 def index():
-    PermissionDAO.assert_permission(session["id"],"usuario_index")
+    PermissionDAO.assert_permission("usuario_index")
 
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
@@ -37,16 +37,16 @@ def index():
 
 
 def new():
-    PermissionDAO.assert_permission(session["id"],"usuario_new")
+    PermissionDAO.assert_permission("usuario_new")
     return render_template("user/new.html")
 
 
 
 def create():
-    PermissionDAO.assert_permission(session["id"],"usuario_new")
+    PermissionDAO.assert_permission("usuario_new")
 
     Auth.verify_authentification()
-    # assert_permission(session,"user_create")
+    # assert_permission("user_create")
     parameter = request.form
     errors = []
 
@@ -75,14 +75,16 @@ def _validate_empty_fields(first_name,last_name,email,user,password):
 
 def edit(user_id):
 
-    PermissionDAO.assert_permission(session["id"],"usuario_update")
+    PermissionDAO.assert_permission("usuario_update")
 
     modification_user = UserDAO.search_by_id(user_id)
-    msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-    return render_template("user/edit.html", user = modification_user, msj = msj)
+    if modification_user:
+        msj = "Los campos que desea dejar igual dejenlo sin rellenar"
+        return render_template("user/edit.html", user = modification_user, msj = msj)
+    return redirect(url_for("user_index"))
 
 def modify(user_id):
-    PermissionDAO.assert_permission(session["id"],"usuario_update")
+    PermissionDAO.assert_permission("usuario_update")
 
     parameter = request.form
     user_update = UserDAO.search_by_id(user_id)
@@ -105,11 +107,11 @@ def modify(user_id):
     return render_template("user/edit.html" , user = user_update)
 
 def delete(user_id):
-    PermissionDAO.assert_permission(session["id"],"usuario_destroy")
+    PermissionDAO.assert_permission("usuario_destroy")
     if UserDAO.delete_by_id(user_id):
-        msj = "El usuario " + user_delete.user + " a sido eliminado con exito"
+        msj = "El usuario  ha sido eliminado con exito"
     else:
-        msj = "Error al quere borrar el usuario " + user_delete.user + " de la tabla"
+        msj = "Error al quere borrar el usuario  de la tabla"
     flash (msj,"info")
     return redirect(url_for("user_index"))
 

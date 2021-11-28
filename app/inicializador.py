@@ -1,4 +1,5 @@
 from sqlalchemy.sql.expression import _True
+from app.models.coordinate import Coordinate
 from app.models.permission import Role, Permission
 from app.models.user import User
 from app.db import db
@@ -6,6 +7,8 @@ from app.models.point import Point
 from app.models.configuration import Configuration
 from app.models.views_sort import View
 from app.models.issue import Issue
+
+from app.dao.route_of_evacuation import Route_of_evacuationDAO
 
 from app.dao.report import ReportDAO
 
@@ -100,6 +103,16 @@ denuncia_add_monitoring = Permission("denuncia_add_monitoring")
 denuncia_show = Permission("denuncia_show")
 
 
+route_of_evacuation_index = Permission("route_of_evacuation_index")
+route_of_evacuation_new = Permission("route_of_evacuation_new")
+route_of_evacuation_update = Permission("route_of_evacuation_update")
+route_of_evacuation_destroy = Permission("route_of_evacuation_destroy")
+
+
+zonas_inundables_index = Permission("zonas_inundables_index")
+zonas_inundables_update = Permission("zonas_inundables_update")
+zonas_inundables_destroy = Permission("zonas_inundables_destroy")
+
 
 
 #Agrego los permisos a la base de datos
@@ -127,6 +140,15 @@ db.session.add(denuncia_resolved)
 db.session.add(denuncia_close)
 db.session.add(denuncia_add_monitoring)
 db.session.add(denuncia_show)
+
+db.session.add(route_of_evacuation_destroy)
+db.session.add(route_of_evacuation_new)
+db.session.add(route_of_evacuation_update)
+db.session.add(route_of_evacuation_index)
+
+db.session.add(zonas_inundables_index)
+db.session.add(zonas_inundables_update)
+db.session.add(zonas_inundables_destroy)
 db.session.commit()
 
 #Creo roles
@@ -162,6 +184,15 @@ rol_administrador.permission.append(denuncia_close)
 rol_administrador.permission.append(denuncia_add_monitoring)
 rol_administrador.permission.append(denuncia_show)
 
+
+rol_administrador.permission.append(route_of_evacuation_destroy)
+rol_administrador.permission.append(route_of_evacuation_update)
+rol_administrador.permission.append(route_of_evacuation_new)
+rol_administrador.permission.append(route_of_evacuation_index)
+
+rol_administrador.permission.append(zonas_inundables_index)
+rol_administrador.permission.append(zonas_inundables_update)
+rol_administrador.permission.append(zonas_inundables_destroy)
 db.session.commit()
 
 
@@ -189,6 +220,13 @@ rol_operador.permission.append(denuncia_resolved)
 rol_operador.permission.append(denuncia_close)
 rol_operador.permission.append(denuncia_add_monitoring)
 rol_operador.permission.append(denuncia_show)
+
+rol_operador.permission.append(route_of_evacuation_update)
+rol_operador.permission.append(route_of_evacuation_new)
+rol_operador.permission.append(route_of_evacuation_index)
+
+rol_operador.permission.append(zonas_inundables_index)
+rol_operador.permission.append(zonas_inundables_update)
 db.session.commit()
 
 
@@ -252,7 +290,7 @@ db.session.commit()
 
 #Agrego los report de prueba
 
-ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no sabemos porque ', 45454, 555555,  'Juan', 'De los palotes', 2213641585, 'juan@email.com',2)
+ReportDAO.create_report('Alcantarilla tapada',2, 'La alcantarilla esta tapada no sabemos porque ', 45454, 555555,  'Juan', 'De los palotes', 2213641585, 'juan@email.com',)
 ReportDAO.create_report('Alcantarilla Sucia',1, 'La alcantarilla esta SUCIA no sabemos porque ', 11111, 22222, 'Pedro', 'Primo', 22236548, 'Pedro@email.com' )
 ReportDAO.create_report('Basural',1, 'Hay un basural en la puerta de mi casa ', 222222, 111111, 'Santiago', 'De los palotes', 236568985, 'Santiago@email.com' )
 ReportDAO.create_report('Sin desagotar',2, 'No desagota la alcantarilla de la puerta de mi casa', 1112311, 2332233232, 'Pedrito', 'Clavito', 222365263, 'Pedrito@email.com',1)
@@ -261,3 +299,40 @@ ReportDAO.create_report('Alcantarillas rotas',2, 'Las alcantarillas de la cuadra
 ReportDAO.create_report('Inundacion de caño',1, 'Hay una inundacion de un caño en la puerta de mi casa y se inunda todo ', 2222, 1111, 'Camila', 'Pini', 22222222, 'Cami@email.com' )
 ReportDAO.create_report('Zanja tapada',1, ' Zanja tapada y no desagora bien nada ', 11111, 55555, 'El santi', 'Pelis', 2232322, 'Santi@email.com' )
 ReportDAO.create_report('Cloaca se inunda ',2, 'Hay una cloaca tapada y se inunda mi casa', 233232, 232323, 'Juanita', 'Clavito', 2232323, 'Juanita@email.com',1)
+
+
+# ruta1 = Route_of_evacuationDAO.create_route('Ruta1',True,'Es una ruta larga')
+# ruta2 = Route_of_evacuationDAO.create_route('Ruta3',True,'Es una ruta de salida')
+
+
+# db.session.add(ruta1)
+# db.session.add(ruta2)
+
+
+# coordenada1 = Coordinate(-34.55551212, -58.12323912)
+# coordenada2 = Coordinate(-36.12332123, -55.21312313)
+# coordenada3 = Coordinate(-37.12332123, -56.21312313)
+# coordenada4 = Coordinate(-38.12332123, -57.21312313)
+# coordenada5 = Coordinate(-39.12332123, -58.21312313)
+# coordenada6 = Coordinate(-40.12332123, -60.21312313)
+# coordenada7 = Coordinate(-41.12332123, -61.21312313)
+# coordenada8 = Coordinate(-42.12332123, -62.21312313)
+
+# db.session.add(coordenada1)
+# db.session.add(coordenada2)
+# db.session.add(coordenada3)
+# db.session.add(coordenada4)
+# db.session.add(coordenada5)
+# db.session.add(coordenada6)
+# db.session.add(coordenada7)
+# db.session.add(coordenada8)
+
+# ruta1.coordinates.append(coordenada1)
+# ruta1.coordinates.append(coordenada2)
+# ruta1.coordinates.append(coordenada3)
+# ruta1.coordinates.append(coordenada4)
+# ruta1.coordinates.append(coordenada5)
+
+# ruta2.coordinates.append(coordenada6)
+# ruta2.coordinates.append(coordenada7)
+# ruta2.coordinates.append(coordenada8)

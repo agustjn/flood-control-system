@@ -9,16 +9,24 @@
   <h1>Denuncias </h1>
 
 
-<form class="row g-2" action="{{url_for('report_index') }}" method="GET">
-  <div class="col-3 p-2 m-1 " >
+<form class="row g" action="{{url_for('report_index') }}" method="GET">
+  <div class="col-2 ">
+    <h5>Fecha inicio</h5>
+    <input type="date" name="fecha_inicio" min="2021-01-01" />
+  </div>
+  <div class="col-2">
+    <h5>Fecha fin</h5>
+    <input type="date" name="fecha_fin"  min="2021-01-01" />
+  </div>
+
+<div class="  col-2 p-1 mt-1 ">
+
     {% if texto %}
         <input  type="text" name="texto_id" placeholder={{texto}}>
     {% else %}
         <input  type="text" name="texto_id" placeholder="Ingrese el titulo de la denuncia">
     {% endif %}
-  </div>
 
-  <div class="col-2 p-1 m-1">
     <select name="status_id" class="form-select " id="status_id">
         <option >{{filtro}}</option>
         <option >{{values[0]}}</option>
@@ -27,8 +35,12 @@
         <option >{{values[3]}}</option>
     </select>
 </div>
-<button class=" p-1 col-2 btn btn-outline-danger btn-lg " type="submit">Filtrar</button>
+<div class="text-center ">
+<button class=" p-1 col-5 btn btn-outline-danger btn " type="submit">Filtrar </button>
+</div>
+
 </form>
+
   <table class="table">
     <thead>
       <tr>

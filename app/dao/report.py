@@ -3,7 +3,7 @@ from app.db import db
 from app.models.report import Report,Monitoring
 from flask import request,session
 from datetime import datetime as dt
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 class ReportDAO():
     """Genera las consultas necesarios para consultar la informacion del denuncias en la base de datos en el resource"""
 
@@ -88,8 +88,10 @@ class ReportDAO():
             update_report.email = email
         if usser_id == -1:
             update_report.user_assing_id = None
+            update_report.status = "Sin confirmar"
         else:
             update_report.user_assing_id = usser_id
+            update_report.status = "En Curso"
         return update_report
 
     @staticmethod
@@ -99,14 +101,20 @@ class ReportDAO():
 
 
     @staticmethod
-    def filter_by_key(status,items_per_page, key=""):
+    def filter_by_key(status,items_per_page, key="",fecha_inicio = None, fecha_fin = None):
         key_filtered = "%" + key + "%"
         page = request.args.get('page', 1, type=int)
         if status == "Todos":
-            reports =  Report.query.filter(Report.title.like(key_filtered)).paginate(page=page, per_page=items_per_page)
+            reports = Report.query.filter(Report.title.like(key_filtered))
         else:
-                reports =  Report.query.filter(Report.title.like(key_filtered)).filter_by(status = status).paginate(page=page, per_page=items_per_page)
-        return reports
+            reports =  Report.query.filter(Report.title.like(key_filtered)).filter_by(status = status)
+
+        if fecha_inicio and fecha_fin:
+            reports = reports.filter(Report.creation_date >= fecha_inicio, Report.creation_date <= fecha_fin )
+            print (f"-----------------------------{reports.all()}----------------------------------")
+
+
+        return reports.paginate(page=page, per_page=items_per_page)
 
     @classmethod
     def delete_by_id(cls,report_id):
