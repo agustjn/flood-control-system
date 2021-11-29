@@ -14,7 +14,8 @@
     "core-js": "^3.6.5",
     "leaflet": "^1.7.1",
     "vue": "^3.2.22",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue-leaflet/vue-leaflet": "^0.6.1",
