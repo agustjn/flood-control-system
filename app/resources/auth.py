@@ -4,7 +4,7 @@ from app.dao.user import UserDAO
 from app.helpers.sessionConfig import configSessionAttributes
 from app.dao.auth import AuthDAO
 from os import environ,urandom
-
+import logging
 import requests
 from oauthlib.oauth2 import WebApplicationClient
 
