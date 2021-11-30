@@ -1,8 +1,9 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash,make_response
 from app.models.user import User
+from app.dao.user import UserDAO
 from app.helpers.sessionConfig import configSessionAttributes
 from app.dao.auth import AuthDAO
-from os import environ
+from os import environ,urandom
 
 import requests
 from oauthlib.oauth2 import WebApplicationClient
@@ -28,7 +29,6 @@ def get_google_provider_cfg():
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
 def login_google():
-        print ("entro al Login -------------------------------------------------")
 
         # Find out what URL to hit for Google login
         google_provider_cfg = get_google_provider_cfg()
@@ -42,11 +42,9 @@ def login_google():
             redirect_uri="https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/login/callback",
             scope=["openid", "email", "profile"],
         )
-        print ("retorna---------------------")
         return redirect(request_uri)
 
 def callback():
-    print ("entro al calbaack -------------------------------------------------")
     # Get authorization code Google sent back to you
     code = request.args.get("code")
 
@@ -79,21 +77,18 @@ def callback():
     else:
         return "User email not available or not verified by Google.", 400
 
-    # Create a user in your db with the information provided
-    # by Google
-    # user = User(
-    #     id_=unique_id, name=users_name, email=users_email, profile_pic=picture
-    # )
-    #
-    # # Doesn't exist? Add it to the database.
-    # print (userinfo_response.json())
-    # if not User.get(unique_id):
-    #     User.create(unique_id, users_name, users_email, picture)
+    # Recupero el usuario por el mail si existe o en caso de no existir lo crea
+    test_email = UserDAO.exist_email(users_email)
+    if test_email:
+        user = UserDAO.search_by_email(users_email)
+        msj = "Inicio coorectamente via google"
+    else:
+        msj = "Se le creo un usuario e ingreso correctamente via google"
+        user = UserDAO.create_user(users_name,"apellido",users_email,urandom(15))
 
-    # Begin user session by logging the user in
-    # login_user(user)
+    configSessionAttributes (user)
 
-    # Send user back to homepage
+
     return render_template("home.html", msj="La session incio correctamente")
 
 

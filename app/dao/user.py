@@ -66,6 +66,7 @@ class UserDAO():
     def exist_email(email):
         return bool(User.query.filter_by(email=email).first())
 
+
     @staticmethod
     def exist_username(username):
         return bool((User.query.filter_by(username=username).first()))
@@ -74,6 +75,10 @@ class UserDAO():
     def search_by_id(user_id):
         return  User.query.filter_by(id=user_id).first()
 
+    @staticmethod
+    def search_by_email(user_email):
+        return  User.query.filter_by(email=user_email).first()
+        
     @staticmethod
     def update (user_update,user,email,password,first_name, last_name):
         if user:
