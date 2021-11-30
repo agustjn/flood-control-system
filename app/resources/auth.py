@@ -28,6 +28,9 @@ def get_google_provider_cfg():
 
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
+logging.basicConfig()
+logging.getLogger("sqlalchmy.engine").setLevel(logging.INFO)
+
 def login_google():
 
         # Find out what URL to hit for Google login
@@ -79,17 +82,21 @@ def callback():
 
     # Recupero el usuario por el mail si existe o en caso de no existir lo crea
     test_email = UserDAO.exist_email(users_email)
+
     if test_email:
         user = UserDAO.search_by_email(users_email)
         msj = "Inicio coorectamente via google"
     else:
-        msj = "Se le creo un usuario e ingreso correctamente via google"
-        user = UserDAO.create_user(users_name,"apellido",users_email,users_email,urandom(15))
+        if (UserDAO.create_user(users_name,"apellido",users_email,users_email,urandom(15))):
+            user = UserDAO.search_by_email(users_email)
+            msj = "Se le creo un usuario e ingreso correctamente via google"
 
-    configSessionAttributes (user)
+    try:
+        configSessionAttributes (user)
+    except:
+        msj =  "Hubo un error al crearse usuario, intente nuevamente"
 
-
-    return render_template("home.html", msj="La session incio correctamente")
+    return render_template("home.html", msj=msj)
 
 
 def login():
