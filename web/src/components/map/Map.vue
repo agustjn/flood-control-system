@@ -45,7 +45,7 @@ export default {
       return [point.coordinates_latitude, point.coordinates_longitude];
     },
     eventOnClick() { 
-        this.address = "123"
+        alert("Roman!!")
     }
   },
 };

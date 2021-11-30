@@ -31,7 +31,8 @@
       <th scope="col">#</th>
       <th scope="col">Nombre</th>
       <th scope="col">Direccion</th>
-      <th scope="col">Coordenadas</th>
+      <th scope="col">Latitud</th>
+      <th scope="col">Longitud</th>
       <th scope="col">Estado</th>
       <th scope="col">Telefono</th>
       <th scope="col">Mail</th>
@@ -43,7 +44,8 @@
         <th scope="row">{{loop.index}}</th>
         <td>{{ point.name }}</td>
         <td>{{ point.address }}</td>
-        <td>{{ point.coordinates }}</td>
+        <td>{{ point.coordinates_latitude }}</td>
+        <td>{{ point.coordinates_longitude }}</td>
         <td>{{ point.status }}</td>
         <td>{{ point.phone}}</td>
         <td>{{ point.email}}</td>
