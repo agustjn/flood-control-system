@@ -78,8 +78,10 @@ def edit(user_id):
     PermissionDAO.assert_permission("usuario_update")
 
     modification_user = UserDAO.search_by_id(user_id)
-    msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-    return render_template("user/edit.html", user = modification_user, msj = msj)
+    if modification_user:
+        msj = "Los campos que desea dejar igual dejenlo sin rellenar"
+        return render_template("user/edit.html", user = modification_user, msj = msj)
+    return redirect(url_for("user_index"))
 
 def modify(user_id):
     PermissionDAO.assert_permission("usuario_update")

@@ -4,7 +4,7 @@ from app.db import db
 from app.scheme.flood_zone import FloodZoneScheme
 
 class FloodZoneDao():
-    
+
 
     @staticmethod
     def search_object_by_id(id):
@@ -49,5 +49,12 @@ class FloodZoneDao():
             return False
 
 
-
-
+    @classmethod
+    def publicate_despublicate(cls,flood_zone_id):
+        flood_zone = cls.search_object_by_id(flood_zone_id)
+        flood_zone.state = not (flood_zone.state)
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False

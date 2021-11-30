@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Creacion de recorrido{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+{% if errors %}
+  {% for error in errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+  {% endfor %}
+{% endif %}
+  <h1>Crear un nuevo Recorrido de evacuacion</h1>
+  <form class="row g-3" action="{{ url_for('route_create')}}" method="POST">
+    <div class="col-md-6">
+      <label for="name" class="form-label">Nombre del recorrido</label>
+      <input type="text" class="form-control" id= "name" name ="name" placeholder="Ingrese el nombre" required>
+    </div>
+    <div class="col-md-6">
+    <label for="publicado">Seleccione un estado:</label>
+      <select class="form-control" id="publicado" name="publicado">
+        <option value = 1>Publicado</option>
+        <option value = 0>Despublicado </option>
+      </select>
+    </div>
+    <div class="col-md-12">
+      <label for="coordinates_lat" class="form-label">Latitud</label>
+      <input type="text" class="form-control" id= "coordinates_lat" name ="coordinates_lat" placeholder="Ingrese la coordenada latitud" required>
+    </div>
+    <div class="col-md-12">
+      <label for="coordinates_long" class="form-label">Longitud</label>
+      <input type="text" class="form-control" id= "coordinates_long" name ="coordinates_long" placeholder="Ingrese la coordenada Longitud" required>
+    </div>
+    <div class="form-outline mb-4">
+      <textarea class="form-control" rows="5" id="description" name= "description" placeholder="Ingrese una descripcion" required oninvalid="this.setCustomValidity('Se necesita una descripcion')" ></textarea>
+      <label id = "description" class="form-label" for="description"></label>
+    </div>
+    <div class="row mt-5">
+      <div class="col-4">
+        <button type="submit" class="btn btn-success btn-lg" >Crear</button>
+      </div>
+      <div class="col-4">
+        <a href="{{ url_for('route_index') }}" class="btn btn-danger btn-lg " >Volver</a>
+      </div>
+    <div class="col-4">
+       <button type="reset" class="btn btn-secondary btn-lg" >Limpiar</button>
+    </div>
+
+   </div>
+  </form>
+
+{% endblock %}

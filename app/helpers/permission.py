@@ -3,9 +3,6 @@ from app.helpers.auth import Auth
 from app.dao.user import UserDAO
 
 class PermissionDAO ():
-
-
-
     @classmethod
     def assert_permission(cls,permission_name):
         Auth.verify_authentification()

@@ -4,9 +4,11 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from app import db
-from app.resources import issue,user,point,configuration,auth,report,route_of_evacuation
+from app.resources import issue,user,point,configuration,auth,report,route_of_evacuation,profile
 from app.resources.api.issue import issue_api
 from app.resources.api.flood_zone import flood_zones_api
+from app.resources.api.point import point_api
+from app.resources.api.route_of_evacuation import route_of_evacuation_api
 from app.helpers import handler
 from app.helpers.auth import Auth
 import logging
@@ -58,14 +60,16 @@ def create_app(environment="development"):
     # Autenticación
     app.add_url_rule("/iniciar_sesion/", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
-    app.add_url_rule(
-        "/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"]
-    )
+    app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"]  )
+
 
     # Rutas de Consultas
     app.add_url_rule("/consultas", "issue_index", issue.index, methods = ["GET"])
     app.add_url_rule("/consultas/create", "issue_create", issue.create, methods=["POST"])
     app.add_url_rule("/consultas/nueva", "issue_new", issue.new)
+
+    #ruta Perfil
+    app.add_url_rule("/perfil/<id>", "profile_index", profile.index_profile)
 
     # Rutas de Usuarios
 
@@ -104,11 +108,18 @@ def create_app(environment="development"):
     app.add_url_rule("/route_of_evacuation", "route_index", route_of_evacuation.index, methods = ["GET"])
     app.add_url_rule("/route_of_evacuation/create", "route_create", route_of_evacuation.create, methods=["POST"])
     app.add_url_rule("/route_of_evacuation/nuevo", "route_new", route_of_evacuation.new)
-    
+    app.add_url_rule("/route_of_evacuation/edit/<route_id>", "route_edit", route_of_evacuation.edit)
+    app.add_url_rule("/route_of_evacuation/modification/<route_id>", "route_modification", route_of_evacuation.modify, methods=["POST"])
+    app.add_url_rule("/route_of_evacuation/delete/<route_id>", "route_delete", route_of_evacuation.delete )
+    app.add_url_rule("/route_of_evacuation/publicate_despublicate/<route_id>", "route_publicate_despublicate", route_of_evacuation.publicate_despublicate )
+
 # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
         return render_template("home.html")
+
+
+
 
 
     app.add_url_rule("/configuraciones","config_index",configuration.index)
@@ -123,6 +134,8 @@ def create_app(environment="development"):
     api.register_blueprint(issue_api)
     api.register_blueprint(flood_zones_api)
     api.register_blueprint(report_api)
+    api.register_blueprint(point_api)
+    api.register_blueprint(route_of_evacuation_api)
 
     app.register_blueprint(api)
 

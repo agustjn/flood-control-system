@@ -33,10 +33,8 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Nombre de ruta </th>
-      <th scope="col">Descricpion</th>
-      <th scope="col">Latitud</th>
-      <th scope="col">Longitud</th>
-      <th scope="col">Estado</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Publicado</th>
       <th  colspan="3" scope="col" > Operaciones</th>
     </tr>
   </thead>
@@ -46,30 +44,29 @@
       <th scope="row">{{loop.index}}</th>
       <td>{{ route.name }}</td>
       <td>{{ route.description }}</td>
-      <td>{{ route.coordinates_latitude }}</td>
-      <td>{{ route.coordinates_longitude }}</td>
-      {% if route.publicado is sameas true%}
-          <td>Publicado </td>
-      {%else%}
-          <td>Despublicado </td>
-      {%endif%}
+      {% if route.publicado %}
+        <td>✔</td>
+      {% else %}
+        <td>✖</td>
+      {% endif %}
+
 
       <!-- {% if assert_permission("usuario_destroy") %} -->
       <td>
-        <a href="#" class="btn btn-secondary btn-sm"
+        <a href="{{url_for('route_delete', route_id = route.id)}}"  class="btn btn-secondary btn-sm"
           onclick="return confirm('¿Estas seguro de eliminar al usuario {{route.name}}?');"> Eliminar </a>
       </td>
       <!-- {% endif %} -->
       <td>
-        <a href="#" class="btn btn-success btn-sm"  > Modificar </a>
+        <a href="{{url_for('route_edit', route_id = route.id)}}"  class="btn btn-success btn-sm"  > Modificar </a>
       </td>
-      {% if route.active %}
+      {% if route.publicado %}
         <td>
-          <a href="#" class="btn btn-success btn-sm"> Publicar </a>
+          <a href="{{ url_for('route_publicate_despublicate',route_id = route.id) }}" class="btn btn-success btn-sm"> Despublicar </a>
         </td>
       {% else %}
         <td>
-          <a href="#" class="btn btn-success btn-sm"> Despublicar </a>
+          <a href="{{ url_for('route_publicate_despublicate',route_id = route.id) }}" class="btn btn-success btn-sm"> Publicar  </a>
         </td>
       {% endif %}
     </tr>

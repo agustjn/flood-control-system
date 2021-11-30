@@ -18,7 +18,7 @@ import json
 # def flood_zones_index():
 #     Auth.is_authenticated()
 #     # Permisos de ver index: Operador/Administrador
-    
+
 #     return render_template("flood_zone/index.html")
 
 def get_values_filter_columns():
@@ -40,7 +40,7 @@ def flood_zones_index():
     PermissionDAO.assert_permission("zonas_inundables_index")
 
     # Permisos de ver index: Operador/Administrador
-    
+
     filtro,texto_a_filtrar = _obtener_valores(status = "Todos",texto = "")
     dao = ConfigurationDAO()
     filtered_zones = FloodZoneDao.filter_by_key(filtro,dao.items_per_page,texto_a_filtrar)
@@ -56,7 +56,7 @@ def allowed_file(filename):
 
 
 def update_csv():
-
+    PermissionDAO.assert_permission("zonas_inundables_update")
     file = request.files['file']
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
@@ -77,9 +77,9 @@ def update_csv():
 
                         coordinate = Coordinate(latitude=float(coor[0]), longitude=float(coor[1]))
                         db.session.add(coordinate)
-                        flood_zone.coordinates.append(coordinate)                             
-                    db.session.commit()          
-                
+                        flood_zone.coordinates.append(coordinate)
+                    db.session.commit()
+
 
 
     else:
@@ -106,4 +106,9 @@ def delete(flood_zone_id):
 
     flash (msj,"info")
     return redirect(url_for("flood_zone_index"))
-    
+
+def publicate_despublicate(flood_zone_id):
+    #ver temas permisos
+    Auth.verify_authentification()
+    FloodZoneDao.publicate_despublicate(flood_zone_id)
+    return redirect(url_for("flood_zone_index"))
