@@ -19,6 +19,12 @@ def index():
 
     return jsonify(flood_zones)
 
+@flood_zones_api.get("/all")
+def all_zones():
+    recover_flood_zones_row = FloodZoneDao.recover_flood_zones()
+    flood_zones = flood_zone_scheme.dump(recover_flood_zones_row, many=True)
+    return jsonify(zonas=flood_zones)
+
 @flood_zones_api.get("/show/<int:id>")
 def show(id):
     flood_zone_instance = FloodZoneDao.recover_flood_zone(id)

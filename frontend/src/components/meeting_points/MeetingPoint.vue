@@ -2,36 +2,57 @@
 <h1> 
     Meeting Point View
 </h1>
-<<<<<<< HEAD
-=======
-<Map/>
+
+<div class="container mt-4" v-if="isCreated">
+    <Map :points_data="points" />
+</div>
+<div v-else>
+    <h1>Cargando mapa..</h1>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <ul>
+            <li v-for="(point, index) in points" :key="index">
+                    
+            </li>
+        </ul>
+        
+    </div>
     
 
->>>>>>> parent of 5ebcf97... Puntos de encuentro con su mapa andando
+</div>
+    
+
 </template>
 
 
 <script>
+import Map from '../map/Map'
 export default { 
-<<<<<<< HEAD
-    
-=======
     name:'meeting-index',
     components:{Map},
     data() {  
         return { 
             points: [ ],
-            errors:[ ]
+            errors:[ ],
+            mapIsCreated: false
         }
     },
     async created() { 
         const response = await fetch("https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/api/points/all");
         const data = await response.json();
-        console.log(data);
-    }
+        this.points = data;
+        this.mapIsCreated = true;        
+        
+        
+        
+    },
+    computed: {  
+         isCreated () {  
+            return this.mapIsCreated;
+        }
+    },
 
-
->>>>>>> parent of 5ebcf97... Puntos de encuentro con su mapa andando
 }
 </script>
 
