@@ -66,12 +66,12 @@ def create_app(environment="development"):
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
     app.config["SESSION_PERMANENT"] = False
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
-    # if environment=="production":
-    #     Que hago
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
-    # else:
-    #     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
+
+    if environment=="development":
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
+
 
 
     Session(app)

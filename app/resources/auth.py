@@ -4,7 +4,7 @@ from app.dao.user import UserDAO
 from app.helpers.sessionConfig import configSessionAttributes
 from app.dao.auth import AuthDAO
 from os import environ,urandom
-import logging
+import random, string
 import requests
 from oauthlib.oauth2 import WebApplicationClient
 
@@ -23,20 +23,21 @@ GOOGLE_DISCOVERY_URL = (
     "https://accounts.google.com/.well-known/openid-configuration"
 )
 
+def randomword(length):
+   letters = string.ascii_lowercase
+   return ''.join(random.choice(letters) for i in range(length))
+
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
 
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
-logging.basicConfig()
-logging.getLogger("sqlalchmy.engine").setLevel(logging.INFO)
 
 def login_google():
 
         # Find out what URL to hit for Google login
         google_provider_cfg = get_google_provider_cfg()
         authorization_endpoint = google_provider_cfg["authorization_endpoint"]
-
 
         # Use library to construct the request for Google login and provide
         # scopes that let you retrieve user's profile from Google
@@ -72,6 +73,9 @@ def callback():
     userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
     uri, headers, body = client.add_token(userinfo_endpoint)
     userinfo_response = requests.get(uri, headers=headers, data=body)
+
+
+
     if userinfo_response.json().get("email_verified"):
         unique_id = userinfo_response.json()["sub"]
         users_email = userinfo_response.json()["email"]
@@ -87,7 +91,7 @@ def callback():
         user = UserDAO.search_by_email(users_email)
         msj = "Inicio coorectamente via google"
     else:
-        if (UserDAO.create_user(users_name,"apellido",users_email,users_email,"*********")):
+        if (UserDAO.create_user(users_name,"    ",users_email,users_email,randomword(15))):
             user = UserDAO.search_by_email(users_email)
             msj = "Se le creo un usuario e ingreso correctamente via google"
 
