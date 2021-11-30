@@ -1,4 +1,4 @@
-from os import path, environ
+from os import path, environ,urandom
 from flask import Flask, render_template, g, Blueprint,session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +18,22 @@ from app.helpers.permission import PermissionDAO
 
 from app.resources.api.report import report_api
 
+#diego
+from oauthlib.oauth2 import WebApplicationClient
+from flask_login import (LoginManager,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+    )
+
+# Configuration google
+GOOGLE_CLIENT_ID = "262521299225-7vupjcju1t6rhe23vu54dmev3vtl1eud.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
+
 #Activo los loggins en la terminal de las query generadas
 logging.basicConfig()
 logging.getLogger("sqlalchmy.engine").setLevel(logging.INFO)
@@ -25,6 +41,21 @@ logging.getLogger("sqlalchmy.engine").setLevel(logging.INFO)
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
+
+    #Diego
+    app.secret_key = environ.get("SECRET_KEY") or urandom(24)
+
+    # OAuth 2 client setup
+    client = WebApplicationClient(GOOGLE_CLIENT_ID)
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.get(user_id)
+
     app.config["SECRET_KEY"] = "NeedConfigureAn"
 
     # Carga de la configuración
@@ -58,6 +89,10 @@ def create_app(environment="development"):
     app.jinja_env.globals.update(assert_permission = PermissionDAO.assert_permission)
 
     # Autenticación
+    app.add_url_rule(
+        "/login/callback", "auth_callback", auth.callback, methods=["GET"]
+    )
+    app.add_url_rule("/Iniciar_sesion_google", "auth_login_google", auth.login_google)
     app.add_url_rule("/iniciar_sesion/", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"]  )
