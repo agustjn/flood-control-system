@@ -94,7 +94,7 @@ def callback():
     # login_user(user)
 
     # Send user back to homepage
-    return redirect(url_for("home.html",msj= "La session se inicio correctamente"))
+    return render_template("home.html", msj="La session incio correctamente")
 
 
 def login():
