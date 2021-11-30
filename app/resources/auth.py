@@ -87,7 +87,7 @@ def callback():
         user = UserDAO.search_by_email(users_email)
         msj = "Inicio coorectamente via google"
     else:
-        if (UserDAO.create_user(users_name,"apellido",users_email,users_email,urandom(15))):
+        if (UserDAO.create_user(users_name,"apellido",users_email,users_email,"*********")):
             user = UserDAO.search_by_email(users_email)
             msj = "Se le creo un usuario e ingreso correctamente via google"
 
