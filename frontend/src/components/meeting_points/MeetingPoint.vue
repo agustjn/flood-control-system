@@ -3,7 +3,7 @@
     Meeting Point View
 </h1>
 
-<div v-if="isCreated">
+<div class="container mt-4" v-if="isCreated">
     <Map :points_data="points" />
 </div>
 <div v-else>
