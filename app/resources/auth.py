@@ -84,7 +84,7 @@ def callback():
         msj = "Inicio coorectamente via google"
     else:
         msj = "Se le creo un usuario e ingreso correctamente via google"
-        user = UserDAO.create_user(users_name,"apellido",users_email,urandom(15))
+        user = UserDAO.create_user(users_name,"apellido",users_email,users_email,urandom(15))
 
     configSessionAttributes (user)
 
