@@ -3,13 +3,15 @@
   <l-map :zoom="zoom" :center="center" style="height: 500px; width: 100%">
   <l-tile-layer :url="url" :attribution="attribution"/>
     <div v-for="(zone, index) in zones_data" :key="index">
-    <l-polygon :lat-lngs="zone.coordinates" name="h" :color="zone.colour" :fill="true" :fillColor="zone.colour" :fillOpacity="0.5" />
+    <l-polygon :lat-lngs="zone.coordinates" name="h" :color="zone.colour" :fill="true" :fillColor="zone.colour" :fillOpacity="0.5">
+      <l-popup>{{zone.name}}</l-popup>
+    </l-polygon>
     </div>
   </l-map>
 </template>
 
 <script>
-import { LMap, LTileLayer, LPolygon } from "@vue-leaflet/vue-leaflet";
+import { LMap, LTileLayer, LPolygon, LPopup} from "@vue-leaflet/vue-leaflet";
 
  
 export default {
@@ -17,7 +19,8 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LPolygon
+    LPolygon,
+    LPopup
   },
   props: ["zones_data"],
   data() {
