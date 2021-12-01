@@ -3,6 +3,7 @@ from flask import request
 from app.models.user import User
 from app.models.views_sort import View
 from app.db import db
+from app.models.permission import Permission
 
 #import logging
 #logger = logging.getLogger(__name__)
@@ -42,8 +43,8 @@ class UserDAO():
 
 
     @staticmethod
-    def create_user(first_name,last_name,email,user,password):
-        new_user = User(first_name,last_name,email,user,password)
+    def create_user(first_name,last_name,email,user,password,active = True):
+        new_user = User(first_name,last_name,email,user,password,active)
         db.session.add(new_user)
         try:
             db.session.commit()
@@ -78,9 +79,11 @@ class UserDAO():
     @staticmethod
     def search_by_email(user_email):
         return  User.query.filter_by(email=user_email).first()
-        
+
     @staticmethod
-    def update (user_update,user,email,password,first_name, last_name):
+    def update (user_update,user,email,password,first_name, last_name,role):
+
+        #Crea role y asignarlo segun lo recibido por parametro
         if user:
             user_update.username = user
         if email:
@@ -91,6 +94,9 @@ class UserDAO():
             user_update.first_name = first_name
         if last_name:
             user_update.last_name = last_name
+        # if role:
+        #     user_update.role.append = rol
+
         try:
             db.session.commit()
             return True
