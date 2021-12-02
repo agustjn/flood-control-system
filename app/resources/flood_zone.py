@@ -13,7 +13,7 @@ import csv
 import os
 from app.db import db
 import json
-
+import io
 
 # def flood_zones_index():
 #     Auth.is_authenticated()
@@ -57,28 +57,23 @@ def allowed_file(filename):
 
 def update_csv():
     PermissionDAO.assert_permission("zonas_inundables_update")
-    file = request.files['file']
+    file = request.files.get('file')
     if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        # NECESITO GUARDARLO PORQUE NO SE COMO ABRIRLO COMO CSV
-        # File es una instancia de FileStorage, y no se como obtener el csv solo para hacer un open
-        file_route = os.path.join('app/static/uploaded_files', filename)
-        file.save(file_route)
-        with open(file_route, 'r') as file:
-            reader = csv.reader(file)
-            for row in reader:
-                if row[1] == 'name' or row[1] == 'area' or FloodZoneDao.name_exists(row[0]):
-                    pass
-                else:
-                    flood_zone = FloodZone(name=row[0])
-                    db.session.add(flood_zone)
-                    coords = json.loads(row[1])
-                    for coor in coords:
+        stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
+        reader = csv.reader(stream)
+        for row in reader:
+            if row[1] == 'name' or row[1] == 'area' or FloodZoneDao.name_exists(row[0]):
+                pass
+            else:
+                flood_zone = FloodZone(name=row[0])
+                db.session.add(flood_zone)
+                coords = json.loads(row[1])
+                for coor in coords:
 
-                        coordinate = Coordinate(latitude=float(coor[0]), longitude=float(coor[1]))
-                        db.session.add(coordinate)
-                        flood_zone.coordinates.append(coordinate)
-                    db.session.commit()
+                    coordinate = Coordinate(latitude=float(coor[0]), longitude=float(coor[1]))
+                    db.session.add(coordinate)
+                    flood_zone.coordinates.append(coordinate)
+                db.session.commit()
 
 
 
