@@ -9,19 +9,19 @@ class PermissionDAO ():
         user_id = session["id"]
         if cls.has_permission(user_id,permission_name):
             return True
-        print ("algo")
         abort(403)
 
     @staticmethod
     def has_permission(user_id,permission):
         bool = False
         user = UserDAO.search_by_id(user_id)
+        print (user.role.all())
         for role in user.role:
+            print ("--------------------entra algunas veces--------------------")
             for permiso in role.permission:
                 print (f"-----------------> {permiso.name}")
-                if permiso.name   == permission:
+                if permiso.name == permission:
                     bool = True
-                    print ("entroooooo o no?")
                     break
         print (bool)
         return bool
