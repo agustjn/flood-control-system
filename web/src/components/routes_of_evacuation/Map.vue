@@ -2,7 +2,7 @@
   <l-map style="height: 400px" :zoom="zoom" :center="center">
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
 
-            <!-- <div v-for="(point, index) in points_data" :key="index">
+            <div v-for="(point, index) in points_data" :key="index">
             <l-marker :lat-lng="formatCoordinates(point)" name="Hi!!" v-on:click="eventOnClick">
                 <l-tooltip>
                     <ul>
@@ -12,29 +12,30 @@
                         <li><strong>{{ point.email }}</strong></li>
                     </ul>                    
                 </l-tooltip>
-            </l-marker> -->
+            </l-marker>
             <l-polyline v-for="(route, index) in routes_data" :lat-lngs="formatRouteCoordinates(route)" color="red" :key="index"></l-polyline>
-                           <div v-for="(route, index)  in routes_data" :key="index">
+                           <!-- <div v-for="(route, index)  in routes_data" :key="index">
                  <div v-for="(data, index2) in route" :key="index2">
                     <l-popup v-if="evaluatePopup(index, route.coordinates)" :content="asd" :key="index" />
                  </div>
 
-             </div>
-            <!-- </div> -->
+             </div> -->
+            </div>
   </l-map>
  
 </template>
 
 <script>
-// import { LMap, LTileLayer, LMarker, LTooltip, LPolyline } from "@vue-leaflet/vue-leaflet";
-import { LMap, LTileLayer, LPolyline } from "@vue-leaflet/vue-leaflet";
+import { LMap, LTileLayer, LMarker, LTooltip, LPolyline } from "@vue-leaflet/vue-leaflet";
 
 
 export default {
   components: {
     LMap,
     LTileLayer,
-    LPolyline
+    LPolyline,
+    LMarker,
+    LTooltip
   },
   props: ["points_data", "routes_data", "email", "name", "phone" ],
   data() {
