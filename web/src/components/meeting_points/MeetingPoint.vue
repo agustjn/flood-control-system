@@ -9,17 +9,17 @@
 <div v-else>
     <h1>Cargando mapa..</h1>
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <ul>
-            <li v-for="(point, index) in points" :key="index">
-                    
-            </li>
-        </ul>
-        
-    </div>
-    
-
+<div class="container mt-5">
+      <div class="card text-white bg-info mb-3" v-for="(point, index) in points" :key="index">
+        <div class="card-header">{{point.name}}</div>
+        <div class="card-body">
+          <h5 class="card-title">{{point.address}}</h5>
+          <p class="card-text">
+            Nro. de telefono: <strong>{{point.phone}}</strong>
+          </p>
+          <p>Email: <strong>{{point.email}}</strong> </p>
+        </div>
+      </div> 
 </div>
     
 
