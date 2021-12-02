@@ -6,7 +6,7 @@ from app.dao.configuration import ConfigurationDAO
 
 # Public resources
 def index():
-    Auth.verify_authentification()
+    #Auth.verify_authentification()
     # Ver proximamente en usar un staticmethod para retornar items per page, asi no se instancia siempre el objeto
     issue = IssueDAO.all_paginated_issues()
     return render_template("issue/index.html", issues=issue)
