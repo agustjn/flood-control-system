@@ -3,7 +3,7 @@
   <l-map :zoom="zoom" :center="center" style="height: 500px; width: 100%">
   <l-tile-layer :url="url" :attribution="attribution"/>
     <div v-for="(zone, index) in zones_data" :key="index">
-    <l-polygon :lat-lngs="zone.coordinates" name="h" :color="zone.colour" :fill="true" :fillColor="zone.colour" :fillOpacity="0.5">
+    <l-polygon :lat-lngs="zone.coordinates" name="h" :color="traduced(zone.colour)" :fill="true" :fillColor="traduced(zone.colour)" :fillOpacity="0.5">
       <l-popup>{{zone.name}}</l-popup>
     </l-polygon>
     </div>
@@ -31,6 +31,17 @@ export default {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     };
+  },
+  methods: {
+        traduced(colour){
+            let dic = { "Rojo" : "red",
+                "Violeta" : "violet",
+                "Amarillo": "yellow",
+                "Azul": "blue",
+                "Verde": "green"
+                }
+            return dic[colour]
+        }
   },
 };
 </script>
