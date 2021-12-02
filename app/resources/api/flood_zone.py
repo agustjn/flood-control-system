@@ -33,6 +33,7 @@ def all_zones():
 def show(id):
     flood_zone_instance = FloodZoneDao.recover_flood_zone(id)
     flood_zone = flood_zone_scheme.dump(flood_zone_instance)
+    flood_zone['coordinates'] = FloodZoneDao.recover_coordinates_by_id(flood_zone['id'])
 
     return jsonify(attributes=flood_zone)
 

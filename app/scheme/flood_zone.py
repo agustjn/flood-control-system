@@ -11,7 +11,7 @@ class FloodZoneScheme(Schema):
     id = fields.Int(required=True)
     name = fields.Str(required=True)
     colour = fields.Str(required=True)
-    # coordinates = fields.Nested(CoordinateScheme, many=True, data_key="coordinates")
+    #coordinates = fields.Nested(CoordinateScheme, many=True, data_key="coordinates")
     
 
     
