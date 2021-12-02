@@ -5,6 +5,9 @@ from app.models.views_sort import View
 from app.db import db
 from app.models.permission import Permission
 
+
+from app.models.permission import Role, Permission
+
 #import logging
 #logger = logging.getLogger(__name__)
 #logger.exception("mensaje")
@@ -39,6 +42,38 @@ class UserDAO():
     @staticmethod
     def recover_users():
          return User.query.all()
+
+
+
+    @staticmethod
+    def inicializate_permission_with(functions):
+        """Recibe una lista la cual contiene 2 lista, la 1ra con los permisos para las funciones, y la 2da con la funciones permitidas"""
+        permisos = []
+        if (not functions[0] == []) and  (not functions[1] == []):
+            values = functions[0]
+            dar_permiso = functions[1]
+            for type in values:
+                for dar in dar_permiso:
+                    perm = f"{dar}_{type}"
+                    print (perm)
+                    permisos.append(Permission(perm))
+        return permisos
+
+    @classmethod
+    def inicializate_role_with(cls,role,permisos):
+        """Recibe un rol y una lista con los funciones sobre que asignar y devuelve al rol con sus permisos asignados"""
+        values = ["index","new","update","show"]
+        if role == "administrador":
+            values.append("destroy")
+        functions = [values,permisos]
+        functions_update = cls.inicializate_permission_with(functions)
+        role_update = Role(role)
+        for f in functions_update:
+            role_update.permission.append(f)
+        return role_update
+
+
+
 
 
 
@@ -80,10 +115,13 @@ class UserDAO():
     def search_by_email(user_email):
         return  User.query.filter_by(email=user_email).first()
 
-    @staticmethod
-    def update (user_update,user,email,password,first_name, last_name,role):
+    @classmethod
+    def update (cls,user_update,user,email,password,first_name, last_name,role):
+        if role:
+            permisos = ["zonas_inundables","usuario","puntos_encuentro","denuncia","route_of_evacuation"]
+            rol = cls.inicializate_role_with(role,permisos)
+            user_update.role.append(rol)
 
-        #Crea role y asignarlo segun lo recibido por parametro
         if user:
             user_update.username = user
         if email:

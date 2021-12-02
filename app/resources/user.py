@@ -71,7 +71,6 @@ def _validate_empty_fields(first_name,last_name,email,user,password):
         return False
 
 def recuperar_valores_roles(modification_user):
-    print(f"---------------------------{modification_user.role.name}----------------")
     if not modification_user.active:
         value1 = 'operador'
         value2 = 'administrador'
@@ -86,7 +85,7 @@ def recuperar_valores_roles(modification_user):
 def edit(user_id):
     PermissionDAO.assert_permission("usuario_update")
     modification_user = UserDAO.search_by_id(user_id)
-
+    print (f"------------------------------------------{modification_user.role.all()}-------------------------")
     if modification_user:
         msj = "Los campos que desea dejar igual dejenlo sin rellenar"
         #value1,value2 = recuperar_valores_roles(modification_user)
