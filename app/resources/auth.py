@@ -24,6 +24,7 @@ GOOGLE_DISCOVERY_URL = (
 )
 
 def randomword(length):
+    #Funcion que devuelve una string aleatorio
    letters = string.ascii_lowercase
    return ''.join(random.choice(letters) for i in range(length))
 

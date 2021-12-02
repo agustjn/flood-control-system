@@ -15,15 +15,11 @@ class PermissionDAO ():
     def has_permission(user_id,permission):
         bool = False
         user = UserDAO.search_by_id(user_id)
-        print (user.role.all())
         for role in user.role:
-            print ("--------------------entra algunas veces--------------------")
             for permiso in role.permission:
-                print (f"-----------------> {permiso.name}")
                 if permiso.name == permission:
                     bool = True
                     break
-        print (bool)
         return bool
 
     @staticmethod

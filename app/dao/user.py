@@ -55,7 +55,6 @@ class UserDAO():
             for type in values:
                 for dar in dar_permiso:
                     perm = f"{dar}_{type}"
-                    print (perm)
                     permisos.append(Permission(perm))
         return permisos
 
@@ -115,13 +114,23 @@ class UserDAO():
     def search_by_email(user_email):
         return  User.query.filter_by(email=user_email).first()
 
-    @classmethod
-    def update (cls,user_update,user,email,password,first_name, last_name,role):
-        if role:
-            permisos = ["zonas_inundables","usuario","puntos_encuentro","denuncia","route_of_evacuation"]
-            rol = cls.inicializate_role_with(role,permisos)
-            user_update.role.append(rol)
 
+    @staticmethod
+    #Devuelve booleano indicando si ya tiene rol asignado
+    def has_rol(user,name_role):
+        for role in user.role:
+            if role.name == name_role:
+                return True
+        return False
+
+
+    @classmethod
+    def update (cls,user_update,user,email,password,first_name, last_name,name_role):
+        if name_role:
+            if not cls.has_rol(user_update,name_role):
+                permisos = ["zonas_inundables","usuario","puntos_encuentro","denuncia","route_of_evacuation"]
+                rol = cls.inicializate_role_with(name_role,permisos)
+                user_update.role.append(rol)
         if user:
             user_update.username = user
         if email:
@@ -132,9 +141,6 @@ class UserDAO():
             user_update.first_name = first_name
         if last_name:
             user_update.last_name = last_name
-        # if role:
-        #     user_update.role.append = rol
-
         try:
             db.session.commit()
             return True
