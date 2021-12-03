@@ -41,6 +41,9 @@ class RoleDAO():
             role_update.permission.append(f)
         return role_update
 
+    def recover_role(name_role):
+        return Role.query.filter_by(name = name_role).first()
+
     @staticmethod
     #Devuelve booleano indicando si ya tiene rol asignado
     def has_rol(user,name_role):

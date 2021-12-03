@@ -87,11 +87,12 @@ class UserDAO():
     @staticmethod
     def update(user_update,user,email,password,first_name, last_name,name_role):
         if name_role:
-            if name_role == "sin asignar":
-                user_update.role.clear()
-            elif not RoleDAO.has_rol(user_update,name_role):
+            # if name_role == 'sin asignar':
+            #     user_update.role.delete()
+            if not RoleDAO.has_rol(user_update,name_role):
                 permisos = ["zonas_inundables","usuario","puntos_encuentro","denuncia","route_of_evacuation"]
-                rol = RoleDAO.inicializate_role_with(name_role,permisos)
+                #rol = RoleDAO.inicializate_role_with(name_role,permisos)
+                rol = RoleDAO.recover_role(name_role)
                 user_update.role.append(rol)
         if user:
             user_update.username = user

@@ -27,6 +27,7 @@ class Role(db.Model):
             backref = db.backref("roles",lazy = "dynamic"),
             lazy = "dynamic",
         )
+        
         def __init__ (self,name = None ):
             self.name = name;
 
