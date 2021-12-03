@@ -48,15 +48,5 @@ export default {
         alert("Roman!!")
     }
   },
-  computed: {
-       coordinates() {
-         if(navigator.geolocation){
-           navigator.geolocation.getCurrentPosition(onSuccessGeolocating,
-                                    onErrorGeolocating);
-              }
-              else {
-                 // No se cuenta con soporte para geolocalización, manejar la situación.
-               }
-      },
 };
 </script>
