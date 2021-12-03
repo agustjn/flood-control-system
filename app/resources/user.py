@@ -2,7 +2,7 @@ from flask import redirect, render_template, request, url_for,flash,session
 from app.dao.configuration import ConfigurationDAO
 from app.dao.user import UserDAO
 from app.helpers.auth import Auth
-
+from app.dao.role import RoleDAO
 from app.helpers.permission import PermissionDAO
 
 
@@ -82,15 +82,25 @@ def recuperar_valores_roles(modification_user):
             value1 = 'operador'
             value2 = 'administrador'
 
+def _recuperar_values_roles(modification_user):
+    list = ["operador","administrador","sin asignar"]
+    roles_name = RoleDAO.recover_roles_of(modification_user)
+    if len(roles_name) == 0:
+        list_values_roles = ["sin asignar"]
+    else:
+        list_values_roles = roles_name
+    for value in list:
+        if not (value in list_values_roles):
+            list_values_roles.append(value)
+    return list_values_roles
+
 def edit(user_id):
     PermissionDAO.assert_permission("usuario_update")
     modification_user = UserDAO.search_by_id(user_id)
     if modification_user:
+        values = _recuperar_values_roles(modification_user)
         msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-        #value1,value2 = recuperar_valores_roles(modification_user)
-        value1 = 'administrador'
-        value2 ='operador'
-        return render_template("user/edit.html", user = modification_user, msj = msj,value1 = value1, value2 = value2)
+        return render_template("user/edit.html", user = modification_user, msj = msj,value = values)
     return redirect(url_for("user_index"))
 
 def modify(user_id):

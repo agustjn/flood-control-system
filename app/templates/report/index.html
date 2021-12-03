@@ -71,10 +71,12 @@
         <td>
           <a href = "{{url_for('report_show',report_id = report.id)}}" id="show" class="btn btn-secondary btn-sm"  ;"> Mostrar </a>
         </td>
+        {% if has_rol (session["id"],"report_destroy")%}
         <td>
           <a href="{{ url_for('report_delete',report_id = report.id) }}" class="btn btn-danger btn-sm"
             onclick="return confirm('¿Estas seguro de eliminar al reporte {{report.title}}?');"> Eliminar </a>
         </td>
+        {% endif %}
       </tr>
     {% endfor %}
   </table>

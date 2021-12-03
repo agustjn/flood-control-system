@@ -95,7 +95,7 @@ def callback():
     else:
         if (UserDAO.create_user(users_name,users_last_name,users_email,users_email,randomword(15),False)):
             user = UserDAO.search_by_email(users_email)
-            msj = "Se le creo un usuario e ingreso correctamente via google"
+            msj = "Se le creo un usuario pero estara bloqueado hasta que el administrador le asigne un rol"
 
     if user.active:
         try:
@@ -118,6 +118,9 @@ def authenticate():
 
     if not user:
         msj = "Usuario o clave incorrecto."
+        return render_template("auth/login.html",msj=msj)
+    if not user.active:
+        msj = "Su usuario se encuentra bloqueado"
         return render_template("auth/login.html",msj=msj)
     configSessionAttributes (user)
 

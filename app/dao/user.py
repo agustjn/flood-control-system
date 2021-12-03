@@ -3,10 +3,8 @@ from flask import request
 from app.models.user import User
 from app.models.views_sort import View
 from app.db import db
-from app.models.permission import Permission
-
-
 from app.models.permission import Role, Permission
+from app.dao.role import RoleDAO
 
 #import logging
 #logger = logging.getLogger(__name__)
@@ -42,38 +40,6 @@ class UserDAO():
     @staticmethod
     def recover_users():
          return User.query.all()
-
-
-
-    @staticmethod
-    def inicializate_permission_with(functions):
-        """Recibe una lista la cual contiene 2 lista, la 1ra con los permisos para las funciones, y la 2da con la funciones permitidas"""
-        permisos = []
-        if (not functions[0] == []) and  (not functions[1] == []):
-            values = functions[0]
-            dar_permiso = functions[1]
-            for type in values:
-                for dar in dar_permiso:
-                    perm = f"{dar}_{type}"
-                    permisos.append(Permission(perm))
-        return permisos
-
-    @classmethod
-    def inicializate_role_with(cls,role,permisos):
-        """Recibe un rol y una lista con los funciones sobre que asignar y devuelve al rol con sus permisos asignados"""
-        values = ["index","new","update","show"]
-        if role == "administrador":
-            values.append("destroy")
-        functions = [values,permisos]
-        functions_update = cls.inicializate_permission_with(functions)
-        role_update = Role(role)
-        for f in functions_update:
-            role_update.permission.append(f)
-        return role_update
-
-
-
-
 
 
     @staticmethod
@@ -115,21 +81,17 @@ class UserDAO():
         return  User.query.filter_by(email=user_email).first()
 
 
+
+
+
     @staticmethod
-    #Devuelve booleano indicando si ya tiene rol asignado
-    def has_rol(user,name_role):
-        for role in user.role:
-            if role.name == name_role:
-                return True
-        return False
-
-
-    @classmethod
-    def update (cls,user_update,user,email,password,first_name, last_name,name_role):
+    def update(user_update,user,email,password,first_name, last_name,name_role):
         if name_role:
-            if not cls.has_rol(user_update,name_role):
+            if name_role == "sin asignar":
+                user_update.role.clear()
+            elif not RoleDAO.has_rol(user_update,name_role):
                 permisos = ["zonas_inundables","usuario","puntos_encuentro","denuncia","route_of_evacuation"]
-                rol = cls.inicializate_role_with(name_role,permisos)
+                rol = RoleDAO.inicializate_role_with(name_role,permisos)
                 user_update.role.append(rol)
         if user:
             user_update.username = user
