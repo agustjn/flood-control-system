@@ -5,6 +5,7 @@ from app.dao.configuration import ConfigurationDAO
 
 report_api = Blueprint("reportes",__name__, url_prefix = "/report")
 
+
 @report_api.get("/all")
 def index():
     """Recupera todos las denuncias de la base de dato, habria que ver si hay campos que no hay que mostrar"""
@@ -29,3 +30,10 @@ def create():
     schema = ReportScheme()
     result = schema.load(user_data)
     return jsonify("Created"),201
+
+
+#     endpoints = Blueprint('api', __name__)
+# api = Api(endpoints)
+# CORS(endpoints, resources='/login', allow_headers='*',
+#      origins='*', methods='*', expose_headers='Authorization')
+# api.add_resource(Login, '/login')

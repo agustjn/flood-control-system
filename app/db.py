@@ -8,11 +8,7 @@ def init_app(app):
 def config_db(app):
     @app.before_first_request
     def init_database():
-<<<<<<< HEAD
         # import app.inicializador
-=======
-        import app.inicializador
->>>>>>> denuncias
         db.create_all()
 
     @app.teardown_request
