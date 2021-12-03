@@ -29,9 +29,18 @@
       <label for="last_name" class="form-label">Ingrese su apellido </label>
       <input type="text" class="form-control" id= "last_name" name ="last_name" placeholder={{user.last_name}}>
     </div>
+    <div class="text-center col-md-12 mb-1">
+    <label for="role">Seleccione el rol del usuario:</label>
+      <select class="form-control text-center" id="role" name="role">
+          <option >{{value[0]}} </option>
+          <option >{{value[1]}}</option>
+          <option >{{value[2]}}</option>
+      </select>
+    </div>
     <div class="d-grid gap-1">
       <button type="submit" class="btn btn-success"  onclick="return confirm('¿Estas seguro de modificar al usuario {{user.user}}?');">Modificar</button>
     </div>
+
     <button type="reset" class="btn btn-secondary" >Limpiar</button>
   </form>
     <div>

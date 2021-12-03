@@ -52,9 +52,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/consultas">Consultas</a>
           </li>
+          {% if has_permission(session["id"],"configuracion_index") %}
           <li class="nav-item">
             <a class="nav-link" href="/configuraciones">Configuraciones</a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="/puntos">Puntos de encuentros</a>
           </li>

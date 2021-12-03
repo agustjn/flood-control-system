@@ -29,14 +29,14 @@ class User(db.Model):
             lazy = "dynamic",
         )
 
-        def __init__ (self,first_name = None , last_name = None, email = None, user = None, password = None):
+        def __init__ (self,first_name = None , last_name = None, email = None, user = None, password = None,active = True):
             self.first_name = first_name
             self.last_name = last_name
             self.email = email
             self.username = user
             self.password = password
             self.configuration_id = 1
-            self.active = True
+            self.active = active
             self.created_at = dt.now().strftime("%b %d %Y %H:%M:%S")
 
 

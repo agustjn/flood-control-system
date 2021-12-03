@@ -13,12 +13,14 @@ class PermissionDAO ():
 
     @staticmethod
     def has_permission(user_id,permission):
+        bool = False
         user = UserDAO.search_by_id(user_id)
         for role in user.role:
             for permiso in role.permission:
-                if permiso.name   == permission:
-                    return True
-            return False
+                if permiso.name == permission:
+                    bool = True
+                    break
+        return bool
 
     @staticmethod
     def has_rol(user_id,role):

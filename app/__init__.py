@@ -68,12 +68,12 @@ def create_app(environment="development"):
     app.config["SESSION_PERMANENT"] = False
 
     #No imprime.
-    logging.info(environment)
+    #logging.info(environment)
 
     #if environment=="development":
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
     #else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
 
 
 

@@ -2,7 +2,7 @@ from flask import redirect, render_template, request, url_for,flash,session
 from app.dao.configuration import ConfigurationDAO
 from app.dao.user import UserDAO
 from app.helpers.auth import Auth
-
+from app.dao.role import RoleDAO
 from app.helpers.permission import PermissionDAO
 
 
@@ -45,8 +45,6 @@ def new():
 def create():
     PermissionDAO.assert_permission("usuario_new")
 
-    Auth.verify_authentification()
-    # assert_permission("user_create")
     parameter = request.form
     errors = []
 
@@ -72,15 +70,37 @@ def _validate_empty_fields(first_name,last_name,email,user,password):
     else:
         return False
 
+def recuperar_valores_roles(modification_user):
+    if not modification_user.active:
+        value1 = 'operador'
+        value2 = 'administrador'
+    else:
+        if modification_user.role.name == 'administrador':
+            value1 = 'administrador'
+            value2 = 'operador'
+        else:
+            value1 = 'operador'
+            value2 = 'administrador'
+
+def _recuperar_values_roles(modification_user):
+    list = ["operador","administrador","sin asignar"]
+    roles_name = RoleDAO.recover_roles_of(modification_user)
+    if len(roles_name) == 0:
+        list_values_roles = ["sin asignar"]
+    else:
+        list_values_roles = roles_name
+    for value in list:
+        if not (value in list_values_roles):
+            list_values_roles.append(value)
+    return list_values_roles
 
 def edit(user_id):
-
     PermissionDAO.assert_permission("usuario_update")
-
     modification_user = UserDAO.search_by_id(user_id)
     if modification_user:
+        values = _recuperar_values_roles(modification_user)
         msj = "Los campos que desea dejar igual dejenlo sin rellenar"
-        return render_template("user/edit.html", user = modification_user, msj = msj)
+        return render_template("user/edit.html", user = modification_user, msj = msj,value = values)
     return redirect(url_for("user_index"))
 
 def modify(user_id):
@@ -95,7 +115,7 @@ def modify(user_id):
         msj = "El usuario " + parameter["user"] + " ya existe, ingrese otro"
 
     else:
-        obj = UserDAO.update(user_update,parameter["user"],parameter["email"],parameter["password"],parameter["first_name"], parameter["last_name"])
+        obj = UserDAO.update(user_update,parameter["user"],parameter["email"],parameter["password"],parameter["first_name"], parameter["last_name"],parameter["role"])
         if obj:
             msj = "Se modifico el usuario " + parameter["user"] + " exitosamente"
         else:

@@ -3,6 +3,8 @@ from flask import request
 from app.models.user import User
 from app.models.views_sort import View
 from app.db import db
+from app.models.permission import Role, Permission
+from app.dao.role import RoleDAO
 
 #import logging
 #logger = logging.getLogger(__name__)
@@ -40,10 +42,9 @@ class UserDAO():
          return User.query.all()
 
 
-
     @staticmethod
-    def create_user(first_name,last_name,email,user,password):
-        new_user = User(first_name,last_name,email,user,password)
+    def create_user(first_name,last_name,email,user,password,active = True):
+        new_user = User(first_name,last_name,email,user,password,active)
         db.session.add(new_user)
         try:
             db.session.commit()
@@ -78,9 +79,20 @@ class UserDAO():
     @staticmethod
     def search_by_email(user_email):
         return  User.query.filter_by(email=user_email).first()
-        
+
+
+
+
+
     @staticmethod
-    def update (user_update,user,email,password,first_name, last_name):
+    def update(user_update,user,email,password,first_name, last_name,name_role):
+        if name_role:
+            if name_role == "sin asignar":
+                user_update.role.clear()
+            elif not RoleDAO.has_rol(user_update,name_role):
+                permisos = ["zonas_inundables","usuario","puntos_encuentro","denuncia","route_of_evacuation"]
+                rol = RoleDAO.inicializate_role_with(name_role,permisos)
+                user_update.role.append(rol)
         if user:
             user_update.username = user
         if email:

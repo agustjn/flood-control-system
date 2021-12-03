@@ -20,7 +20,11 @@
           <main role="main" class="container my-auto">
               <div class="row ">
                   <div id="login" class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-12  border border-danger">
-                      <h2 class="text-center">Bienvenide</h2>
+                      <h2 class="text-center">Iniciar session</h2>
+                      <div class="d-grid gap-2 col-6 mx-auto">
+                          <a class= "mb-2 btn btn-secondary" href="{{url_for('auth_login_google')}}">Ingresar con google</a>
+                      </div>
+
                       <img class="img-fluid mx-auto d-block rounded"
                        src="https://picsum.photos/id/870/300/200" />
 
@@ -42,8 +46,7 @@
                               Ingresar
                           </button>
                           </div>
-                            <a href="#">Registrarse</a>
-                            <a href="{{url_for('auth_login_google')}}">Iniciar con google</a>
+                              <a href="#">Crear una cuenta</a>
                       </form>
                   </div>
               </div>
