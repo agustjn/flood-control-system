@@ -102,7 +102,7 @@ def callback():
     #         msj = "Hubo un error al crear el usuario, intente nuevamente"
 
     #UserDAO.create_user(string(users_name),string(users_last_name),string(users_email),string(users_email),string(randomword(15)),False)
-    UserDAO.create_user("nombre","apellido","email@gmail","email@gmail","contra1",False)
+    UserDAO.create_user("nombre","apellido","email@gmail","email@gmail","contra1")
     user = UserDAO.search_by_email("email@gmail")
     msj = "Inicio coorectamente via google"
     configSessionAttributes (user)
