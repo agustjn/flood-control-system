@@ -5,6 +5,7 @@ import MeetingPoint from './components/meeting_points/MeetingPoint'
 import Report from './components/reports/Report'
 import RouteOfEvacuation from './components/routes_of_evacuation/RouteOfEvacuation'
 import Stadistic from './components/stadistics/Stadistic'
+import Detail from './components/flood_zones/Detail'
 
 const routes = [
     { 
@@ -36,6 +37,11 @@ const routes = [
         path:'/stadistics',
         name:'stadistic',
         component: Stadistic
+    },
+    {
+        path:'/flood-zone/:id',
+        name:'flood_zone_detail',
+        component: Detail
     }
 ]
 const router = createRouter({ 

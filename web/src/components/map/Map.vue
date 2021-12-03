@@ -27,7 +27,7 @@ export default {
     LMarker,
     LTooltip,
   },
-  props: ["points_data", "email", "name", "phone" ],
+  props: ["points_data"],
   data() {
     return {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",

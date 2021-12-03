@@ -52,6 +52,9 @@ class FloodZoneDao():
     def recover_coordinates_by_id(id):
         return FloodZone.query.filter_by(id=id).first().get_as_json()
 
+    @staticmethod
+    def recover_coordinates_by_id(id):
+        return FloodZone.query.filter_by(id=id).first().get_as_json()
 
     @classmethod
     def publicate_despublicate(cls,flood_zone_id):
@@ -62,3 +65,5 @@ class FloodZoneDao():
             return True
         except:
             return False
+
+

@@ -15,6 +15,7 @@ import logging
 from app.helpers.routes import RoutesConfig
 from app.helpers.configurations import format_background
 from app.helpers.permission import PermissionDAO
+from flask_cors import CORS
 
 from app.resources.api.report import report_api
 
@@ -41,6 +42,7 @@ logging.getLogger("sqlalchmy.engine").setLevel(logging.INFO)
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
+    CORS(app)
 
     #Diego
     app.secret_key = environ.get("SECRET_KEY") or urandom(24)
@@ -71,9 +73,9 @@ def create_app(environment="development"):
     #logging.info(environment)
 
     #if environment=="development":
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/proyecto'
     #else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo3:YWMyMDEzYzE4OTY5@localhost:3306/grupo3'
 
 
 

@@ -19,7 +19,7 @@ def validate_category(category):
 
 class ReportScheme(Schema):
         title = fields.Str(required=True)
-        category = fields.Int(required=True,validate=validate_category)
+        category = fields.Str(required=True) # FALTA VALIDAR
         description = fields.Str(required=True)
         coordinates = fields.Str(required=True,validate = validate_coordinates)
         coordinates_longitude = fields.Str()

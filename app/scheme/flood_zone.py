@@ -10,13 +10,13 @@ class FloodZoneScheme(Schema):
     id = fields.Int(required=True)
     name = fields.Str(required=True)
     colour = fields.Str(required=True)
-    # coordinates = fields.Nested(CoordinateScheme, many=True, data_key="coordinates")
-    
+    #coordinates = fields.Nested(CoordinateScheme, many=True, data_key="coordinates")
 
-    
+
+
 class FloodZonePaginationScheme(Schema):
     page = fields.Int()
-    total = fields.String() 
+    total = fields.String()
     items = fields.Nested(FloodZoneScheme, many=True, data_key="zonas")
 
 
