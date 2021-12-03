@@ -89,23 +89,17 @@ def callback():
     # Recupero el usuario por el mail si existe o en caso de no existir lo crea
     test_email = UserDAO.exist_email(users_email)
 
-    # if test_email:
-    #     user = UserDAO.search_by_email(users_email)
-    #     msj = "Inicio coorectamente via google"
-    #     if user.active:
-    #         configSessionAttributes (user)
-    # else:
-    #     if (UserDAO.create_user(users_name,users_last_name,users_email,users_email,randomword(15),False)):
-    #         user = UserDAO.search_by_email(users_email)
-    #         msj = "Se le creo un usuario pero estara bloqueado hasta que el administrador le asigne un rol"
-    #     else:
-    #         msj = "Hubo un error al crear el usuario, intente nuevamente"
-
-    #UserDAO.create_user(string(users_name),string(users_last_name),string(users_email),string(users_email),string(randomword(15)),False)
-    UserDAO.create_user("nombre","apellido","email@gmail","email@gmail","contra1")
-    user = UserDAO.search_by_email("email@gmail")
-    msj = "Inicio coorectamente via google"
-    configSessionAttributes (user)
+    if test_email:
+        user = UserDAO.search_by_email(users_email)
+        msj = "Inicio coorectamente via google"
+        if user.active:
+            configSessionAttributes (user)
+    else:
+        if (UserDAO.create_user(users_name,users_last_name,users_email,users_email,randomword(15),False)):
+            user = UserDAO.search_by_email(users_email)
+            msj = "Se le creo un usuario pero estara bloqueado hasta que el administrador le asigne un rol"
+        else:
+            msj = "Hubo un error al crear el usuario, intente nuevamente"
     return render_template("home.html", msj=msj)
 
 
