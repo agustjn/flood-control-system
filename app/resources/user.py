@@ -71,6 +71,7 @@ def _validate_empty_fields(first_name,last_name,email,user,password):
         return False
 
 
+
 def _recuperar_values_roles(modification_user):
     list = ["operador","administrador","sin asignar"]
     roles_name = RoleDAO.recover_roles_of(modification_user)
