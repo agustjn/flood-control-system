@@ -91,7 +91,7 @@ def callback():
 
     if test_email:
         user = UserDAO.search_by_email(users_email)
-        msj = "Inicio coorectamente via google"
+        msj = "Inicio correctamente via google"
         if user.active:
             configSessionAttributes (user)
     else:
