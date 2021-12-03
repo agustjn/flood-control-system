@@ -101,11 +101,9 @@ def callback():
         if (UserDAO.create_user(users_name,users_last_name,users_email,users_email,randomword(15),False)):
             user = UserDAO.search_by_email(users_email)
             msj = "Se le creo un usuario pero estara bloqueado hasta que el administrador le asigne un rol"
-
-
-    else:
-        msj =  "Hay que esperar que el administrador seleccione un rol , vuelve a intentar mas tarde"
-    return render_template("home.html", msj=msj)
+        else:
+            msj =  "Hay que esperar que el administrador seleccione un rol , vuelve a intentar mas tarde"
+        return render_template("home.html", msj=msj)
 
 
 def login():
