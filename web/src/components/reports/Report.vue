@@ -162,7 +162,7 @@ export default {
 
     submitDenuncia() {
       axios
-        .post("http://localhost:5000/api/report/", this.form)
+        .post("https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/api/report/", this.form)
         .catch((error) => {
           // error.response.status
           console.log(error);
