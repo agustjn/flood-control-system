@@ -27,7 +27,7 @@ class User(db.Model):
             secondary = User_has_role.get_table_user_has_role(),
             backref= db.backref("roles_user", lazy="dynamic"),
             lazy = "dynamic",
-        )
+            )   
 
         def __init__ (self,first_name = None , last_name = None, email = None, user = None, password = None,active = True):
             self.first_name = first_name

@@ -3,7 +3,8 @@ from flask import request
 from app.models.user import User
 from app.models.views_sort import View
 from app.db import db
-from app.models.permission import Permission
+from app.models.permission import Role, Permission
+from app.dao.role import RoleDAO
 
 #import logging
 #logger = logging.getLogger(__name__)
@@ -39,7 +40,6 @@ class UserDAO():
     @staticmethod
     def recover_users():
          return User.query.all()
-
 
 
     @staticmethod
@@ -80,10 +80,20 @@ class UserDAO():
     def search_by_email(user_email):
         return  User.query.filter_by(email=user_email).first()
 
-    @staticmethod
-    def update (user_update,user,email,password,first_name, last_name,role):
 
-        #Crea role y asignarlo segun lo recibido por parametro
+
+
+
+    @staticmethod
+    def update(user_update,user,email,password,first_name, last_name,name_role):
+        if name_role:
+            # if name_role == 'sin asignar':
+            #     user_update.role.delete()
+            if not RoleDAO.has_rol(user_update,name_role):
+                permisos = ["zonas_inundables","usuario","puntos_encuentro","denuncia","route_of_evacuation"]
+                #rol = RoleDAO.inicializate_role_with(name_role,permisos)
+                rol = RoleDAO.recover_role(name_role)
+                user_update.role.append(rol)
         if user:
             user_update.username = user
         if email:
@@ -94,9 +104,6 @@ class UserDAO():
             user_update.first_name = first_name
         if last_name:
             user_update.last_name = last_name
-        # if role:
-        #     user_update.role.append = rol
-
         try:
             db.session.commit()
             return True

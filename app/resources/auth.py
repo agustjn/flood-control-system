@@ -24,6 +24,7 @@ GOOGLE_DISCOVERY_URL = (
 )
 
 def randomword(length):
+    #Funcion que devuelve una string aleatorio
    letters = string.ascii_lowercase
    return ''.join(random.choice(letters) for i in range(length))
 
@@ -90,19 +91,15 @@ def callback():
 
     if test_email:
         user = UserDAO.search_by_email(users_email)
-        msj = "Inicio coorectamente via google"
+        msj = "Inicio correctamente via google"
+        if user.active:
+            configSessionAttributes (user)
     else:
         if (UserDAO.create_user(users_name,users_last_name,users_email,users_email,randomword(15),False)):
             user = UserDAO.search_by_email(users_email)
-            msj = "Se le creo un usuario e ingreso correctamente via google"
-
-    if user.active:
-        try:
-            configSessionAttributes (user)
-        except:
-            msj =  "Hubo un error al crearse usuario, intente nuevamente"
-    else:
-        msj =  "Hay que esperar que el administrador seleccione un rol , vuelve a intentar mas tarde"
+            msj = "Se le creo un usuario pero estara bloqueado hasta que el administrador le asigne un rol"
+        else:
+            msj = "Hubo un error al crear el usuario, intente nuevamente"
     return render_template("home.html", msj=msj)
 
 
@@ -117,6 +114,9 @@ def authenticate():
 
     if not user:
         msj = "Usuario o clave incorrecto."
+        return render_template("auth/login.html",msj=msj)
+    if not user.active:
+        msj = "Su usuario se encuentra bloqueado"
         return render_template("auth/login.html",msj=msj)
     configSessionAttributes (user)
 

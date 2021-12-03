@@ -49,7 +49,7 @@
         <td>{{ point.status }}</td>
         <td>{{ point.phone}}</td>
         <td>{{ point.email}}</td>
-         {% if assert_permission("puntos_encuentro_destroy") %}
+         {% if has_permission(session["id"],"puntos_encuentro_destroy") %}
             <td>
               <a href="{{ url_for('point_delete',point_id = point.id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('¿Estas seguro de eliminar al punto de encuentro  {{point.name}}?');"> Eliminar </a>
             </td>

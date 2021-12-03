@@ -27,10 +27,12 @@ class Role(db.Model):
             backref = db.backref("roles",lazy = "dynamic"),
             lazy = "dynamic",
         )
+        
         def __init__ (self,name = None ):
             self.name = name;
 
-
+        def __repr__(self):
+            return self.name
 
 class User_has_role():
     table = db.Table(
