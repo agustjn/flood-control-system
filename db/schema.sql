@@ -179,7 +179,7 @@ CREATE TABLE `report` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
-  `category` int(30) NOT NULL,
+  `category` varchar(50) NOT NULL,
   `creation_date` varchar(50) NOT NULL,
   `closing_date` varchar(50),
   `description` varchar(255) NOT NULL,

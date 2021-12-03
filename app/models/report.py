@@ -24,7 +24,7 @@ class Report(db.Model):
     id = Column(Integer,primary_key=True)
     title = Column(String(50))
     status = Column(String(50))
-    category = Column(Integer)
+    category = Column(String(50))
     creation_date = Column(String(30))
     closing_date = Column(String(30))
     description = Column(String(255))
