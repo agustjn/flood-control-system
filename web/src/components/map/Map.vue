@@ -10,7 +10,7 @@
                         <li><strong>{{ point.address }}</strong></li>
                         <li><strong>{{ point.phone }}</strong></li>
                         <li><strong>{{ point.email }}</strong></li>
-                    </ul>                    
+                    </ul>
                 </l-tooltip>
             </l-marker>
             </div>
@@ -44,9 +44,19 @@ export default {
     formatCoordinates(point) {
       return [point.coordinates_latitude, point.coordinates_longitude];
     },
-    eventOnClick() { 
+    eventOnClick() {
         alert("Roman!!")
     }
   },
+  computed: {
+       coordinates() {
+         if(navigator.geolocation){
+           navigator.geolocation.getCurrentPosition(onSuccessGeolocating,
+                                    onErrorGeolocating);
+              }
+              else {
+                 // No se cuenta con soporte para geolocalización, manejar la situación.
+               }
+      },
 };
 </script>

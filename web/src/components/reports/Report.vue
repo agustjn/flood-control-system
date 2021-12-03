@@ -1,12 +1,22 @@
 <template>
 
-    <div>
-    <h1>Reportes:</h1>
+    <div class=".container">
+    <h1 >Reportes:</h1>
     <ul v-if="reports && reports.length">
       <li v-for="(report, index) in reports" :key="index">
-        <p>
-            {{report.description}}
-        </p>
+
+
+          <div class="card">
+            <div class="card-header">
+              <h3>{{report.title}}</h3>
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p> {{report.description}}</p>
+                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+              </blockquote>
+            </div>
+            </div>
       </li>/
     </ul>
 

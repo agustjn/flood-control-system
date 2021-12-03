@@ -1,6 +1,6 @@
 <template>
 
-<h1> 
+<h1>
     Zonas Inundables
 </h1>
 
@@ -9,6 +9,11 @@
 </div>
 <div v-else>
     <h1>Cargando mapa..</h1>
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
 </div>
 <br>
 <h2>Zonas</h2>
@@ -35,24 +40,24 @@
 
 <script>
 import Map from './Map'
-export default { 
+export default {
     name:'zones-index',
     components:{Map},
-    data() {  
-        return { 
+    data() {
+        return {
             zones: [ ],
             errors:[ ],
             mapIsCreated: false
         }
     },
-    async created() { 
+    async created() {
         const response = await fetch("https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/api/flood_zones/all");
         const data = await response.json();
         this.zones = data.zonas;  //hago esto porque la api me lo devuelve como zonas[adentro 0{id...}]
-        this.mapIsCreated = true;        
-        
-        
-        
+        this.mapIsCreated = true;
+
+
+
     },
     methods: {
         traduced(colour){
@@ -65,8 +70,8 @@ export default {
             return dic[colour]
         }
     },
-    computed: {  
-         isCreated () {  
+    computed: {
+         isCreated () {
             return this.mapIsCreated;
         }
     },
