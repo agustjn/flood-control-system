@@ -2,7 +2,7 @@
 
     <h1 class="title">Denunciar</h1>
   <form v-on:submit.prevent="submitDenuncia" action="http://127.0.0.1:5000/api/report/" method="POST">
-    <div style="width: 20%; float:left">
+    <div style="width: 50%; float:left">
   <div>
       <label class="form-label" for="">Titulo: </label>
       <input class="form-input" type="text" placeholder="titulo" v-model="form.title">
