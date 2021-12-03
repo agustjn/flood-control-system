@@ -4,18 +4,22 @@ from app.models.report import Report,Monitoring
 from flask import request,session
 from datetime import datetime as dt
 from sqlalchemy import or_, and_
+import logging
 class ReportDAO():
     """Genera las consultas necesarios para consultar la informacion del denuncias en la base de datos en el resource"""
 
     @staticmethod
     def create_report(title,category, description, coordinates_latitude, coordinates_longitude,  first_name, last_name, phone, email,user_assing_id = None):
         new_report = Report(title,category, description, coordinates_latitude, coordinates_longitude, first_name, last_name, phone, email,user_assing_id)
+
         db.session.add(new_report)
-        try:
-            db.session.commit()
-            return True
-        except:
-            return False
+    # try:
+        
+        db.session.commit()
+        print("---"*50)
+        # return True
+    # except:
+    #     return False
 
 
     @staticmethod
