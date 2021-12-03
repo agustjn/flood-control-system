@@ -76,12 +76,14 @@ def _recuperar_values_roles(modification_user):
     list = ["operador","administrador","sin asignar"]
     roles_name = RoleDAO.recover_roles_of(modification_user)
     if len(roles_name) == 0:
+        print ("NO tiene nada")
         list_values_roles = ["sin asignar"]
     else:
         list_values_roles = roles_name
     for value in list:
         if not (value in list_values_roles):
             list_values_roles.append(value)
+    print (list_values_roles)
     return list_values_roles
 
 def edit(user_id):
