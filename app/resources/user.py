@@ -70,17 +70,7 @@ def _validate_empty_fields(first_name,last_name,email,user,password):
     else:
         return False
 
-def recuperar_valores_roles(modification_user):
-    if not modification_user.active:
-        value1 = 'operador'
-        value2 = 'administrador'
-    else:
-        if modification_user.role.name == 'administrador':
-            value1 = 'administrador'
-            value2 = 'operador'
-        else:
-            value1 = 'operador'
-            value2 = 'administrador'
+
 
 def _recuperar_values_roles(modification_user):
     list = ["operador","administrador","sin asignar"]
