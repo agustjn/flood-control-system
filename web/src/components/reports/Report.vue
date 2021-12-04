@@ -145,12 +145,13 @@ export default {
       alert("Click!");
     },
 
+<<<<<<< HEAD
     addMarker(e) {
       // this.form.coordinates_latitude = e.latlng["lat"];
       // this.form.coordinates_longitude = e.latlng["lng"];
       this.form.coordinates = e.latlng["lat"] + "," + e.latlng["lng"];
       console.log(this.form.coordinates);
-      
+
       //var mark = {};
       //mark = {id:1, coordinates: [e.latlng['lat'],e.latlng['lng']]};
       //console.log(mark);
@@ -171,3 +172,6 @@ export default {
   },
 };
 </script>
+=======
+</style>
+>>>>>>> Inicio_session
