@@ -150,7 +150,7 @@ export default {
       // this.form.coordinates_longitude = e.latlng["lng"];
       this.form.coordinates = e.latlng["lat"] + "," + e.latlng["lng"];
       console.log(this.form.coordinates);
-      
+
       //var mark = {};
       //mark = {id:1, coordinates: [e.latlng['lat'],e.latlng['lng']]};
       //console.log(mark);
