@@ -145,7 +145,6 @@ export default {
       alert("Click!");
     },
 
-<<<<<<< HEAD
     addMarker(e) {
       // this.form.coordinates_latitude = e.latlng["lat"];
       // this.form.coordinates_longitude = e.latlng["lng"];
@@ -163,7 +162,7 @@ export default {
 
     submitDenuncia() {
       axios
-        .post("http://localhost:5000/api/report/", this.form)
+        .post("https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/api/report/", this.form)
         .catch((error) => {
           // error.response.status
           console.log(error);
@@ -172,6 +171,3 @@ export default {
   },
 };
 </script>
-=======
-</style>
->>>>>>> Inicio_session
