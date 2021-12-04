@@ -43,20 +43,21 @@ export default {
             mapIsCreated: false
         }
     },
+
     async created() {
         const response = await fetch("https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/api/points/all");
         const data = await response.json();
         this.points = data;
         this.mapIsCreated = true;
 
-
-
     },
     computed: {
          isCreated () {
             return this.mapIsCreated;
-        }
+        },
+
     },
+
 
 }
 </script>

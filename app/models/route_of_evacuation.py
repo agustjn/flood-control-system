@@ -25,7 +25,13 @@ class Route_of_evacuation(db.Model):
         self.name = nombre
         self.description = descripcion
         self.publicado = estado
-        self.coordinates.append(coordinates)
+        self._agregar_coordinates(coordinates)
+
+    def _agregar_coordinates(self,coordinates):
+        for coordinate_lat_long in coordinates:
+            #print (f"coordenadas         {coordinate_lat_long.id} {coordinate_lat_long.latitude}           {coordinate_lat_long.longitude}")
+            self.coordinates.append(coordinate_lat_long)
+
 
 
     def __repr__(self):

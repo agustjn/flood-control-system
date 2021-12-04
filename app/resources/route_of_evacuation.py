@@ -42,15 +42,13 @@ def create():
     PermissionDAO.assert_permission("route_of_evacuation_new")
     parameter = request.form
     if (_validate_empty_fields(parameter["name"],parameter["publicado"],parameter["coordinates"],parameter["description"])):
-           # if not Route_of_evacuationDAO.exist_coordinates(coordinates_latitude = parameter["coordinates_lat"], coordinates_longitude = parameter["coordinates_long"]):
             if Route_of_evacuationDAO.create_route(parameter["name"],bool(parameter.get('publicado')),parameter["coordinates"],parameter["description"]):
                 msj = "Se creo el recorrido de evacuacion " + parameter["name"] + " con exito"
                 flash (msj)
                 return redirect(url_for("route_index"))
             else:
                 msj = "Se produjo un error al momento de crealo, intentelo nuevamente"
-            #else:
-            #    msj = "Las coordenadas ingresadas ya existen, ingrese otras "
+
     else:
         msj = "Complete todos los campos para que puedas continuar"
     flash (msj)
@@ -71,12 +69,23 @@ def delete(route_id):
     flash (msj)
     return redirect(url_for("route_index"))
 
+def _parse_coordinate_string(coordinates_obj):
+    list_coordinates_string = []
+    for obj in coordinates_obj:
+        list_new = []
+        list_new.append(obj.latitude)
+        list_new.append(obj.longitude)
+        list_coordinates_string.append(list_new)
+        #print (f"-----------La lista creada {obj.latitude}  {obj.longitude}")
+    return list_coordinates_string
 
 def edit(route_id):
     PermissionDAO.assert_permission("route_of_evacuation_update")
     modification_route = Route_of_evacuationDAO.search_by_id(route_id)
+    list_coordinates_string = _parse_coordinate_string(modification_route.coordinates.order_by().all())
+    #list_coordinates_string = list(reversed(list_coordinates_string))
     if modification_route:
-        return render_template("route_of_evacuation/edit.html",route = modification_route)
+        return render_template("route_of_evacuation/edit.html",route = modification_route,list_string = list_coordinates_string)
     return redirect(url_for('route_index'))
 
 
@@ -86,17 +95,10 @@ def modify(route_id):
     parameter = request.form
     route_modification = Route_of_evacuationDAO.search_by_id(route_id)
     if route_modification:
-        if Route_of_evacuationDAO.exist_coordinates(coordinates_latitude = parameter["coordinates_lat"], coordinates_longitude = parameter["coordinates_long"]):
-            msj = "Las coordenadas ingresadas ya existe, ingrese otras "
-            flash(msj)
-            return render_template("route_of_evacuation/edit.html",route = modification_route)
+        if (Route_of_evacuationDAO.update(route_modification,parameter["name"],int(parameter["publicado"]),parameter["coordinates"],parameter["description"])):
+            msj = "Se actualizo con exito el recorrido seleccionado "
         else:
-            if (Route_of_evacuationDAO.update(route_modification,parameter["name"],int(parameter["publicado"]),parameter["coordinates_lat"],parameter["coordinates_long"],parameter["description"])):
-                msj = "Se actualizo con exito el recorrido seleccionado "
-            else:
-                msj = "Ocurrio un error al quere modificar el recorrido seleccionado"
-    else:
-        msj = "El id seleccionado no existe, intente nuevamente"
+            msj = "Ocurrio un error al quere modificar el recorrido seleccionado"
     flash (msj)
     return redirect(url_for("route_index"))
 
