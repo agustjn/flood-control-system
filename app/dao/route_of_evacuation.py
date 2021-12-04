@@ -32,10 +32,15 @@ class Route_of_evacuationDAO ():
     #     if (db.session.query(Route).filter(or_(Route.coordinates_latitude == coordinates_latitude, Route.coordinates_longitude == coordinates_longitude)).first()):
     #             return True
     #     return False
-
     @staticmethod
-    def create_route(name,publicado,description):
-        new_route = Route(name,publicado,description)
+    def _create_coordinates(coordinates):
+        print(coordinates)
+
+
+    @classmethod
+    def create_route(cls,name,publicado,coordinate,description):
+        cls._create_coordinates(coordinate)
+        new_route = Route(name,publicado,coordinate,description)
         db.session.add(new_route)
         try:
             db.session.commit()

@@ -21,10 +21,11 @@ class Route_of_evacuation(db.Model):
             lazy = "dynamic",
         )
 
-    def __init__(self, nombre=None, estado=None, descripcion=None):
+    def __init__(self, nombre=None, estado=None,coordinates=None, descripcion=None):
         self.name = nombre
         self.description = descripcion
         self.publicado = estado
+        self.coordinates.append(coordinates)
 
 
     def __repr__(self):
