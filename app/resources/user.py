@@ -114,9 +114,9 @@ def modify(user_id):
             msj = "Se produjo un error al modificar, intente nuevamente "
         flash (msj)
         return redirect(url_for("user_index"))
-
+    values = _recuperar_values_roles(user_update)
     flash(msj)
-    return render_template("user/edit.html" , user = user_update)
+    return render_template("user/edit.html" , user = user_update, msj = msj, value = values)
 
 def delete(user_id):
     PermissionDAO.assert_permission("usuario_destroy")
