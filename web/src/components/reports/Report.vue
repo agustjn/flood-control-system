@@ -10,12 +10,13 @@
           type="text"
           placeholder="Ingrese el titulo de la denuncia"
           v-model="form.title"
+          required oninvalid="this.setCustomValidity('ingrese titulo')" oninput="this.setCustomValidity('')"
         />
       </div>
       <div class = "form-group mt-2">
 
 
-        <select  class="form-control text-center" v-model="form.category">
+        <select required class="form-control text-center" v-model="form.category">
           <option disabled value="">seleccione categoria</option>
           <option>Alcantarillas</option>
           <option>Basura</option>
@@ -30,6 +31,7 @@
           type="text"
           placeholder="Ingrese su nombre"
           v-model="form.first_name"
+          required oninvalid="this.setCustomValidity('ingrese nombre')" oninput="this.setCustomValidity('')"
         />
       </div>
       <div class = "form-group mt-2">
@@ -39,6 +41,7 @@
           type="text"
           placeholder="Ingrese su apellido"
           v-model="form.last_name"
+          required oninvalid="this.setCustomValidity('ingrese apellido')" oninput="this.setCustomValidity('')"
         />
       </div>
       <div class = "form-group mt-2">
@@ -48,6 +51,7 @@
           type="text"
           placeholder="Ingrese su telefono"
           v-model="form.phone"
+          required oninvalid="this.setCustomValidity('ingrese telefono')" oninput="this.setCustomValidity('')"
         />
       </div>
       <div class = "form-group  mt-2" >
@@ -57,6 +61,7 @@
           class="form-control text-center"
           placeholder="Ingrese su email"
           v-model="form.email"
+          required oninvalid="this.setCustomValidity('ingrese email')" oninput="this.setCustomValidity('')"
         />
       </div>
       <div class = "form-group mt-2">
@@ -64,21 +69,31 @@
           class = "form-control text-center"
           v-model="form.description"
           placeholder="ingrese una descripción de la denuncia"
+          required oninvalid="this.setCustomValidity('ingrese descripcion')" oninput="this.setCustomValidity('')"
         ></textarea>
       </div>
     </div>
-    <div>
-      <span>Descripción: </span>
-      <textarea v-model="form.description" placeholder="ingrese una descripción de la denuncia" required oninvalid="this.setCustomValidity('ingrese descripcion')"></textarea>
+    
+    <div style="height: 400px; width: 50%; float:right">
+      <l-map
+        v-if="showMap"
+        :zoom="zoom"
+        :center="center"
+        :options="mapOptions"
+        style="height: 80%"
+        @update:center="centerUpdate"
+        @update:zoom="zoomUpdate"
+        @click="addMarker"
+      >
+        <l-tile-layer :url="url" :attribution="attribution" />
+        <l-marker :lat-lng="withPopup" v-model="coordinates">
+          <l-popup>
+            <div @click="innerClick">I am a popup</div>
+          </l-popup>
+        </l-marker>
+      </l-map>
     </div>
-    <div>
-      <label class="form-label" for="">Nombre: </label>
-      <input class="form-input" type="text" placeholder="nombre" v-model="form.first_name" required oninvalid="this.setCustomValidity('ingrese nombre')" oninput="this.setCustomValidity('')">
-    </div>
-    <div>
-      <label class="form-label" for="">Apellido: </label>
-      <input class="form-input" type="text" placeholder="apellido" v-model="form.last_name" required oninvalid="this.setCustomValidity('ingrese apellido')" oninput="this.setCustomValidity('')">
-    </div>
+
     <div>
       <button type="submit" class="btn-lg btn-success mt-2">Generar denuncia</button>
     </div>
