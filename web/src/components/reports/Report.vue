@@ -6,64 +6,65 @@
       <div class="form-group mt-2 text-center">
 
         <input
-          class="form-control "
+          class="form-control text-center"
           type="text"
-          placeholder="titulo"
+          placeholder="Ingrese el titulo de la denuncia"
           v-model="form.title"
         />
       </div>
       <div class = "form-group mt-2">
 
 
-        <select  class="form-control" v-model="form.category">
+        <select  class="form-control text-center" v-model="form.category">
           <option disabled value="">seleccione categoria</option>
           <option>Alcantarillas</option>
           <option>Basura</option>
           <option>Otros</option>
         </select>
       </div>
-      <div class = "form-group mt-2">
-        <textarea
-          class = "form-control"
-          v-model="form.description"
-          placeholder="ingrese una descripción de la denuncia"
-        ></textarea>
-      </div>
+
       <div class = "form-group mt-2">
 
         <input
-          class="form-control"
+          class="form-control text-center"
           type="text"
-          placeholder="nombre"
+          placeholder="Ingrese su nombre"
           v-model="form.first_name"
         />
       </div>
       <div class = "form-group mt-2">
 
         <input
-          class="form-control"
+          class="form-control text-center"
           type="text"
-          placeholder="apellido"
+          placeholder="Ingrese su apellido"
           v-model="form.last_name"
         />
       </div>
       <div class = "form-group mt-2">
 
         <input
-          class="form-control"
+          class="form-control text-center"
           type="text"
-          placeholder="telefono"
+          placeholder="Ingrese su telefono"
           v-model="form.phone"
         />
       </div>
-      <div class = "form-group mt-2" >
+      <div class = "form-group  mt-2" >
 
         <input
           type="email"
-          class="form-control"
+          class="form-control text-center"
           placeholder="Ingrese su email"
           v-model="form.email"
         />
+      </div>
+      <div class = "form-group mt-2">
+        <textarea
+          class = "form-control text-center"
+          v-model="form.description"
+          placeholder="ingrese una descripción de la denuncia"
+        ></textarea>
       </div>
     </div>
     <div style="height: 400px; width: 50%; float:right">
@@ -86,7 +87,7 @@
       </l-map>
     </div>
     <div>
-      <button type="submit" class="btn btn-primary">Generar denuncia</button>
+      <button type="submit" class="btn-lg btn-success mt-2">Generar denuncia</button>
     </div>
   </form>
 </template>
