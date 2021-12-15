@@ -172,14 +172,15 @@ export default {
     },
 
     submitDenuncia(){
-      if(!this.coordinates){
-        alert("no ingreso coordinadas")
+      if(this.form.coordinates_latitude == ''){
+        alert("no ingreso coordenadas")
       }
+      else{
       axios.post('http://127.0.0.1:5000/api/report/', this.form)
         .catch((error) => {
           error.response.status
         })
-        
+      }
     }
    
 
