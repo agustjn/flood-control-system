@@ -1,21 +1,71 @@
 <template>
+  <h1 class="title">Denunciar</h1>
+  <form
+    v-on:submit.prevent="submitDenuncia">
+    <div  style="width: 50%; float: left ">
+      <div class="form-group mt-2 text-center">
 
-    <h1 class="title">Denunciar</h1>
-  <form v-on:submit.prevent="submitDenuncia" action="http://127.0.0.1:5000/api/report/" method="POST">
-    <div style="width: 20%; float:left">
-  <div>
-      <label class="form-label" for="">Titulo: </label>
-      <input class="form-input" type="text" placeholder="titulo" v-model="form.title" required oninvalid="this.setCustomValidity('ingrese titulo')" oninput="this.setCustomValidity('')">
-    </div>
-    <div>
-      <label class="form-label" for="">Categoria: </label>
-    
-      <select required oninvalid="this.setCustomValidity('selecciona categoria')" v-model="form.category">
-        <option disabled value="">seleccione categoria</option>
-        <option>Alcantarillas</option>
-        <option>Basura</option>
-        <option>Otros</option>
+        <input
+          class="form-control text-center"
+          type="text"
+          placeholder="Ingrese el titulo de la denuncia"
+          v-model="form.title"
+        />
+      </div>
+      <div class = "form-group mt-2">
+
+
+        <select  class="form-control text-center" v-model="form.category">
+          <option disabled value="">seleccione categoria</option>
+          <option>Alcantarillas</option>
+          <option>Basura</option>
+          <option>Otros</option>
         </select>
+      </div>
+
+      <div class = "form-group mt-2">
+
+        <input
+          class="form-control text-center"
+          type="text"
+          placeholder="Ingrese su nombre"
+          v-model="form.first_name"
+        />
+      </div>
+      <div class = "form-group mt-2">
+
+        <input
+          class="form-control text-center"
+          type="text"
+          placeholder="Ingrese su apellido"
+          v-model="form.last_name"
+        />
+      </div>
+      <div class = "form-group mt-2">
+
+        <input
+          class="form-control text-center"
+          type="text"
+          placeholder="Ingrese su telefono"
+          v-model="form.phone"
+        />
+      </div>
+      <div class = "form-group  mt-2" >
+
+        <input
+          type="email"
+          class="form-control text-center"
+          placeholder="Ingrese su email"
+          v-model="form.email"
+        />
+      </div>
+      <div class = "form-group mt-2">
+        <textarea
+          class = "form-control text-center"
+          v-model="form.description"
+          placeholder="ingrese una descripción de la denuncia"
+        ></textarea>
+      </div>
     </div>
     <div>
       <span>Descripción: </span>
@@ -30,43 +80,7 @@
       <input class="form-input" type="text" placeholder="apellido" v-model="form.last_name" required oninvalid="this.setCustomValidity('ingrese apellido')" oninput="this.setCustomValidity('')">
     </div>
     <div>
-      <label class="form-label" for="">Telefono: </label>
-      <input class="form-input" type="text" placeholder="telefono" v-model="form.phone" required oninvalid="this.setCustomValidity('ingrese telefono')" oninput="this.setCustomValidity('')">
-    </div>
-    <div>
-      <label class="form-label" for="">E-mail: </label>
-      <input class="form-input" type="email" placeholder="mail" v-model="form.email">
-    </div>
-  </div>
-  <div style="height: 400px; width: 50%; float:right">
-    
-    <l-map
-      v-if="showMap"
-      :zoom="zoom"
-      :center="center"
-      :options="mapOptions"
-      style="height: 80%"
-      @update:center="centerUpdate"
-      @update:zoom="zoomUpdate"
-      @click="addMarker"
-    >
-      <l-tile-layer
-        :url="url"
-        :attribution="attribution"
-      />
-      <l-marker :lat-lng="withPopup" v-model="coordinates" >
-        <l-popup>
-          <div @click="innerClick">
-            I am a popup
-            
-          </div>
-        </l-popup>
-      </l-marker>
-     
-    </l-map>
-  </div>
-   <div >
-     <button type="submit" class="btn btn-primary">Generar denuncia</button>
+      <button type="submit" class="btn-lg btn-success mt-2">Generar denuncia</button>
     </div>
    </form>
 </template>

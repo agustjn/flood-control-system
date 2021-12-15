@@ -16,7 +16,7 @@
 </div>
 <div class="container mt-5">
       <div class="card text-white bg-info mb-3" v-for="(point, index) in points" :key="index">
-        <div class="card-header">{{point.name}}</div>
+        <div class="card-header">"informacion de muestra"</div>
         <div class="card-body">
           <h5 class="card-title">{{point.address}}</h5>
           <p class="card-text">
