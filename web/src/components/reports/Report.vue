@@ -1,100 +1,80 @@
 <template>
-  <h1 class="title">Denunciar</h1>
-  <form
-    v-on:submit.prevent="submitDenuncia">
-    <div style="width: 50%; float: left">
-      <div>
-        <label class="form-label" for="">Titulo: </label>
-        <input
-          class="form-input"
-          type="text"
-          placeholder="titulo"
-          v-model="form.title"
-        />
-      </div>
-      <div>
-        <label class="form-label" for="">Categoria: </label>
 
-        <select v-model="form.category">
-          <option disabled value="">seleccione categoria</option>
-          <option>Alcantarillas</option>
-          <option>Basura</option>
-          <option>Otros</option>
-        </select>
-      </div>
-      <div>
-        <span>Descripción: </span>
-        <textarea
-          v-model="form.description"
-          placeholder="ingrese una descripción de la denuncia"
-        ></textarea>
-      </div>
-      <div>
-        <label class="form-label" for="">Nombre: </label>
-        <input
-          class="form-input"
-          type="text"
-          placeholder="nombre"
-          v-model="form.first_name"
-        />
-      </div>
-      <div>
-        <label class="form-label" for="">Apellido: </label>
-        <input
-          class="form-input"
-          type="text"
-          placeholder="apellido"
-          v-model="form.last_name"
-        />
-      </div>
-      <div>
-        <label class="form-label" for="">Telefono: </label>
-        <input
-          class="form-input"
-          type="text"
-          placeholder="telefono"
-          v-model="form.phone"
-        />
-      </div>
-      <div>
-        <label class="form-label" for="">E-mail: </label>
-        <input
-          class="form-input"
-          type="text"
-          placeholder="mail"
-          v-model="form.email"
-        />
-      </div>
-    </div>
-    <div style="height: 400px; width: 50%; float:right">
-      <l-map
-        v-if="showMap"
-        :zoom="zoom"
-        :center="center"
-        :options="mapOptions"
-        style="height: 80%"
-        @update:center="centerUpdate"
-        @update:zoom="zoomUpdate"
-        @click="addMarker"
-      >
-        <l-tile-layer :url="url" :attribution="attribution" />
-        <l-marker :lat-lng="withPopup" v-model="coordinates">
-          <l-popup>
-            <div @click="innerClick">I am a popup</div>
-          </l-popup>
-        </l-marker>
-      </l-map>
+    <h1 class="title">Denunciar</h1>
+  <form v-on:submit.prevent="submitDenuncia" action="http://127.0.0.1:5000/api/report/" method="POST">
+    <div style="width: 20%; float:left">
+  <div>
+      <label class="form-label" for="">Titulo: </label>
+      <input class="form-input" type="text" placeholder="titulo" v-model="form.title" required oninvalid="this.setCustomValidity('ingrese titulo')" oninput="this.setCustomValidity('')">
     </div>
     <div>
-      <button type="submit" class="btn btn-primary">Generar denuncia</button>
+      <label class="form-label" for="">Categoria: </label>
+    
+      <select required oninvalid="this.setCustomValidity('selecciona categoria')" v-model="form.category">
+        <option disabled value="">seleccione categoria</option>
+        <option>Alcantarillas</option>
+        <option>Basura</option>
+        <option>Otros</option>
+        </select>
     </div>
-  </form>
+    <div>
+      <span>Descripción: </span>
+      <textarea v-model="form.description" placeholder="ingrese una descripción de la denuncia" required oninvalid="this.setCustomValidity('ingrese descripcion')"></textarea>
+    </div>
+    <div>
+      <label class="form-label" for="">Nombre: </label>
+      <input class="form-input" type="text" placeholder="nombre" v-model="form.first_name" required oninvalid="this.setCustomValidity('ingrese nombre')" oninput="this.setCustomValidity('')">
+    </div>
+    <div>
+      <label class="form-label" for="">Apellido: </label>
+      <input class="form-input" type="text" placeholder="apellido" v-model="form.last_name" required oninvalid="this.setCustomValidity('ingrese apellido')" oninput="this.setCustomValidity('')">
+    </div>
+    <div>
+      <label class="form-label" for="">Telefono: </label>
+      <input class="form-input" type="text" placeholder="telefono" v-model="form.phone" required oninvalid="this.setCustomValidity('ingrese telefono')" oninput="this.setCustomValidity('')">
+    </div>
+    <div>
+      <label class="form-label" for="">E-mail: </label>
+      <input class="form-input" type="email" placeholder="mail" v-model="form.email">
+    </div>
+  </div>
+  <div style="height: 400px; width: 50%; float:right">
+    
+    <l-map
+      v-if="showMap"
+      :zoom="zoom"
+      :center="center"
+      :options="mapOptions"
+      style="height: 80%"
+      @update:center="centerUpdate"
+      @update:zoom="zoomUpdate"
+      @click="addMarker"
+    >
+      <l-tile-layer
+        :url="url"
+        :attribution="attribution"
+      />
+      <l-marker :lat-lng="withPopup" v-model="coordinates" >
+        <l-popup>
+          <div @click="innerClick">
+            I am a popup
+            
+          </div>
+        </l-popup>
+      </l-marker>
+     
+    </l-map>
+  </div>
+   <div >
+     <button type="submit" class="btn btn-primary">Generar denuncia</button>
+    </div>
+   </form>
 </template>
 
 <script>
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Example",
@@ -103,34 +83,38 @@ export default {
     LTileLayer,
     LMarker,
     LPopup,
+    
   },
   data() {
     return {
-      coordinates: [],
+      
+      coordinates:[],
       form: {
-        title: "",
-        category: "",
-        description: "",
-        coordinates: "",
-        first_name: "",
-        last_name: "",
-        phone: "",
-        email: "",
+        title: '',
+        category: '',
+        description: '', 
+        coordinates_latitude: '', 
+        coordinates_longitude: '',  
+        first_name: '', 
+        last_name: '',
+        phone: '',
+        email: ''
+
       },
       zoom: 13,
       center: [-34.9214, -57.9544],
-      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       withPopup: {},
-
+      
       currentZoom: 11.5,
       currentCenter: latLng(),
-
+      
       mapOptions: {
-        zoomSnap: 0.5,
+        zoomSnap: 0.5
       },
-      showMap: true,
+      showMap: true
     };
   },
   methods: {
@@ -140,34 +124,36 @@ export default {
     centerUpdate(center) {
       this.currentCenter = center;
     },
-
+  
     innerClick() {
       alert("Click!");
     },
 
-    addMarker(e) {
-      // this.form.coordinates_latitude = e.latlng["lat"];
-      // this.form.coordinates_longitude = e.latlng["lng"];
-      this.form.coordinates = e.latlng["lat"] + "," + e.latlng["lng"];
-      console.log(this.form.coordinates);
-
+    addMarker(e){
+      this.form.coordinates_latitude = e.latlng['lat'];
+      this.form.coordinates_longitude = e.latlng['lng'];
+      console.log(this.form.coordinates_longitude);
       //var mark = {};
       //mark = {id:1, coordinates: [e.latlng['lat'],e.latlng['lng']]};
       //console.log(mark);
-      // console.log(e.latlng);
-      // console.log(this.withPopup);
-
-      this.withPopup = latLng(e.latlng["lat"], e.latlng["lng"]);
+      console.log(e.latlng);
+      console.log(this.withPopup);
+      
+      this.withPopup = latLng(e.latlng['lat'],e.latlng['lng']);
     },
 
-    submitDenuncia() {
-      axios
-        .post("https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/api/report/", this.form)
+    submitDenuncia(){
+      if(!this.coordinates){
+        alert("no ingreso coordinadas")
+      }
+      axios.post('http://127.0.0.1:5000/api/report/', this.form)
         .catch((error) => {
-          // error.response.status
-          console.log(error);
-        });
-    },
-  },
+          error.response.status
+        })
+        
+    }
+   
+
+  }
 };
 </script>
