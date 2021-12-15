@@ -43,6 +43,8 @@ def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
     CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
+
 
     #Diego
     app.secret_key = environ.get("SECRET_KEY") or urandom(24)
