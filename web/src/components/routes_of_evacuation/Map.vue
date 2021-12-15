@@ -96,11 +96,6 @@ export default {
       }
       return coords;
     },
-    evaluatePopup(index, coordinates) {
-      console.log(index == 0 || index == coordinates.length);
-
-      return index == 0 || index == coordinates.length;
-    },
   },
 };
 </script>
@@ -110,15 +105,15 @@ export default {
   font-size: 50px;
 }
 
-.card-title {  
+.card-title {
   font-size: 40px;
 }
 
-.card-text { 
+.card-text {
   font-size:25px
 }
 
-strong {  
+strong {
   font-size:25px
 }
 

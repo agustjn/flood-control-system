@@ -42,18 +42,13 @@
                 text="Denuncie alcantarillas tapadas,basurales,u otras indoles que empeoren una inundacion"
                 link="/reports"/>
             </div>
-            <div class="col-md-4 col-sm-12 mt-3">
+            <div class="col-md-6 col-sm-6 mt-3">
                 <Card
                 image_name="mapa"
-                text="Visualize en un mapa las denuncias actuales con su respectivo estado"
+                text="Realize las denuncias relacionadas a inundaciones "
                 link="/meeting-points"/>
             </div>
-            <div class="col-md-4 col-sm-12 mt-3" style="font-size:15px">
-                <Card
-                image_name="stadistics"
-                text="Conozca estadisticas respecto a informacion relacionada a las inundaciones"
-                link="/stadistics"/>
-        </div>
+
 
         </div>
     </div>

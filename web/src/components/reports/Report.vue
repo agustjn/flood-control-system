@@ -2,66 +2,66 @@
   <h1 class="title">Denunciar</h1>
   <form
     v-on:submit.prevent="submitDenuncia">
-    <div style="width: 50%; float: left">
-      <div>
-        <label class="form-label" for="">Titulo: </label>
+    <div  style="width: 50%; float: left ">
+      <div class="form-group mt-2 text-center">
+
         <input
-          class="form-input"
+          class="form-control "
           type="text"
           placeholder="titulo"
           v-model="form.title"
         />
       </div>
-      <div>
-        <label class="form-label" for="">Categoria: </label>
+      <div class = "form-group mt-2">
 
-        <select v-model="form.category">
+
+        <select  class="form-control" v-model="form.category">
           <option disabled value="">seleccione categoria</option>
           <option>Alcantarillas</option>
           <option>Basura</option>
           <option>Otros</option>
         </select>
       </div>
-      <div>
-        <span>Descripción: </span>
+      <div class = "form-group mt-2">
         <textarea
+          class = "form-control"
           v-model="form.description"
           placeholder="ingrese una descripción de la denuncia"
         ></textarea>
       </div>
-      <div>
-        <label class="form-label" for="">Nombre: </label>
+      <div class = "form-group mt-2">
+
         <input
-          class="form-input"
+          class="form-control"
           type="text"
           placeholder="nombre"
           v-model="form.first_name"
         />
       </div>
-      <div>
-        <label class="form-label" for="">Apellido: </label>
+      <div class = "form-group mt-2">
+
         <input
-          class="form-input"
+          class="form-control"
           type="text"
           placeholder="apellido"
           v-model="form.last_name"
         />
       </div>
-      <div>
-        <label class="form-label" for="">Telefono: </label>
+      <div class = "form-group mt-2">
+
         <input
-          class="form-input"
+          class="form-control"
           type="text"
           placeholder="telefono"
           v-model="form.phone"
         />
       </div>
-      <div>
-        <label class="form-label" for="">E-mail: </label>
+      <div class = "form-group mt-2" >
+
         <input
-          class="form-input"
-          type="text"
-          placeholder="mail"
+          type="email"
+          class="form-control"
+          placeholder="Ingrese su email"
           v-model="form.email"
         />
       </div>
