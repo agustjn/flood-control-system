@@ -6,66 +6,74 @@
       <div class="form-group mt-2 text-center">
 
         <input
-          class="form-control "
+          class="form-control text-center"
           type="text"
-          placeholder="titulo"
+          placeholder="Ingrese el titulo de la denuncia"
           v-model="form.title"
+          required oninvalid="this.setCustomValidity('ingrese titulo')" oninput="this.setCustomValidity('')"
         />
       </div>
       <div class = "form-group mt-2">
 
 
-        <select  class="form-control" v-model="form.category">
+        <select required class="form-control text-center" v-model="form.category">
           <option disabled value="">seleccione categoria</option>
           <option>Alcantarillas</option>
           <option>Basura</option>
           <option>Otros</option>
         </select>
       </div>
-      <div class = "form-group mt-2">
-        <textarea
-          class = "form-control"
-          v-model="form.description"
-          placeholder="ingrese una descripción de la denuncia"
-        ></textarea>
-      </div>
+
       <div class = "form-group mt-2">
 
         <input
-          class="form-control"
+          class="form-control text-center"
           type="text"
-          placeholder="nombre"
+          placeholder="Ingrese su nombre"
           v-model="form.first_name"
+          required oninvalid="this.setCustomValidity('ingrese nombre')" oninput="this.setCustomValidity('')"
         />
       </div>
       <div class = "form-group mt-2">
 
         <input
-          class="form-control"
+          class="form-control text-center"
           type="text"
-          placeholder="apellido"
+          placeholder="Ingrese su apellido"
           v-model="form.last_name"
+          required oninvalid="this.setCustomValidity('ingrese apellido')" oninput="this.setCustomValidity('')"
         />
       </div>
       <div class = "form-group mt-2">
 
         <input
-          class="form-control"
+          class="form-control text-center"
           type="text"
-          placeholder="telefono"
+          placeholder="Ingrese su telefono"
           v-model="form.phone"
+          required oninvalid="this.setCustomValidity('ingrese telefono')" oninput="this.setCustomValidity('')"
         />
       </div>
-      <div class = "form-group mt-2" >
+      <div class = "form-group  mt-2" >
 
         <input
           type="email"
-          class="form-control"
+          class="form-control text-center"
           placeholder="Ingrese su email"
           v-model="form.email"
+          required oninvalid="this.setCustomValidity('ingrese email')" oninput="this.setCustomValidity('')"
         />
       </div>
+      <div class = "form-group mt-2">
+        <textarea
+          class = "form-control text-center"
+          v-model="form.description"
+          placeholder="ingrese una descripción de la denuncia"
+          required oninvalid="this.setCustomValidity('ingrese descripcion')" oninput="this.setCustomValidity('')"
+        ></textarea>
+      </div>
     </div>
+    
     <div style="height: 400px; width: 50%; float:right">
       <l-map
         v-if="showMap"
@@ -85,16 +93,17 @@
         </l-marker>
       </l-map>
     </div>
+
     <div>
-      <button type="submit" class="btn btn-primary">Generar denuncia</button>
+      <button type="submit" class="btn-lg btn-success mt-2">Generar denuncia</button>
     </div>
-  </form>
+   </form>
 </template>
 
 <script>
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Example",
@@ -103,34 +112,38 @@ export default {
     LTileLayer,
     LMarker,
     LPopup,
+    
   },
   data() {
     return {
-      coordinates: [],
+      
+      coordinates:[],
       form: {
-        title: "",
-        category: "",
-        description: "",
-        coordinates: "",
-        first_name: "",
-        last_name: "",
-        phone: "",
-        email: "",
+        title: '',
+        category: '',
+        description: '', 
+        coordinates_latitude: '', 
+        coordinates_longitude: '',  
+        first_name: '', 
+        last_name: '',
+        phone: '',
+        email: ''
+
       },
       zoom: 13,
       center: [-34.9214, -57.9544],
-      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       withPopup: {},
-
+      
       currentZoom: 11.5,
       currentCenter: latLng(),
-
+      
       mapOptions: {
-        zoomSnap: 0.5,
+        zoomSnap: 0.5
       },
-      showMap: true,
+      showMap: true
     };
   },
   methods: {
@@ -140,34 +153,37 @@ export default {
     centerUpdate(center) {
       this.currentCenter = center;
     },
-
+  
     innerClick() {
       alert("Click!");
     },
 
-    addMarker(e) {
-      // this.form.coordinates_latitude = e.latlng["lat"];
-      // this.form.coordinates_longitude = e.latlng["lng"];
-      this.form.coordinates = e.latlng["lat"] + "," + e.latlng["lng"];
-      console.log(this.form.coordinates);
-
+    addMarker(e){
+      this.form.coordinates_latitude = e.latlng['lat'];
+      this.form.coordinates_longitude = e.latlng['lng'];
+      console.log(this.form.coordinates_longitude);
       //var mark = {};
       //mark = {id:1, coordinates: [e.latlng['lat'],e.latlng['lng']]};
       //console.log(mark);
-      // console.log(e.latlng);
-      // console.log(this.withPopup);
-
-      this.withPopup = latLng(e.latlng["lat"], e.latlng["lng"]);
+      console.log(e.latlng);
+      console.log(this.withPopup);
+      
+      this.withPopup = latLng(e.latlng['lat'],e.latlng['lng']);
     },
 
-    submitDenuncia() {
-      axios
-        .post("https://admin-grupo3.proyecto2021.linti.unlp.edu.ar/api/report/", this.form)
+    submitDenuncia(){
+      if(this.form.coordinates_latitude == ''){
+        alert("no ingreso coordenadas")
+      }
+      else{
+      axios.post('http://127.0.0.1:5000/api/report/', this.form)
         .catch((error) => {
-          // error.response.status
-          console.log(error);
-        });
-    },
-  },
+          error.response.status
+        })
+      }
+    }
+   
+
+  }
 };
 </script>
