@@ -3,7 +3,7 @@ from marshmallow import Schema , fields, post_load, validate, ValidationError
 from flask import abort;
 
 def validate_coordinates(coordinates):
-    if   ReportDAO.existe_coordinates(coordinates):
+    if ReportDAO.existe_coordinates(coordinates):
         try:
             raise ValidationError(" La coordenada ingresada ya existe")
         except Exception as e:

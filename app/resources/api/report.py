@@ -2,7 +2,7 @@ from app.dao.report import ReportDAO
 from flask import jsonify, Blueprint, request
 from app.scheme.report import  reports_scheme,report_scheme,report_pagination_scheme, ReportScheme
 from app.dao.configuration import ConfigurationDAO
-
+from flask import abort;
 report_api = Blueprint("reportes",__name__, url_prefix = "/report")
 
 
@@ -28,7 +28,10 @@ def index_page():
 def create():
     user_data = request.get_json()
     schema = ReportScheme()
-    result = schema.load(user_data)
+    try:
+        schema.load(user_data)
+    except:
+        return abort(400)
     return jsonify("Created"),201
 
 
