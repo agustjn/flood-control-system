@@ -9,6 +9,7 @@ from app.resources.api.issue import issue_api
 from app.resources.api.flood_zone import flood_zones_api
 from app.resources.api.point import point_api
 from app.resources.api.route_of_evacuation import route_of_evacuation_api
+from app.resources.api.stadistics import stadistics_api
 from app.helpers import handler
 from app.helpers.auth import Auth
 import logging
@@ -176,6 +177,7 @@ def create_app(environment="development"):
     api.register_blueprint(report_api)
     api.register_blueprint(point_api)
     api.register_blueprint(route_of_evacuation_api)
+    api.register_blueprint(stadistics_api)
 
     app.register_blueprint(api)
 
