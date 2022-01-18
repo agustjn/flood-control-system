@@ -10,7 +10,7 @@ class ReportDAO():
 
     @staticmethod
     def create_report(title,category, description, coordinates_latitude, coordinates_longitude,  first_name, last_name, phone, email,user_assing_id = None):
-        new_report = Report(title,category, description, coordinates_latitude, coordinates_longitude, first_name, last_name, phone, email,user_assing_id)
+        new_report = Report(title,category, description, coordinates_latitude, coordinates_longitude, first_name, last_name, phone, email, user_assing_id)
 
         db.session.add(new_report)
     # try:
@@ -31,7 +31,7 @@ class ReportDAO():
         lis = report_dic["coordinates"].split(",")
         coordinates_latitude = lis[0]
         coordinates_longitude = lis[1]
-        return  cls.create_report(report_dic["title"],report_dic["category"], report_dic["description"], coordinates_latitude, coordinates_longitude,  report_dic["first_name"], report_dic["last_name"], report_dic["phone"], report_dic["email"])
+        return  cls.create_report(report_dic["title"],report_dic["category"], report_dic["description"], coordinates_latitude, coordinates_longitude,  report_dic["first_name"], report_dic["last_name"], report_dic["phone"], report_dic["email"], report_dic["user_assing_id"])
 
 
     @staticmethod

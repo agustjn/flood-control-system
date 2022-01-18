@@ -28,6 +28,9 @@ class ReportScheme(Schema):
         last_name = fields.Str(required=True)
         phone = fields.Int(required=True)
         email = fields.Email(required=True)
+        user_assing_id = fields.Int()
+        creation_date = fields.Str()
+        status = fields.Str()
 
         @post_load
         def make_report(self, data, **kwargs):
