@@ -6,7 +6,7 @@ stadistics_api = Blueprint("estadisticas",__name__, url_prefix = "/stadistics")
 
 @stadistics_api.get("/")
 def index():
-    """Recupera todos las denuncias de la base de dato, habria que ver si hay campos que no hay que mostrar"""
+    """Recupera todos las denuncias de la base de dato"""
     recover_reports_stadistics_row = ReportDAO.recover_reports()
     reports = reports_scheme.dump(recover_reports_stadistics_row)
     return jsonify(reports)
