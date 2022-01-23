@@ -1,6 +1,6 @@
 from app.dao.report import ReportDAO
 from flask import jsonify, Blueprint, request
-from app.scheme.report import  reports_scheme,report_scheme,report_pagination_scheme, ReportScheme
+from app.scheme.report import  reports_scheme,report_pagination_scheme, ReportScheme
 from app.dao.configuration import ConfigurationDAO
 from flask import abort;
 report_api = Blueprint("reportes",__name__, url_prefix = "/report")

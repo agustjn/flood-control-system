@@ -26,9 +26,9 @@ class ReportScheme(Schema):
         coordinates_latitude = fields.Str()
         first_name = fields.Str(required=True)
         last_name = fields.Str(required=True)
-        phone = fields.Int(required=True)
-        email = fields.Email(required=True)
-        user_assing_id = fields.Int()
+        phone = fields.Str(required=True)
+        email = fields.Str(required=True)
+        user_assing_id = fields.Str()
         creation_date = fields.Str()
         status = fields.Str()
 
